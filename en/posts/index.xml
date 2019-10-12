@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Viel Losero&#39;s Website</title>
+    <link>/en/posts/</link>
+    <description>Recent content in Posts on Viel Losero&#39;s Website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es</language>
+    <lastBuildDate>Thu, 03 Oct 2019 14:44:20 +0200</lastBuildDate>
+    
+	<atom:link href="/en/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Starting With Hugo: Static site generator.</title>
+      <link>/en/posts/1-hugo-start-how-to/</link>
+      <pubDate>Thu, 03 Oct 2019 14:44:20 +0200</pubDate>
+      
+      <guid>/en/posts/1-hugo-start-how-to/</guid>
+      <description>Why Hugo I chose hugo after comparing the top static site gen and reading a couple of posts by jekyll vs hugo, everyone will have their preferences. This is the first SSG I use since for some I had to start, Hugo&amp;rsquo;s documentation is quite broad and easy to understand.
+Hugo installation Installing Hugo will depend on the operating system we have. In Devian it is as easy as using apt.</description>
+    </item>
+    
+  </channel>
+</rss>

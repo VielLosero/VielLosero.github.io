@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/en/about/</loc>
+    <lastmod>2019-10-12T18:03:16+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/acerca/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/about/"
+                />
+  </url>
+  
+  <url>
+    <loc>/en/</loc>
+    <lastmod>2019-10-11T11:34:36+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/"
+                />
+  </url>
+  
+  <url>
+    <loc>/en/contact/</loc>
+    <lastmod>2019-10-11T10:47:14+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/contacto/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/contact/"
+                />
+  </url>
+  
+  <url>
+    <loc>/en/posts/</loc>
+    <lastmod>2019-10-03T14:44:20+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/posts/"
+                />
+  </url>
+  
+  <url>
+    <loc>/en/posts/1-hugo-start-how-to/</loc>
+    <lastmod>2019-10-03T14:44:20+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/posts/1-hugo-start-how-to/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/posts/1-hugo-start-how-to/"
+                />
+  </url>
+  
+  <url>
+    <loc>/en/categories/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories/"
+                />
+  </url>
+  
+  <url>
+    <loc>/en/tags/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags/"
+                />
+  </url>
+  
+</urlset>

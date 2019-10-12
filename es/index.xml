@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bienvenidos! on Pagina Web de Viel Losero</title>
+    <link>/es/</link>
+    <description>Recent content in Bienvenidos! on Pagina Web de Viel Losero</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es</language>
+    <lastBuildDate>Fri, 11 Oct 2019 11:34:36 +0200</lastBuildDate>
+    
+	<atom:link href="/es/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Sobre mi</title>
+      <link>/es/acerca/</link>
+      <pubDate>Sat, 12 Oct 2019 10:15:39 +0200</pubDate>
+      
+      <guid>/es/acerca/</guid>
+      <description>Viel Losero es un seudonimo. Si puedes encontrarme a lo mejor puedas contratrme.
+Si tienes algun comentario o necesitas ayuda con algun problema informático no dudes en contactarme.</description>
+    </item>
+    
+    <item>
+      <title>Contacto</title>
+      <link>/es/contacto/</link>
+      <pubDate>Fri, 11 Oct 2019 10:47:14 +0200</pubDate>
+      
+      <guid>/es/contacto/</guid>
+      <description>Email: viel.losero@gmail.com
+Twitter: @VLosero
+GitHub: VielLosero</description>
+    </item>
+    
+    <item>
+      <title>Empezando con Hugo: Generador de paginas web estaticas.</title>
+      <link>/es/posts/1-hugo-start-how-to/</link>
+      <pubDate>Thu, 03 Oct 2019 14:44:20 +0200</pubDate>
+      
+      <guid>/es/posts/1-hugo-start-how-to/</guid>
+      <description>Porqué Hugo Escogí hugo después de comparar los top static site gen y leer un par de posts de jekyll vs hugo, cada uno tendrá sus preferencias. Este és el primer SSG que uso ya que por alguno tenia que empezar, la documentación de Hugo es bastante amplia y fácil de entender.
+Instalación de Hugo Instalar Hugo dependerá del sistema operativo que tengamos. En Devian es tan fácil como usar apt.</description>
+    </item>
+    
+  </channel>
+</rss>
