@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html><head>
+<title>Viel Losero - Hosting con Hugo y github</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="../../../css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="../../../"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item active" href="../../../es/posts/" title="">Publicaciones</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../es/contacto/" title="">Contacto</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../es/acerca/" title="">Acerca</a>
+		
+        </nav>        
+</div>
+</div>
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Hosting con Hugo y github</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Oct 11, 2019 - [ 663 Words ] 
+		
+		    
+		       - [ <a href="../../../en/posts/2-hosting-hugo-on-github/">en</a> ]
+		    
+                                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents">
+<ul>
+<li><a href="#cuenta-de-github">Cuenta de github</a></li>
+<li><a href="#cración-del-submódulo-git">Cración del submódulo git</a></li>
+<li><a href="#creando-el-sitio">Creando el sitio</a></li>
+<li><a href="#aceptando-los-cambios">Aceptando los cambios</a></li>
+<li><a href="#ssh-agent">SSH agent</a></li>
+<li><a href="#publicando-el-sitio">Publicando el sitio</a></li>
+</ul>
+</nav></p>
+		
+
+<h1 id="cuenta-de-github">Cuenta de github</h1>
+
+<p>Despues de mi <a href="../../../es/posts/1-hugo-start-how-to/">anterior post</a> donde empiezo con Hugo la creación de una página web con contenido estático, ahora toca alojar dicha página en github.</p>
+
+<p>No voy a entrar en como crear una cuenta en github, podéis seguir las indicaciones para crear la cuenta desde este enlace. <a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-via-gh-pages-branch">Hosting on github</a></p>
+
+<p>Una vez creada la cuenta github, añadida la clave ssh para la gestión remota y creado el repositorio, crearemos el submódulo.</p>
+
+<h1 id="cración-del-submódulo-git">Cración del submódulo git</h1>
+
+<p>Hugo crea el sitio estático con los ficheros de configuración del tema, contenido, static, etc. pero estos no son el sitio real, solo son para trabajar, podríamos decir, en caliente. La carpeta public es la que contiene el sitio estático creado por hugo,
+Creando un submódulo para la carpeta public nos permitirá publicar o actualizar la pagina web sin tener que actualizar todos los ficheros de configuración y creación del sitio.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero_blog# git submodule add -b master git@github.com:VielLosero/VielLosero.github.io.git public
+Clonando en <span class="s1">&#39;/root/data/hugo/viel_losero_blog/public&#39;</span>...
+remote: Enumerating objects: <span class="m">10</span>, <span class="k">done</span>.
+remote: Counting objects: <span class="m">100</span>% <span class="o">(</span><span class="m">10</span>/10<span class="o">)</span>, <span class="k">done</span>.
+remote: Compressing objects: <span class="m">100</span>% <span class="o">(</span><span class="m">9</span>/9<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">10</span> <span class="o">(</span>delta <span class="m">2</span><span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, pack-reused <span class="m">0</span>
+Recibiendo objetos: <span class="m">100</span>% <span class="o">(</span><span class="m">10</span>/10<span class="o">)</span>, <span class="m">256</span>.29 KiB <span class="p">|</span> <span class="m">749</span>.00 KiB/s, listo.
+Resolviendo deltas: <span class="m">100</span>% <span class="o">(</span><span class="m">2</span>/2<span class="o">)</span>, listo.
+root@kali:~/data/hugo/viel_losero_blog# </code></pre></div>
+<p>Podemos comprobar los submódulos actuales con:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero_blog# cat .gitmodules 
+<span class="o">[</span>submodule <span class="s2">&#34;themes/terminal&#34;</span><span class="o">]</span>
+        <span class="nv">path</span> <span class="o">=</span> themes/terminal
+        <span class="nv">url</span> <span class="o">=</span> https://github.com/panr/hugo-theme-terminal.git
+<span class="o">[</span>submodule <span class="s2">&#34;themes/ananke&#34;</span><span class="o">]</span>
+        <span class="nv">path</span> <span class="o">=</span> themes/ananke
+        <span class="nv">url</span> <span class="o">=</span> https://github.com/budparr/gohugo-theme-ananke.git
+<span class="o">[</span>submodule <span class="s2">&#34;public&#34;</span><span class="o">]</span>
+        <span class="nv">path</span> <span class="o">=</span> public
+        <span class="nv">url</span> <span class="o">=</span> git@github.com:VielLosero/VielLosero.github.io.git
+        <span class="nv">branch</span> <span class="o">=</span> master
+root@kali:~/data/hugo/viel_losero_blog# </code></pre></div>
+<h1 id="creando-el-sitio">Creando el sitio</h1>
+
+<p>Con un simple comando hugo, el programa nos creará las páginas estáticas en public, recordar quitar el draft(borrador) de la cabecera de los posts para que hugo cree las página estáticas. Con la opcion -t podemos indicar el tema que queremos si tenemos más de un tema instalado.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero_blog# hugo -t terminal
+
+                   <span class="p">|</span> EN  
++------------------+----+
+  Pages            <span class="p">|</span>  <span class="m">6</span>  
+  Paginator pages  <span class="p">|</span>  <span class="m">0</span>  
+  Non-page files   <span class="p">|</span>  <span class="m">0</span>  
+  Static files     <span class="p">|</span> <span class="m">15</span>  
+  Processed images <span class="p">|</span>  <span class="m">0</span>  
+  Aliases          <span class="p">|</span>  <span class="m">3</span>  
+  Sitemaps         <span class="p">|</span>  <span class="m">1</span>  
+  Cleaned          <span class="p">|</span>  <span class="m">0</span>  
+
+Total in <span class="m">10</span> ms
+root@kali:~/data/hugo/viel_losero_blog# </code></pre></div>
+<h1 id="aceptando-los-cambios">Aceptando los cambios</h1>
+
+<p>Una vez creados los archivos definitivos del sitio en el directorio public, necesitamos añadir dichos archivos al repositorio y hacer un commit para aceptar los cambios para que tengan efecto en el repositorio.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero_blog# <span class="nb">cd</span> public/
+root@kali:~/data/hugo/viel_losero_blog/public# git add .
+root@kali:~/data/hugo/viel_losero_blog/public# git commit -m <span class="s2">&#34;create public folder and commit it&#34;</span>
+<span class="o">[</span>master 164fb0a<span class="o">]</span> created public folder and commit it
+ <span class="m">25</span> files changed, <span class="m">805</span> insertions<span class="o">(</span>+<span class="o">)</span>, <span class="m">18</span> deletions<span class="o">(</span>-<span class="o">)</span>
+ create mode <span class="m">100644</span> assets/2bf08001f42c34e30e1de9d2eb81aead.woff
+ create mode <span class="m">100644</span> assets/62da0ac51db1e4a3a4d57b9154a344fc.woff
+ create mode <span class="m">100644</span> assets/blue.css
+ create mode <span class="m">100644</span> assets/green.css
+ create mode <span class="m">100644</span> assets/main.js
+ create mode <span class="m">100644</span> assets/pink.css
+ create mode <span class="m">100644</span> assets/prism.js
+ create mode <span class="m">100644</span> assets/red.css
+ create mode <span class="m">100644</span> assets/style.css
+ create mode <span class="m">100644</span> categories/index.html
+ create mode <span class="m">100644</span> categories/index.xml
+ create mode <span class="m">100644</span> categories/page/1/index.html
+ create mode <span class="m">100644</span> img/favicon/blue.png
+ create mode <span class="m">100644</span> img/favicon/green.png
+ create mode <span class="m">100644</span> img/favicon/orange.png
+ create mode <span class="m">100644</span> img/favicon/pink.png
+ create mode <span class="m">100644</span> img/favicon/red.png
+ create mode <span class="m">100644</span> img/hugo-dev.png
+ rewrite index.html <span class="o">(</span><span class="m">88</span>%<span class="o">)</span>
+ create mode <span class="m">100644</span> index.xml
+ create mode <span class="m">100644</span> page/1/index.html
+ create mode <span class="m">100644</span> sitemap.xml
+ create mode <span class="m">100644</span> tags/index.html
+ create mode <span class="m">100644</span> tags/index.xml
+ create mode <span class="m">100644</span> tags/page/1/index.html
+root@kali:~/data/hugo/viel_losero_blog/public# </code></pre></div>
+<h1 id="ssh-agent">SSH agent</h1>
+
+<p>Para no tener que estar escribiendo cada vez la contraseña de nuestra clave SSH podemos añadirla al agente SSH para que nos cree un sistema de <a href="https://www.ssh.com/ssh/add">inicio de sesión único</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero_blog/public# <span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span>
+root@kali:~/data/hugo/viel_losero_blog/public# ssh-add ~/.ssh/id_rsa_viel</code></pre></div>
+<h1 id="publicando-el-sitio">Publicando el sitio</h1>
+
+<p>Solo nos queda publicar el sitio y comprobar que todo está correcto. Para publicar el sitio, en la carpeta public, empujaremos los archivos en local hacia  la rama master en github.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero_blog/public# git push origin master
+Enumerando objetos: <span class="m">40</span>, listo.
+Contando objetos: <span class="m">100</span>% <span class="o">(</span><span class="m">40</span>/40<span class="o">)</span>, listo.
+Compresión delta usando hasta <span class="m">6</span> hilos
+Comprimiendo objetos: <span class="m">100</span>% <span class="o">(</span><span class="m">32</span>/32<span class="o">)</span>, listo.
+Escribiendo objetos: <span class="m">100</span>% <span class="o">(</span><span class="m">38</span>/38<span class="o">)</span>, <span class="m">369</span>.84 KiB <span class="p">|</span> <span class="m">2</span>.33 MiB/s, listo.
+Total <span class="m">38</span> <span class="o">(</span>delta <span class="m">12</span><span class="o">)</span>, reusado <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>
+remote: Resolving deltas: <span class="m">100</span>% <span class="o">(</span><span class="m">12</span>/12<span class="o">)</span>, <span class="k">done</span>.
+To github.com:VielLosero/VielLosero.github.io.git
+   de56330..164fb0a  master -&gt; master
+root@kali:~/data/hugo/viel_losero_blog/public# </code></pre></div>
+<p>Aquí podemos ver una captura de pantalla de la subida del directorio public a la rama master de github.</p>
+
+<p><img src="../../../en/posts/images/hosting-hugo-on-github.png" alt="Public folder pushed to master" /></p>
+
+<p><a href="#" class="back">back</a></p>
+
+<p>referencias:</p>
+
+<p><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-via-gh-pages-branch">Hosting Hugo on github</a></p>
+
+<p><a href="https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent">Generatin ssh key</a></p>
+
+<p><a href="https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account">Add ssh key to github</a></p>
+
+<p>Licencia:<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+Copyright © 2019 Viel Losero
+</footer>
+</body>
+</html>

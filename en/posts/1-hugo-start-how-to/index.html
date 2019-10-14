@@ -42,8 +42,6 @@
 		</div>
 		 <p id="toc">Table of contents <nav id="TableOfContents">
 <ul>
-<li>
-<ul>
 <li><a href="#why-hugo">Why Hugo</a></li>
 <li><a href="#hugo-installation">Hugo installation</a></li>
 <li><a href="#creation-of-the-site-structure">Creation of the site structure</a></li>
@@ -51,23 +49,22 @@
 <li><a href="#installing-a-theme-as-a-submodule">Installing a theme as a submodule</a></li>
 <li><a href="#creating-a-test-post">Creating a test post</a></li>
 <li><a href="#result">Result</a></li>
-</ul></li>
 </ul>
 </nav></p>
 		
 
-<h2 id="why-hugo">Why Hugo</h2>
+<h1 id="why-hugo">Why Hugo</h1>
 
 <p>I chose hugo after comparing the <a href="https://www.staticgen.com/">top static site gen</a> and reading a couple of posts by jekyll vs hugo, everyone will have their preferences. This is the first SSG I use since for some I had to start, <a href="https://gohugo.io/documentation/">Hugo&rsquo;s documentation</a> is quite broad and easy to understand.</p>
 
-<h2 id="hugo-installation">Hugo installation</h2>
+<h1 id="hugo-installation">Hugo installation</h1>
 
 <p>Installing Hugo will depend on the operating system we have. In Devian it is as easy as using apt.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data# apt-get install hugo</code></pre></div>
 <p>After installing, we will create a new directory to work neatly.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data# mkdir hugo
 root@kali:~/data# <span class="nb">cd</span> hugo</code></pre></div>
-<h2 id="creation-of-the-site-structure">Creation of the site structure</h2>
+<h1 id="creation-of-the-site-structure">Creation of the site structure</h1>
 
 <p>With Hugo we can create a <a href="https://gohugo.io/getting-started/directory-structure/">basic structure</a> for the new website.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo# hugo new site viel_losero                                                                                                                   
@@ -97,7 +94,7 @@ Visit https://gohugo.io/ <span class="k">for</span> quickstart guide and full do
     └── themes
 
 <span class="m">7</span> directories, <span class="m">2</span> files</code></pre></div>
-<h2 id="creation-of-the-git-repository">Creation of the git repository</h2>
+<h1 id="creation-of-the-git-repository">Creation of the git repository</h1>
 
 <p>Once the basic structure is created, we will enter the new website directory and start a git repository.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo# 
@@ -119,7 +116,7 @@ drwxr-xr-x <span class="m">7</span> root root <span class="m">119</span> oct  <s
 drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 layouts
 drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 static
 drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 themes</code></pre></div>
-<h2 id="installing-a-theme-as-a-submodule">Installing a theme as a submodule</h2>
+<h1 id="installing-a-theme-as-a-submodule">Installing a theme as a submodule</h1>
 
 <p>Hugo&rsquo;s test server does not start without a theme, it will give us an error.
 To install a hugo theme as a git submodule we can download it from <a href="https://themes.gohugo.io/">https://themes.gohugo.io/</a>. Installing the theme as a git sub-module will allow us to keep it updated.</p>
@@ -177,7 +174,7 @@ Resolviendo deltas: <span class="m">100</span>% <span class="o">(</span><span cl
 </span><span class="s">        name = &#34;Showcase&#34;
 </span><span class="s">        url = &#34;/showcase&#34;
 </span><span class="s">EOF</span></code></pre></div>
-<h2 id="creating-a-test-post">Creating a test post</h2>
+<h1 id="creating-a-test-post">Creating a test post</h1>
 
 <p>Installed the theme, we will create a new test post with the markup language <a href="https://es.wikipedia.org/wiki/Markdown">Markdown</a>, this is one of the features of Hugo publish files with extension md.
 For the new test post I will use this own .md file of notes on the installation and testing of Hugo.</p>
@@ -188,7 +185,7 @@ root@kali:~/data/hugo/viel_losero# vi content/posts/hugo-start-how-to.md</code><
 <p>Finally we will take a screenshot of the result and add it to the post.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# mkdir static/images
 root@kali:~/data/hugo/viel_losero# cp /root/Imágenes/Captura<span class="se">\ </span>de<span class="se">\ </span>pantalla<span class="se">\ </span>-2019-10-03<span class="se">\ </span><span class="m">17</span>-27-33.png static/images/hugo-dev.png</code></pre></div>
-<h2 id="result">Result</h2>
+<h1 id="result">Result</h1>
 
 <p>Here we have the screenshot with the result of my first test with Hugo.</p>
 

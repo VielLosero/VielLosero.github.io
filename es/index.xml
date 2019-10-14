@@ -22,6 +22,17 @@ Si tienes algun comentario o necesitas ayuda con algun problema informático no 
     </item>
     
     <item>
+      <title>Hosting con Hugo y github</title>
+      <link>/es/posts/2-hosting-hugo-on-github/</link>
+      <pubDate>Fri, 11 Oct 2019 19:54:30 +0200</pubDate>
+      
+      <guid>/es/posts/2-hosting-hugo-on-github/</guid>
+      <description>Cuenta de github Despues de mi anterior post donde empiezo con Hugo la creación de una página web con contenido estático, ahora toca alojar dicha página en github.
+No voy a entrar en como crear una cuenta en github, podéis seguir las indicaciones para crear la cuenta desde este enlace. Hosting on github
+Una vez creada la cuenta github, añadida la clave ssh para la gestión remota y creado el repositorio, crearemos el submódulo.</description>
+    </item>
+    
+    <item>
       <title>Contacto</title>
       <link>/es/contacto/</link>
       <pubDate>Fri, 11 Oct 2019 10:47:14 +0200</pubDate>

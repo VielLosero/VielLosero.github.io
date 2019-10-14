@@ -42,8 +42,6 @@
 		</div>
 		 <p id="toc">Table of contents <nav id="TableOfContents">
 <ul>
-<li>
-<ul>
 <li><a href="#porqué-hugo">Porqué Hugo</a></li>
 <li><a href="#instalación-de-hugo">Instalación de Hugo</a></li>
 <li><a href="#creación-de-la-estructura-del-sitio">Creación de la estructura del sitio</a></li>
@@ -51,23 +49,22 @@
 <li><a href="#instalación-de-un-tema-como-submódulo">Instalación de un tema como submódulo</a></li>
 <li><a href="#creación-de-un-post-de-prueba">Creación de un post de prueba</a></li>
 <li><a href="#resultado">Resultado</a></li>
-</ul></li>
 </ul>
 </nav></p>
 		
 
-<h2 id="porqué-hugo">Porqué Hugo</h2>
+<h1 id="porqué-hugo">Porqué Hugo</h1>
 
 <p>Escogí hugo después de comparar los <a href="https://www.staticgen.com/">top static site gen</a> y leer un par de posts de jekyll vs hugo, cada uno tendrá sus preferencias. Este és el primer SSG que uso ya que por alguno tenia que empezar, la <a href="https://gohugo.io/documentation/">documentación de Hugo</a> es bastante amplia y fácil de entender.</p>
 
-<h2 id="instalación-de-hugo">Instalación de Hugo</h2>
+<h1 id="instalación-de-hugo">Instalación de Hugo</h1>
 
 <p>Instalar Hugo dependerá del sistema operativo que tengamos. En Devian es tan fácil como usar apt.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data# apt-get install hugo</code></pre></div>
 <p>Después de instalar, crearemos un nuevo directorio para trabajar ordenadamente.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data# mkdir hugo
 root@kali:~/data# <span class="nb">cd</span> hugo</code></pre></div>
-<h2 id="creación-de-la-estructura-del-sitio">Creación de la estructura del sitio</h2>
+<h1 id="creación-de-la-estructura-del-sitio">Creación de la estructura del sitio</h1>
 
 <p>Con Hugo podemos crear una  <a href="https://gohugo.io/getting-started/directory-structure/">estructura básica</a> para el nuevo sitio web.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo# hugo new site viel_losero                                                                                                                   
@@ -97,7 +94,7 @@ Visit https://gohugo.io/ <span class="k">for</span> quickstart guide and full do
     └── themes
 
 <span class="m">7</span> directories, <span class="m">2</span> files</code></pre></div>
-<h2 id="creación-del-repositorio-git">Creación del repositorio git</h2>
+<h1 id="creación-del-repositorio-git">Creación del repositorio git</h1>
 
 <p>Una vez creada la estructura básica entraremos en el nuevo directorio del sitio web y iniciaremos un repositorio git.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo# <span class="nb">cd</span> viel_losero/
@@ -117,7 +114,7 @@ drwxr-xr-x <span class="m">7</span> root root <span class="m">119</span> oct  <s
 drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 layouts
 drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 static
 drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 themes</code></pre></div>
-<h2 id="instalación-de-un-tema-como-submódulo">Instalación de un tema como submódulo</h2>
+<h1 id="instalación-de-un-tema-como-submódulo">Instalación de un tema como submódulo</h1>
 
 <p>El servidor de pruevas de Hugo no se inicia sin un tema, nos dará un error.
 Para instalar un tema de hugo como submódulo git podemos descargarlo desde <a href="https://themes.gohugo.io/">https://themes.gohugo.io/</a>. Instalar el tema como un submodulo git nos permitirá mantenerlo actualizado.</p>
@@ -175,7 +172,7 @@ Resolviendo deltas: <span class="m">100</span>% <span class="o">(</span><span cl
 </span><span class="s">        name = &#34;Showcase&#34;
 </span><span class="s">        url = &#34;/showcase&#34;
 </span><span class="s">EOF</span></code></pre></div>
-<h2 id="creación-de-un-post-de-prueba">Creación de un post de prueba</h2>
+<h1 id="creación-de-un-post-de-prueba">Creación de un post de prueba</h1>
 
 <p>Instalado el tema, crearemos un nuevo post de prueba con el lenguaje de marcas <a href="https://es.wikipedia.org/wiki/Markdown">Markdown</a>, esta es una de las características de Hugo publicar archivos con extensión md.</p>
 
@@ -187,7 +184,7 @@ root@kali:~/data/hugo/viel_losero# vi content/posts/hugo-start-how-to.md</code><
 <p>Finalmente haremos una captura de pantalla del resultado y la añadiremos al post.</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# mkdir static/images
 root@kali:~/data/hugo/viel_losero# cp /root/Imágenes/Captura<span class="se">\ </span>de<span class="se">\ </span>pantalla<span class="se">\ </span>-2019-10-03<span class="se">\ </span><span class="m">17</span>-27-33.png static/images/hugo-dev.png</code></pre></div>
-<h2 id="resultado">Resultado</h2>
+<h1 id="resultado">Resultado</h1>
 
 <p>Aquí tenemos la captura de pantalla con el resultado de mi primera prueba con Hugo.</p>
 

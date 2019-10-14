@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Hosting with Hugo and github</title>
+      <link>/en/posts/2-hosting-hugo-on-github/</link>
+      <pubDate>Sun, 13 Oct 2019 19:54:30 +0200</pubDate>
+      
+      <guid>/en/posts/2-hosting-hugo-on-github/</guid>
+      <description>Github account After my previous post where I start with Hugo the creation of a web page with static content, now it&amp;rsquo;s time to host that page in github.
+I will not go into how to create an account on github, you can follow the instructions to create the account from this link. Hosting on github
+Once the github account has been created, the ssh key has been added for remote management and the repository has been created, we will create the submodule.</description>
+    </item>
+    
+    <item>
       <title>About</title>
       <link>/en/about/</link>
       <pubDate>Sat, 12 Oct 2019 18:03:16 +0200</pubDate>
