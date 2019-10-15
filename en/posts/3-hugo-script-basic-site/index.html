@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head>
+<title>Viel Losero - Hugo Static site generator: Script to generate the initial configuration.</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="../../../css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="../../../"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item active" href="../../../en/posts/" title="">Posts</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/about/" title="">About</a>
+		
+        </nav>        
+</div>
+</div>
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Hugo Static site generator: Script to generate the initial configuration.</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Oct 15, 2019 - [ 391 Words ] 
+		
+		    
+		       - [ <a href="../../../es/posts/3-hugo-script-basic-site/">es</a> ]
+		    
+                                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents">
+<ul>
+<li><a href="#script-code">Script Code</a></li>
+<li><a href="#testing-the-script">Testing the script</a>
+<ul>
+<li><a href="#download">Download</a></li>
+<li><a href="#execution">Execution</a></li>
+</ul></li>
+<li><a href="#result">Result</a></li>
+</ul>
+</nav></p>
+		
+
+<h1 id="script-code">Script Code</h1>
+
+<p>This script has helped me to generate mi website at initial moment since for me it was a bit awkward to editing all the files one by one to tests and see results of Hugo&rsquo;s configuration . With this script we have all the initial configuration in a single file to be able to make configuration tests with Hugo relatively easy.</p>
+
+<p><a href="https://github.com/VielLosero/scripts/blob/master/hugo-SSG/hugo-script-create-basic-site.sh">hugo-script-create-basic-site.sh</a></p>
+
+<h1 id="testing-the-script">Testing the script</h1>
+
+<h2 id="download">Download</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# wget https://raw.githubusercontent.com/VielLosero/scripts/master/hugo-SSG/hugo-script-create-basic-site.sh
+--2019-10-15 <span class="m">13</span>:59:20--  https://raw.githubusercontent.com/VielLosero/scripts/master/hugo-SSG/hugo-script-create-basic-site.sh
+Resolviendo raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>... <span class="m">151</span>.101.0.133, <span class="m">151</span>.101.64.133, <span class="m">151</span>.101.128.133, ...
+Conectando con raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)[</span><span class="m">151</span>.101.0.133<span class="o">]</span>:443... conectado.
+Petición HTTP enviada, esperando respuesta... <span class="m">200</span> OK
+Longitud: <span class="m">10006</span> <span class="o">(</span><span class="m">9</span>,8K<span class="o">)</span> <span class="o">[</span>text/plain<span class="o">]</span>
+Grabando a: “hugo-script-create-basic-site.sh”
+
+hugo-script-create-basic-site.sh        <span class="m">100</span>%<span class="o">[=============================================================================</span>&gt;<span class="o">]</span>   <span class="m">9</span>,77K  --.-KB/s    en 0s      
+
+<span class="m">2019</span>-10-15 <span class="m">13</span>:59:21 <span class="o">(</span><span class="m">39</span>,1 MB/s<span class="o">)</span> - “hugo-script-create-basic-site.sh” guardado <span class="o">[</span><span class="m">10006</span>/10006<span class="o">]</span>
+
+root@kali:~# </code></pre></div>
+<h2 id="execution">Execution</h2>
+
+<p>We change the permissions</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# chmod +x hugo-script-create-basic-site.sh</code></pre></div>
+<p>We edit the routes and execute it</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# ./hugo-script-create-basic-site.sh                                                                                                               
+<span class="o">[</span>*<span class="o">]</span> Generating basic structure with hugo templates                                                                                                            
+Congratulations! Your new Hugo site is created in /home/user/mi_new_static_website/mi_blog.                                                                   
+                                                                                                                                                              
+Just a few more steps and you<span class="err">&#39;</span>re ready to go:                                                                                                                 
+                                                                                                                                                              
+<span class="m">1</span>. Download a theme into the same-named folder.                                                                                                               
+   Choose a theme from https://themes.gohugo.io/ or                                                                                                           
+   create your own with the <span class="s2">&#34;hugo new theme &lt;THEMENAME&gt;&#34;</span> command.                                                                                             
+<span class="m">2</span>. Perhaps you want to add some content. You can add single files                                                                                             
+   with <span class="s2">&#34;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&#34;</span>.                                                                                                         
+<span class="m">3</span>. Start the built-in live server via <span class="s2">&#34;hugo server&#34;</span>.                                                                                                          
+                                                                                                                                                              
+Visit https://gohugo.io/ <span class="k">for</span> quickstart guide and full documentation.                                                                                         
+Creating theme at /home/user/mi_new_static_website/mi_blog/themes/mi_theme                                                                                    
+<span class="o">[</span>*<span class="o">]</span> Creating baseof.html
+<span class="o">[</span>*<span class="o">]</span> Creating index.html
+<span class="o">[</span>*<span class="o">]</span> Creating list.html
+<span class="o">[</span>*<span class="o">]</span> Creating single.html
+<span class="o">[</span>*<span class="o">]</span> Creating head.html
+<span class="o">[</span>*<span class="o">]</span> Creating header.html
+<span class="o">[</span>*<span class="o">]</span> Creating footer.html
+<span class="o">[</span>*<span class="o">]</span> Creating config.toml
+<span class="o">[</span>*<span class="o">]</span> Generating css
+<span class="o">[</span>*<span class="o">]</span> Creating content files
+/home/user/mi_new_static_website/mi_blog/content/_index.en.md created
+/home/user/mi_new_static_website/mi_blog/content/posts/post1.md created
+<span class="o">[</span>*<span class="o">]</span> Making dir <span class="k">for</span> images
+<span class="o">[</span>*<span class="o">]</span> Generating pygments
+<span class="o">[</span>*<span class="o">]</span> Generating Multilanguage Menu
+<span class="o">[</span>*<span class="o">]</span> Making dir <span class="k">for</span> static images like logo
+<span class="o">[</span>*<span class="o">]</span> Starting Hugo Server
+
+                   <span class="p">|</span> EN <span class="p">|</span> ES  
++------------------+----+----+
+  Pages            <span class="p">|</span> <span class="m">11</span> <span class="p">|</span>  <span class="m">8</span>  
+  Paginator pages  <span class="p">|</span>  <span class="m">0</span> <span class="p">|</span>  <span class="m">0</span>  
+  Non-page files   <span class="p">|</span>  <span class="m">0</span> <span class="p">|</span>  <span class="m">0</span>  
+  Static files     <span class="p">|</span>  <span class="m">2</span> <span class="p">|</span>  <span class="m">2</span>  
+  Processed images <span class="p">|</span>  <span class="m">0</span> <span class="p">|</span>  <span class="m">0</span>  
+  Aliases          <span class="p">|</span>  <span class="m">1</span> <span class="p">|</span>  <span class="m">0</span>  
+  Sitemaps         <span class="p">|</span>  <span class="m">2</span> <span class="p">|</span>  <span class="m">1</span>  
+  Cleaned          <span class="p">|</span>  <span class="m">0</span> <span class="p">|</span>  <span class="m">0</span>  
+
+Total in <span class="m">16</span> ms
+Watching <span class="k">for</span> changes in /home/user/mi_new_static_website/mi_blog/<span class="o">{</span>archetypes,content,data,layouts,static,themes<span class="o">}</span>
+Watching <span class="k">for</span> config changes in /home/user/mi_new_static_website/mi_blog/config.toml
+Environment: <span class="s2">&#34;development&#34;</span>
+Serving pages from memory
+Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+Web Server is available at //localhost:1313/ <span class="o">(</span><span class="nb">bind</span> address <span class="m">127</span>.0.0.1<span class="o">)</span>
+Press Ctrl+C to stop</code></pre></div>
+<h1 id="result">Result</h1>
+
+<p>Here we have the result.</p>
+
+<p><img src="../../../en/posts/images/testing-hugo-script-create-basic-site.gif" alt="Image running script" /></p>
+
+<p><a href="#" class="back">back</a></p>
+
+<p>References:</p>
+
+<p><a href="https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/">How to make gifs with ffmpeg</a></p>
+
+<p>Licence:<a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+	Send your coments here --> 
+	<a href="https://twitter.com/VLosero">[Twitter]</a>
+	<a href="https://github.com/VielLosero">[Git]</a>
+	<a href="mailto:viel.losero@gmail.com">[Email]</a>
+	&lt;-- Envia tus comentarios aquí
+	<p>Copyright © 2019 Viel Losero</p>
+	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+</footer>
+</body>
+</html>

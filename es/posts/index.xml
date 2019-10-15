@@ -6,13 +6,22 @@
     <description>Recent content in Posts on Pagina Web de Viel Losero</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
-    <lastBuildDate>Fri, 11 Oct 2019 19:54:30 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 15 Oct 2019 12:22:20 +0200</lastBuildDate>
     
 	<atom:link href="/es/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Hosting con Hugo y github</title>
+      <title>Hugo generador de páginas web estáticas: Script para generar la configuración inicial.</title>
+      <link>/es/posts/3-hugo-script-basic-site/</link>
+      <pubDate>Tue, 15 Oct 2019 12:22:20 +0200</pubDate>
+      
+      <guid>/es/posts/3-hugo-script-basic-site/</guid>
+      <description>Código del Script Este script que os dejo a continuación me ha servido para generar este sitio web en sus momento iniciales ya que para mi era un poco incomodo tener que estar editando todos los archivos de uno en uno para hace pruebas y ver el resultado de la configuración de Hugo. Con este script tenemos toda la configuración inicial en un solo archivo para poder hacer pruebas de configuración con Hugo relativamente fácil.</description>
+    </item>
+    
+    <item>
+      <title>Hugo generador de páginas web estáticas: Hosting en github.</title>
       <link>/es/posts/2-hosting-hugo-on-github/</link>
       <pubDate>Fri, 11 Oct 2019 19:54:30 +0200</pubDate>
       
@@ -23,7 +32,7 @@ Una vez creada la cuenta github, añadida la clave ssh para la gestión remota y
     </item>
     
     <item>
-      <title>Empezando con Hugo: Generador de paginas web estaticas.</title>
+      <title>Hugo generador de páginas web estáticas: Empezando con Hugo.</title>
       <link>/es/posts/1-hugo-start-how-to/</link>
       <pubDate>Thu, 03 Oct 2019 14:44:20 +0200</pubDate>
       

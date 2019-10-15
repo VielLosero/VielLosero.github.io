@@ -6,13 +6,24 @@
     <description>Recent content in Posts on Viel Losero&#39;s Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
-    <lastBuildDate>Sun, 13 Oct 2019 19:54:30 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 15 Oct 2019 12:22:20 +0200</lastBuildDate>
     
 	<atom:link href="/en/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Hosting with Hugo and github</title>
+      <title>Hugo Static site generator: Script to generate the initial configuration.</title>
+      <link>/en/posts/3-hugo-script-basic-site/</link>
+      <pubDate>Tue, 15 Oct 2019 12:22:20 +0200</pubDate>
+      
+      <guid>/en/posts/3-hugo-script-basic-site/</guid>
+      <description>Script Code This script has helped me to generate mi website at initial moment since for me it was a bit awkward to editing all the files one by one to tests and see results of Hugo&amp;rsquo;s configuration . With this script we have all the initial configuration in a single file to be able to make configuration tests with Hugo relatively easy.
+hugo-script-create-basic-site.sh
+Testing the script Download root@kali:~# wget https://raw.</description>
+    </item>
+    
+    <item>
+      <title>Hugo Static site generator: Hosting on github.</title>
       <link>/en/posts/2-hosting-hugo-on-github/</link>
       <pubDate>Sun, 13 Oct 2019 19:54:30 +0200</pubDate>
       
@@ -23,7 +34,7 @@ Once the github account has been created, the ssh key has been added for remote 
     </item>
     
     <item>
-      <title>Starting With Hugo: Static site generator.</title>
+      <title>Hugo Static site generator: Starting with Hugo.</title>
       <link>/en/posts/1-hugo-start-how-to/</link>
       <pubDate>Thu, 03 Oct 2019 14:44:20 +0200</pubDate>
       
