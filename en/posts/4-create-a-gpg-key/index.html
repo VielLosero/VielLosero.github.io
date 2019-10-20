@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html><head>
+<title>Viel Losero - Using GPG: Gnu Privacy Guard.</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="../../../css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="../../../"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item active" href="../../../en/posts/" title="">Posts</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/about/" title="">About</a>
+		
+        </nav>        
+</div>
+</div>
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Using GPG: Gnu Privacy Guard.</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Oct 18, 2019 - [ 3250 Words ] 
+		
+		    
+		       - [ <a href="../../../es/posts/4-create-a-gpg-key/">es</a> ]
+		    
+                                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents">
+<ul>
+<li><a href="#creation-of-public-and-private-keys">Creation of public and private keys</a></li>
+<li><a href="#key-management">Key Management</a>
+<ul>
+<li><a href="#list-of-public-keys">List of Public keys</a></li>
+<li><a href="#list-of-private-keys">List of Private keys</a></li>
+<li><a href="#creating-an-armored-public-key-file">Creating an armored public key file</a></li>
+<li><a href="#upload-our-public-key">Upload our public key</a></li>
+<li><a href="#searching-our-public-key">Searching our public key</a></li>
+</ul></li>
+<li><a href="#add-the-email-uid-to-our-key">Add the email UID to our key</a>
+<ul>
+<li><a href="#key-search-without-uid">Key search without UID</a></li>
+<li><a href="#email-verification">Email verification</a></li>
+<li><a href="#key-search-with-uid">Key search with UID</a></li>
+</ul></li>
+<li><a href="#working-with-files">Working with files</a>
+<ul>
+<li><a href="#file-encryption">File encryption</a></li>
+<li><a href="#file-decryption">File decryption</a></li>
+<li><a href="#file-signing">File signing</a></li>
+<li><a href="#signature-verification">Signature verification</a></li>
+</ul></li>
+<li><a href="#third-parties">Third parties</a>
+<ul>
+<li><a href="#importing-third-party-s-public-keys">Importing third-party’s public keys</a></li>
+<li><a href="#sending-encrypted-message">Sending encrypted message</a>
+<ul>
+<li><a href="#testing-decryption">Testing decryption</a></li>
+</ul></li>
+<li><a href="#signing-third-party-keys">Signing third party keys</a>
+<ul>
+<li><a href="#key-list">Key List</a></li>
+<li><a href="#signing-public-key">Signing public key</a></li>
+<li><a href="#trust-in-third-party-s-public-keys">Trust in third-party’s public keys</a></li>
+<li><a href="#message-signing-and-encryption-using-the-mail-uid">Message signing and encryption using the mail UID</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#management-gpg-keys">Management GPG Keys</a>
+<ul>
+<li><a href="#update-and-verification-third-party-s-keys">Update and verification third party&rsquo;s keys</a></li>
+<li><a href="#create-the-revocation-file">Create the revocation file</a></li>
+<li><a href="#encrypt-the-certificate-revocation-file">Encrypt the certificate revocation file</a></li>
+</ul></li>
+</ul>
+</nav></p>
+		
+
+<h1 id="creation-of-public-and-private-keys">Creation of public and private keys</h1>
+
+<p>To create the GPG keys we can use **gpg &ndash;generate-key ** or **gpg &ndash;full-generate-key ** the first command will create the keys without asking other options than necessary. If we want more control over some options such as size or validity period we will use **gpg &ndash;full-generate-key **.</p>
+
+<p>The size of the key is related to its security but also to the performance since it has to process with larger numbers.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --full-generate-key
+gpg <span class="o">(</span>GnuPG<span class="o">)</span> <span class="m">2</span>.2.17<span class="p">;</span> Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">2019</span> Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+gpg: creado el directorio <span class="s1">&#39;/root/.gnupg&#39;</span>
+gpg: caja de claves <span class="s1">&#39;/root/.gnupg/pubring.kbx&#39;</span> creada
+Por favor seleccione tipo de clave deseado:
+   <span class="o">(</span><span class="m">1</span><span class="o">)</span> RSA y RSA <span class="o">(</span>por defecto<span class="o">)</span>
+   <span class="o">(</span><span class="m">2</span><span class="o">)</span> DSA y ElGamal
+   <span class="o">(</span><span class="m">3</span><span class="o">)</span> DSA <span class="o">(</span>sólo firmar<span class="o">)</span>
+   <span class="o">(</span><span class="m">4</span><span class="o">)</span> RSA <span class="o">(</span>sólo firmar<span class="o">)</span>
+Su elección: <span class="m">1</span>
+las claves RSA pueden tener entre <span class="m">1024</span> y <span class="m">4096</span> bits de longitud.
+¿De qué tamaño quiere la clave? <span class="o">(</span><span class="m">3072</span><span class="o">)</span> <span class="m">4096</span>
+El tamaño requerido es de <span class="m">4096</span> bits
+Por favor, especifique el período de validez de la clave.
+         <span class="nv">0</span> <span class="o">=</span> la clave nunca caduca
+      &lt;n&gt;  <span class="o">=</span> la clave caduca en n días
+      &lt;n&gt;w <span class="o">=</span> la clave caduca en n semanas
+      &lt;n&gt;m <span class="o">=</span> la clave caduca en n meses
+      &lt;n&gt;y <span class="o">=</span> la clave caduca en n años
+¿Validez de la clave <span class="o">(</span><span class="m">0</span><span class="o">)</span>? <span class="m">0</span>
+La clave nunca caduca
+¿Es correcto? <span class="o">(</span>s/n<span class="o">)</span> s
+
+GnuPG debe construir un ID de usuario para identificar su clave.
+
+Nombre y apellidos: Viel Losero
+Dirección de correo electrónico: viel.losero@gmail.com
+Comentario: 
+Ha seleccionado este ID de usuario:
+    <span class="s2">&#34;Viel Losero &lt;viel.losero@gmail.com&gt;&#34;</span>
+
+¿Cambia <span class="o">(</span>N<span class="o">)</span>ombre, <span class="o">(</span>C<span class="o">)</span>omentario, <span class="o">(</span>D<span class="o">)</span>irección o <span class="o">(</span>V<span class="o">)</span>ale/<span class="o">(</span>S<span class="o">)</span>alir? V
+Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
+alguna otra tarea <span class="o">(</span>trabajar en otra ventana/consola, mover el ratón, usar
+la red y los discos<span class="o">)</span> durante la generación de números primos. Esto da al
+generador de números aleatorios mayor oportunidad de recoger suficiente
+entropía.
+Es necesario generar muchos bytes aleatorios. Es una buena idea realizar
+alguna otra tarea <span class="o">(</span>trabajar en otra ventana/consola, mover el ratón, usar
+la red y los discos<span class="o">)</span> durante la generación de números primos. Esto da al
+generador de números aleatorios mayor oportunidad de recoger suficiente
+entropía.
+gpg: /root/.gnupg/trustdb.gpg: se ha creado base de datos de confianza
+gpg: clave F87816F5B769CD83 marcada como de confianza absoluta
+gpg: creado el directorio <span class="s1">&#39;/root/.gnupg/openpgp-revocs.d&#39;</span>
+sgpg: certificado de revocación guardado como <span class="s1">&#39;/root/.gnupg/openpgp-revocs.d/141839E8065C95F48E8DC329F87816F5B769CD83.rev&#39;</span>
+claves pública y secreta creadas y firmadas.
+
+pub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>SC<span class="o">]</span>
+      141839E8065C95F48E8DC329F87816F5B769CD83
+uid                      Viel Losero &lt;viel.losero@gmail.com&gt;
+sub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>E<span class="o">]</span>
+
+root@kali:~# </code></pre></div>
+<h1 id="key-management">Key Management</h1>
+
+<p>Listing the keys gives us the UID identifier ** Viel Losero viel.losero@gmail.com** and the fingerprint of the key (that long number) ** 141839E8065C95F48E8DC329F87816F5B769CD83 **.</p>
+
+<p>To use a gpg key we need the UID or the fingerprint of that key with  gpg commands to signed, encrypted or verification.</p>
+
+<h2 id="list-of-public-keys">List of Public keys</h2>
+
+<p>We can see that we only have our public key, later we will see how to import more public keys from other people to send them messages.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --list-keys
+/root/.gnupg/pubring.kbx
+------------------------
+pub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>SC<span class="o">]</span>
+      141839E8065C95F48E8DC329F87816F5B769CD83
+uid        <span class="o">[</span>  absoluta <span class="o">]</span> Viel Losero &lt;viel.losero@gmail.com&gt;
+sub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>E<span class="o">]</span></code></pre></div>
+<h2 id="list-of-private-keys">List of Private keys</h2>
+
+<p>The ID and footprint of the private key is the same as that of the public key, obviously. This list is simply a way to present the information of the keys to the user. The actual keys and configuration files are in the hidden .gnupg directory as explained by <a href="https://gnupg.org/documentation/manuals/gnupg/GPG-Configuration.html#GPG-Configuration">gnupg file configuration</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --list-secret-keys
+/root/.gnupg/pubring.kbx
+------------------------
+sec   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>SC<span class="o">]</span>
+      141839E8065C95F48E8DC329F87816F5B769CD83
+uid        <span class="o">[</span>  absoluta <span class="o">]</span> Viel Losero &lt;viel.losero@gmail.com&gt;
+ssb   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>E<span class="o">]</span></code></pre></div>
+<h2 id="creating-an-armored-public-key-file">Creating an armored public key file</h2>
+
+<p>If we want to send our public key to another person we can export the key and add the option ** armor ** to be able to see the information in a readable way (Human Readable), this simply causes the binary file of the public key to be passed to base64 to see it well on screen. If we tried to see a binary file on the screen without any hexadecimal editor we would only see rare characters.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --armor --output viel.losero@gmail.com-public-key.gpg --export viel.losero@gmail.com                                                         
+root@kali:~# cat viel.losero@gmail.com-public-key.gpg                                                                                                         
+-----BEGIN PGP PUBLIC KEY BLOCK-----                                                                                                                          
+                                                                                                                                                              
+mQINBF2od4EBEAC09q3FqknBkwLYBGFyFjAapNDIb3XD7b4jJNtq8HePz/8oLR6P                                                                                              
+jd1Zt+7t3GW888sQqkxbGvmtgx6PwwjBr1fqI+vfbv7LtTqNMHwdkF+2jvR8FjzZ                                                                                              
+tkNw8+5ShZeD/gxypaSenIazwQAe0M40VuHQMjZkK7e+wbehR6CZ7Sgf8WYFqxn/                                                                                              
+EB7Kfb4bNok7raXo2PZctQQ8iZVaWU1eXYK8wfm9UlTcDeUwe3rlfUenUn29juX7                                                                                              
+pfIDCQnnOAnYPvbegIQUPLJ6BG7rpagSOml48MbPvxQ3uOfJ8edWKY5+rvO92jVM                                                                                              
+pdZTKqzV5OlCEsPGX4jH/1zzgXWTjvROQSxYw1E9Z+nNEGej6sscMRtGVwOV5TGo                                                                                              
+TsRzUdI+0CBaRDW+hoX+7qqzbcCShwX9KaxpgSac1VfP1EKoou4MQQXv4/NVN/JC                                                                                              
+eB5mjv27qtkxXDO8EAFd+lUTOeGI303XoZcC+UAUV/WiVrhuwDzJ1M+UutdnR8VB                                                                                              
+P/ecrhqhwvQUFuK5zWH2tkxFO/lL2c2Q0+kcbzElhLo/BoP8jjKea2zQAMDVJFv/                                                                                              
+Te6zb5KHK9tOUbFxPekhbD2tEDsz4U4P7jmFQAD1wNilljRD2C/Lp4Ft34grx/K2                                                                                              
+tpgwpb3NVXvzOmfeWpfO5lKvm9CGP4LR00n3nMdaITHF9XkWuJ9xL3CDmQARAQAB                                                                                              
+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<span class="o">=</span>
+<span class="o">=</span>Aa5W
+-----END PGP PUBLIC KEY BLOCK-----
+root@kali:~# </code></pre></div>
+<p>We can do a test with the following commands to obtain the public key in binary and then pass it to base64.</p>
+
+<ul>
+<li><p>gpg &ndash;output file.gpg &ndash;export ID</p></li>
+
+<li><p>cat file.gpg</p></li>
+
+<li><p>cat file.gpg | base64</p></li>
+</ul>
+
+<h2 id="upload-our-public-key">Upload our public key</h2>
+
+<p>We can send and armored public key to third party from a secure channel. or send the key to a public pgp servers.  The receiver has to be sure that the key he receives really belongs to the right person.</p>
+
+<p>Once the key is published on the public pgp servers, we can inform about her fingerprint, such as that nice guys from <a href="https://puri.sm/about/team/">purism team</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --send-keys 141839E8065C95F48E8DC329F87816F5B769CD83
+gpg: enviando clave F87816F5B769CD83 a hkps://keys.openpgp.org
+root@kali:~# </code></pre></div>
+<p>We can use other public servers such as:</p>
+
+<p><a href="https://pgp.key-server.io/">public pgp-key server</a></p>
+
+<p><a href="https://pgp.mit.edu/">mit public pgp-key server</a></p>
+
+<p><a href="http://keyserver.ubuntu.com/">ubuntu keyserver</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --send-keys --keyserver https://pgp.key-server.io/ 141839E8065C95F48E8DC329F87816F5B769CD83
+gpg: enviando clave F87816F5B769CD83 a https://pgp.key-server.io/
+root@kali:~# </code></pre></div>
+<h2 id="searching-our-public-key">Searching our public key</h2>
+
+<p>Other people who get the fingerprint of our key can find it now. But we need to add a UID to the key data so that third parties can import it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">t@kali:~# gpg --search 141839E8065C95F48E8DC329F87816F5B769CD83
+gpg: data source: https://keys.openpgp.org:443
+<span class="o">(</span><span class="m">1</span><span class="o">)</span>       <span class="m">4096</span> bit RSA key F87816F5B769CD83
+Keys <span class="m">1</span>-1 of <span class="m">1</span> <span class="k">for</span> <span class="s2">&#34;141839E8065C95F48E8DC329F87816F5B769CD83&#34;</span>.  Introduzca número<span class="o">(</span>s<span class="o">)</span>, O<span class="o">)</span>tro, o F<span class="o">)</span>in &gt; f
+root@kali:~# </code></pre></div>
+<h1 id="add-the-email-uid-to-our-key">Add the email UID to our key</h1>
+
+<p>Associate our key to our email is done by the key server by sending us an email to the account listed in the key.</p>
+
+<h2 id="key-search-without-uid">Key search without UID</h2>
+
+<p>If we search our key, without the email being verified, we will only see the fingerprint of the key. If a key has no associated UID, it cannot be imported by other users.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --search 141839E8065C95F48E8DC329F87816F5B769CD83                                                                                            
+gpg: data source: https://keys.openpgp.org:443                                                                                                                
+<span class="o">(</span><span class="m">1</span><span class="o">)</span>       <span class="m">4096</span> bit RSA key F87816F5B769CD83                                                                                                                   
+Keys <span class="m">1</span>-1 of <span class="m">1</span> <span class="k">for</span> <span class="s2">&#34;141839E8065C95F48E8DC329F87816F5B769CD83&#34;</span>.  Introduzca número<span class="o">(</span>s<span class="o">)</span>, O<span class="o">)</span>tro, o F<span class="o">)</span>in &gt; f    </code></pre></div>
+<h2 id="email-verification">Email verification</h2>
+
+<p>Received mail from openpgp.org</p>
+
+<pre><code>Your key upload on keys.openpgp.org
+keyserver@keys.openpgp.org 
+ Hi,
+
+this is an automated message from keys.openpgp.org. If you didn't upload your key there, please ignore this message.
+
+OpenPGP key: 141839E8065C95F48E8DC329F87816F5B769CD83
+
+This key was just uploaded for the first time, and is now published without identity information. If you want to allow others to find this key by e-mail address, please follow this link:
+--- skipped ---
+</code></pre>
+
+<h2 id="key-search-with-uid">Key search with UID</h2>
+
+<p>Once the key server has verified the email, it will be associated with the key and we can also search the key by the associated email.
+In electrónic signature environments, apart from the fact that the keys are created by a certificate autority, the user is identified in person from theyr document ID to certify that the keys are given to the right person.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --search 141839E8065C95F48E8DC329F87816F5B769CD83
+gpg: data source: https://keys.openpgp.org:443
+<span class="o">(</span><span class="m">1</span><span class="o">)</span>     Viel Losero &lt;viel.losero@gmail.com&gt;
+          <span class="m">4096</span> bit RSA key F87816F5B769CD83, creado: <span class="m">2019</span>-10-17
+Keys <span class="m">1</span>-1 of <span class="m">1</span> <span class="k">for</span> <span class="s2">&#34;141839E8065C95F48E8DC329F87816F5B769CD83&#34;</span>.  Introduzca número<span class="o">(</span>s<span class="o">)</span>, O<span class="o">)</span>tro, o F<span class="o">)</span>in &gt; 
+root@kali:~# 
+root@kali:~# gpg --search viel.losero@gmail.com
+gpg: data source: https://keys.openpgp.org:443
+<span class="o">(</span><span class="m">1</span><span class="o">)</span>     Viel Losero &lt;viel.losero@gmail.com&gt;
+          <span class="m">4096</span> bit RSA key F87816F5B769CD83, creado: <span class="m">2019</span>-10-17
+Keys <span class="m">1</span>-1 of <span class="m">1</span> <span class="k">for</span> <span class="s2">&#34;viel.losero@gmail.com&#34;</span>.  Introduzca número<span class="o">(</span>s<span class="o">)</span>, O<span class="o">)</span>tro, o F<span class="o">)</span>in &gt;</code></pre></div>
+<h1 id="working-with-files">Working with files</h1>
+
+<p>Once the keys are done, we can encrypt our own files to save them securely, decrypt files sent to us by third parties or sign files, as we will see below.</p>
+
+<h2 id="file-encryption">File encryption</h2>
+
+<p>Encryption of files with asymmetric encryption is not the main function of GPG. The best way to to save encrypted files is with symmetric encryption that is faster. If we use asimetric encryptation when we encrypt a message for ourselves, our public key is used as if we were a third party. Then only with our private key can we decrypt and read it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# <span class="nb">echo</span> <span class="s2">&#34;mensaje de prueba&#34;</span> &gt; test.txt
+root@kali:~# gpg --encrypt --sign --armor -r viel.losero@gmail.com test.txt
+
+-- prompted <span class="k">for</span> passphrase
+
+root@kali:~# cat test.txt.asc 
+-----BEGIN PGP MESSAGE-----
+
+hQIMAymOXBWhtoQCAQ/+NY9q6IU0NTaLAboT3l3q9CCrKgdLw8ayWiPY9MFNSTa3
+4LTV3sYK1tHlmV8R4yBxPze72nSR0veBPbb5f+CKUbZAAyjbnDZnr9PpMrCsPgPm
+--- skipped <span class="k">for</span> security reasons --- 
+eM0sta/1VdsCO5yHm694EIgihp0Alpo/MVj0JxhxH0PSxnZs5i6kau1e9b/ViGDO
+y5CY55rdnFCmQb+xJbjdjoqxlC/gySk1I5n2EB6rBe+pY5WBXk1E+tNxZtFHfwMV
+<span class="nv">R9p5g9t19Vi7D0bT1M6Oj9a8gDs4g8t00R1kHpk1VEYDYZyJHnJkx9p74Qde</span>
+<span class="o">=</span>AIh5
+-----END PGP MESSAGE-----
+root@kali:~# </code></pre></div>
+<h2 id="file-decryption">File decryption</h2>
+
+<p>File decryption is one of the main functions of asymmetric encryption. Third parties with our public key will be able to encrypt messages for us. These messages can only be decrypted and read with our private key.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --output test.txt.dec --decrypt test.txt.asc                                                                                                 
+gpg: cifrado con clave de <span class="m">4096</span> bits RSA, ID 298E5C15A1B68402, creada el <span class="m">2019</span>-10-17                                                                            
+      <span class="s2">&#34;Viel Losero &lt;viel.losero@gmail.com&gt;&#34;</span>                                                                                                                   
+gpg: Firmado el jue <span class="m">17</span> oct <span class="m">2019</span> <span class="m">17</span>:50:32 CEST                                                                                                                 
+gpg:                usando RSA clave 141839E8065C95F48E8DC329F87816F5B769CD83                                                                                 
+gpg: Firma correcta de <span class="s2">&#34;Viel Losero &lt;viel.losero@gmail.com&gt;&#34;</span> <span class="o">[</span>absoluta<span class="o">]</span>                                                                                       
+root@kali:~# ls -la test.txt*
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">18</span> oct <span class="m">17</span> <span class="m">17</span>:49 test.txt
+-rw-r--r-- <span class="m">1</span> root root <span class="m">1686</span> oct <span class="m">17</span> <span class="m">17</span>:50 test.txt.asc
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">18</span> oct <span class="m">17</span> <span class="m">17</span>:51 test.txt.dec
+root@kali:~# 
+root@kali:~# cat test.txt.dec 
+mensaje de prueba
+root@kali:~# </code></pre></div>
+<h2 id="file-signing">File signing</h2>
+
+<p>File signing is also one of the main functions of asymmetric encryption. In electronic signature environments, when the keys are created by a certified autority and a user signs a document, they give authentication, integrity and non-repudiation.</p>
+
+<p>In our case, as we will see later, when we associate the email with the public key, our key can only prove that the person who signs or decrypts the files is the owner of the associated email account.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --clear-sign  -o test.txt.clear test.txt
+root@kali:~# ls -la test.txt*
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">18</span> oct <span class="m">17</span> <span class="m">18</span>:09 test.txt
+-rw-r--r-- <span class="m">1</span> root root <span class="m">900</span> oct <span class="m">17</span> <span class="m">18</span>:10 test.txt.asc
+-rw-r--r-- <span class="m">1</span> root root <span class="m">900</span> oct <span class="m">17</span> <span class="m">18</span>:13 test.txt.clear
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">18</span> oct <span class="m">17</span> <span class="m">17</span>:51 test.txt.dec
+root@kali:~# </code></pre></div>
+<h2 id="signature-verification">Signature verification</h2>
+
+<p>Verifying a signed message is relatively simple. The message comes in clear text and with a simple ** cat ** we can see it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --verify test.txt.clear 
+gpg: Firmado el jue <span class="m">17</span> oct <span class="m">2019</span> <span class="m">18</span>:13:08 CEST
+gpg:                usando RSA clave 141839E8065C95F48E8DC329F87816F5B769CD83
+gpg: Firma correcta de <span class="s2">&#34;Viel Losero &lt;viel.losero@gmail.com&gt;&#34;</span> <span class="o">[</span>absoluta<span class="o">]</span>
+root@kali:~# 
+root@kali:~# cat test.txt.clear 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+mensaje de prueba
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEFBg56AZclfSOjcMp+HgW9bdpzYMFAl2q6rEACgkQ+HgW9bdp
+zYPnShAAlh9MX5EZHyXZ3oxLntIthfmJ7dTMnYzNxnaMT5FTvUKjyq0joXuoKnYx
+--- skipped <span class="k">for</span> security reasons --- 
+jbcm0Iz4Vb1WicAo2ARTYKfRXroSZQlqQVZONzbYBEtypEJ6qKmk82/FUifuhTXK
+<span class="nv">mUfdrdAoRTBL6QDYHPfR3bjXYHcgwyEPxrruIsNhpHk8Uiqeoaw</span><span class="o">=</span>
+<span class="o">=</span>mhz2
+-----END PGP SIGNATURE-----</code></pre></div>
+<h1 id="third-parties">Third parties</h1>
+
+<p>Sending encrypted emails to third parties securely is relatively easy with GPG. In this section we will use the purism CEO&rsquo;s public key only to perform a test but we will not send the file by email.</p>
+
+<h2 id="importing-third-party-s-public-keys">Importing third-party’s public keys</h2>
+
+<p>If a key does not have an associated UID we cannot import it correctly, luckily we can check other servers to see if the key have an associated email UID.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --search B8CAACEAD94930F123C4642C23CF2E3D254514F7
+gpg: data source: https://keys.openpgp.org:443
+<span class="o">(</span><span class="m">1</span><span class="o">)</span>       <span class="m">4096</span> bit RSA key 23CF2E3D254514F7
+Keys <span class="m">1</span>-1 of <span class="m">1</span> <span class="k">for</span> <span class="s2">&#34;B8CAACEAD94930F123C4642C23CF2E3D254514F7&#34;</span>.  Introduzca número<span class="o">(</span>s<span class="o">)</span>, O<span class="o">)</span>tro, o F<span class="o">)</span>in &gt; f
+root@kali:~# 
+root@kali:~# gpg --recv-keys B8CAACEAD94930F123C4642C23CF2E3D254514F7
+gpg: key 23CF2E3D254514F7: new key but contains no user ID - skipped
+gpg: Cantidad total procesada: <span class="m">1</span>
+gpg:           sin identificador: <span class="m">1</span>
+root@kali:~# 
+root@kali:~# gpg --search --keyserver hkps://keyserver.ubuntu.com  B8CAACEAD94930F123C4642C23CF2E3D254514F7 
+gpg: data source: https://162.213.33.8:443
+<span class="o">(</span><span class="m">1</span><span class="o">)</span>     Todd Weaver &lt;todd@puri.sm&gt;
+        Todd Weaver &lt;ceo@puri.sm&gt;
+          <span class="m">4096</span> bit RSA key 23CF2E3D254514F7, creado: <span class="m">2014</span>-12-05
+Keys <span class="m">1</span>-1 of <span class="m">1</span> <span class="k">for</span> <span class="s2">&#34;B8CAACEAD94930F123C4642C23CF2E3D254514F7&#34;</span>.  Introduzca número<span class="o">(</span>s<span class="o">)</span>, O<span class="o">)</span>tro, o F<span class="o">)</span>in &gt; f
+root@kali:~# 
+root@kali:~# gpg --recv-keys --keyserver hkps://keyserver.ubuntu.com  B8CAACEAD94930F123C4642C23CF2E3D254514F7 
+gpg: clave 23CF2E3D254514F7: clave pública <span class="s2">&#34;Todd Weaver &lt;todd@puri.sm&gt;&#34;</span> importada
+gpg: Cantidad total procesada: <span class="m">1</span>
+gpg:               importadas: <span class="m">1</span>
+root@kali:~# </code></pre></div>
+<h2 id="sending-encrypted-message">Sending encrypted message</h2>
+
+<p>Once we have the public key of the person with we want to communicate safely, we can encrypt a message for that person who can only read with his private key.</p>
+
+<p>The warning message that comes out is because we still have not signed the recipient&rsquo;s public key.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg -r B8CAACEAD94930F123C4642C23CF2E3D254514F7 --encrypt test.txt                                                                               
+gpg: 7F609032678C8047: No hay seguridad de que esta clave pertenezca realmente                                                                                
+al usuario que se nombra
+
+sub  rsa4096/7F609032678C8047 <span class="m">2014</span>-12-05 Todd Weaver &lt;todd@puri.sm&gt;
+ Huella clave primaria: B8CA ACEA D949 30F1 23C4  642C 23CF 2E3D <span class="m">2545</span> 14F7
+      Huella de subclave: 4D32 522D BE68 B6B5 31B9  26A2 7F60 <span class="m">9032</span> 678C <span class="m">8047</span>
+
+No es seguro que la clave pertenezca a la persona que se nombra en el
+identificador de usuario. Si *realmente* sabe lo que está haciendo,
+puede contestar sí a la siguiente pregunta.
+
+¿Usar esta clave de todas formas? <span class="o">(</span>s/N<span class="o">)</span> s</code></pre></div>
+<h3 id="testing-decryption">Testing decryption</h3>
+
+<p>No comments here xd.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg test.txt.gpg 
+gpg: ADVERTENCIA: no se ha proporcionado ninguna orden. Intentando adivinar lo que quieres...
+gpg: cifrado con clave de <span class="m">4096</span> bits RSA, ID 7F609032678C8047, creada el <span class="m">2014</span>-12-05
+      <span class="s2">&#34;Todd Weaver &lt;todd@puri.sm&gt;&#34;</span>
+gpg: descifrado fallido: No secret key
+root@kali:~# </code></pre></div>
+<h2 id="signing-third-party-keys">Signing third party keys</h2>
+
+<p>When we trust that a public key really belongs to the indicated person we can sign that key to trust in it.
+We can see how before signing the public key in the list of public keys it comes out as unknown.</p>
+
+<h3 id="key-list">Key List</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --list-keys                                                                                                                                  
+/root/.gnupg/pubring.kbx                                                                                                                                      
+------------------------                                                                                                                                      
+pub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>SC<span class="o">]</span>                                                                                                                                 
+      141839E8065C95F48E8DC329F87816F5B769CD83                                                                                                                
+uid        <span class="o">[</span>  absoluta <span class="o">]</span> Viel Losero &lt;viel.losero@gmail.com&gt;                                                                                                  
+sub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>E<span class="o">]</span>                                                                                                                                  
+                                                                                                                                                              
+pub   rsa4096 <span class="m">2014</span>-12-05 <span class="o">[</span>SC<span class="o">]</span>                                                                                                                                 
+      B8CAACEAD94930F123C4642C23CF2E3D254514F7                                                                                                                
+uid        <span class="o">[</span>desconocida<span class="o">]</span> Todd Weaver &lt;todd@puri.sm&gt;                                                                                                           
+uid        <span class="o">[</span>desconocida<span class="o">]</span> Todd Weaver &lt;ceo@puri.sm&gt;                                                                                                            
+uid        <span class="o">[</span>desconocida<span class="o">]</span> <span class="o">[</span>jpeg image of size <span class="m">3931</span><span class="o">]</span>                                                                                                            
+sub   rsa4096 <span class="m">2014</span>-12-05 <span class="o">[</span>E<span class="o">]</span>                                                                                                                                  </code></pre></div>
+<h3 id="signing-public-key">Signing public key</h3>
+
+<p>We have to be sure that the fingerprint of the key is correct and belongs to the right person. Once we are sure we can sign your public key to trust on it and not give us notices about.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --sign-key B8CAACEAD94930F123C4642C23CF2E3D254514F7                                                                                          
+                                                                                                                                                              
+pub  rsa4096/23CF2E3D254514F7                                                                                                                                 
+     creado: <span class="m">2014</span>-12-05  caduca: nunca       uso: SC                                                                                                          
+     confianza: desconocido   validez: desconocido                                                                                                            
+sub  rsa4096/7F609032678C8047                                                                                                                                 
+     creado: <span class="m">2014</span>-12-05  caduca: nunca       uso: E                                                                                                           
+<span class="o">[</span>desconocida<span class="o">]</span> <span class="o">(</span><span class="m">1</span><span class="o">)</span>. Todd Weaver &lt;todd@puri.sm&gt;                                                                                                                 
+<span class="o">[</span>desconocida<span class="o">]</span> <span class="o">(</span><span class="m">2</span><span class="o">)</span>  Todd Weaver &lt;ceo@puri.sm&gt;                                                                                                                  
+<span class="o">[</span>desconocida<span class="o">]</span> <span class="o">(</span><span class="m">3</span><span class="o">)</span>  <span class="o">[</span>jpeg image of size <span class="m">3931</span><span class="o">]</span>
+
+¿Firmar realmente todos los IDs de usuario? <span class="o">(</span>s/N<span class="o">)</span> s
+
+pub  rsa4096/23CF2E3D254514F7
+     creado: <span class="m">2014</span>-12-05  caduca: nunca       uso: SC  
+     confianza: desconocido   validez: desconocido
+ Huella clave primaria: B8CA ACEA D949 30F1 23C4  642C 23CF 2E3D <span class="m">2545</span> 14F7
+
+     Todd Weaver &lt;todd@puri.sm&gt;
+     Todd Weaver &lt;ceo@puri.sm&gt;
+     <span class="o">[</span>jpeg image of size <span class="m">3931</span><span class="o">]</span>
+
+¿Está realmente seguro de querer firmar esta clave
+con su clave: <span class="s2">&#34;Viel Losero &lt;viel.losero@gmail.com&gt;&#34;</span> <span class="o">(</span>F87816F5B769CD83<span class="o">)</span>?
+
+¿Firmar de verdad? <span class="o">(</span>s/N<span class="o">)</span> s</code></pre></div>
+<h3 id="trust-in-third-party-s-public-keys">Trust in third-party’s public keys</h3>
+
+<p>We can see how once the public key of another person is signed and added to our ring is listed with total confidence.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --list-keys
+gpg: comprobando base de datos de confianza
+gpg: marginals needed: <span class="m">3</span>  completes needed: <span class="m">1</span>  trust model: pgp
+gpg: nivel: <span class="m">0</span>  validez:   <span class="m">1</span>  firmada:   <span class="m">1</span>  confianza: <span class="m">0</span>-, 0q, 0n, 0m, 0f, 1u
+gpg: nivel: <span class="m">1</span>  validez:   <span class="m">1</span>  firmada:   <span class="m">0</span>  confianza: <span class="m">1</span>-, 0q, 0n, 0m, 0f, 0u
+/root/.gnupg/pubring.kbx
+------------------------
+pub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>SC<span class="o">]</span>
+      141839E8065C95F48E8DC329F87816F5B769CD83
+uid        <span class="o">[</span>  absoluta <span class="o">]</span> Viel Losero &lt;viel.losero@gmail.com&gt;
+sub   rsa4096 <span class="m">2019</span>-10-17 <span class="o">[</span>E<span class="o">]</span>
+
+pub   rsa4096 <span class="m">2014</span>-12-05 <span class="o">[</span>SC<span class="o">]</span>
+      B8CAACEAD94930F123C4642C23CF2E3D254514F7
+uid        <span class="o">[</span>   total   <span class="o">]</span> Todd Weaver &lt;todd@puri.sm&gt;
+uid        <span class="o">[</span>   total   <span class="o">]</span> Todd Weaver &lt;ceo@puri.sm&gt;
+uid        <span class="o">[</span>   total   <span class="o">]</span> <span class="o">[</span>jpeg image of size <span class="m">3931</span><span class="o">]</span>
+sub   rsa4096 <span class="m">2014</span>-12-05 <span class="o">[</span>E<span class="o">]</span>
+
+root@kali:~# </code></pre></div>
+<h3 id="message-signing-and-encryption-using-the-mail-uid">Message signing and encryption using the mail UID</h3>
+
+<p>To work more comfortably with keys and not have to be copy paste fingerprints, we can encrypt messages using the UID of the key.</p>
+
+<p>We can also sign our message and encrypt it before sending to the destination. the person who receive it will may verify the signature.</p>
+
+<p>IMPORTANT! Before sending or receiving a message, we have to verify that the third party&rsquo;s key is not revoked.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg  -r ceo@puri.sm -u viel@losero@gmail.com --encrypt test.txt                                                                                  
+El fichero <span class="s1">&#39;test.txt.gpg&#39;</span> ya existe. ¿Sobreescribir? <span class="o">(</span>s/N<span class="o">)</span> s                                                                                                  
+root@kali:~# ls -la test.txt*                                                                                                                                 
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">18</span> oct <span class="m">17</span> <span class="m">18</span>:09 test.txt                                                                                                              
+-rw-r--r-- <span class="m">1</span> root root <span class="m">900</span> oct <span class="m">17</span> <span class="m">18</span>:10 test.txt.asc                                                                                                          
+-rw-r--r-- <span class="m">1</span> root root <span class="m">900</span> oct <span class="m">19</span> <span class="m">12</span>:51 test.txt.clear                                                                                                        
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">18</span> oct <span class="m">17</span> <span class="m">17</span>:51 test.txt.dec                                                                                                          
+-rw-r--r-- <span class="m">1</span> root root <span class="m">566</span> oct <span class="m">17</span> <span class="m">18</span>:16 test.txt.dtc                                                                                                          
+-rw-r--r-- <span class="m">1</span> root root <span class="m">614</span> oct <span class="m">19</span> <span class="m">19</span>:05 test.txt.gpg    
+root@kali:~# </code></pre></div>
+<h1 id="management-gpg-keys">Management GPG Keys</h1>
+
+<p>One of the most important parts of gpg is the management of our private keys, revocation certificates and updating the key ring.</p>
+
+<h2 id="update-and-verification-third-party-s-keys">Update and verification third party&rsquo;s keys</h2>
+
+<p>Before sending a message or verifying the validity of the signature of a third party it is good to regularly update our key ring to be able to consult possible revoked certificates. We can update adding it to the CRON or manually.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --refresh-keys
+gpg: renovando <span class="m">2</span> claves desde hkps://keys.openpgp.org
+gpg: clave 23CF2E3D254514F7: <span class="s2">&#34;Todd Weaver &lt;todd@puri.sm&gt;&#34;</span> sin cambios
+gpg: clave F87816F5B769CD83: <span class="s2">&#34;Viel Losero &lt;viel.losero@gmail.com&gt;&#34;</span> sin cambios
+gpg: Cantidad total procesada: <span class="m">2</span>
+gpg:              sin cambios: <span class="m">2</span>
+root@kali:~# </code></pre></div>
+<h2 id="create-the-revocation-file">Create the revocation file</h2>
+
+<p>Good practices suggest storing the revocation certificate of the public key and a backup copy of the private key on a USB or external device write protected and in a safe place. If the certificate is compromised or we lose it, we can revoke from the backup.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# gpg --output viel.losero@gmail.com-revocation.crt --gen-revoke viel.losero@gmail.com
+
+sec  rsa4096/F87816F5B769CD83 <span class="m">2019</span>-10-17 Viel Losero &lt;viel.losero@gmail.com&gt;
+
+¿Crear un certificado de revocación para esta clave? <span class="o">(</span>s/N<span class="o">)</span> s
+Por favor elija una razón para la revocación:
+  <span class="nv">0</span> <span class="o">=</span> No se dio ninguna razón
+  <span class="nv">1</span> <span class="o">=</span> La clave ha sido comprometida
+  <span class="nv">2</span> <span class="o">=</span> La clave ha sido reemplazada
+  <span class="nv">3</span> <span class="o">=</span> La clave ya no está en uso
+  <span class="nv">Q</span> <span class="o">=</span> Cancelar
+<span class="o">(</span>Probablemente quería seleccionar <span class="m">1</span> aquí<span class="o">)</span>
+¿Su decisión? <span class="m">0</span>
+Introduzca una descripción opcional<span class="p">;</span> acábela con una línea vacía:
+&gt; Initial Rebocation Backup
+&gt; 
+Razón para la revocación: No se dio ninguna razón
+Initial Rebocation Backup
+¿Es correcto? <span class="o">(</span>s/N<span class="o">)</span> s
+se fuerza salida con armadura ASCII.
+Certificado de revocación creado.
+
+Por favor consérvelo en un medio que pueda esconder<span class="p">;</span> si alguien consigue
+acceso a este certificado puede usarlo para inutilizar su clave.
+Es inteligente imprimir este certificado y guardarlo en otro lugar, por
+si acaso su medio resulta imposible de leer. Pero precaución: ¡el sistema
+de impresión de su máquina podría almacenar los datos y hacerlos accesibles
+a otras personas!
+root@kali:~# </code></pre></div>
+<h2 id="encrypt-the-certificate-revocation-file">Encrypt the certificate revocation file</h2>
+
+<p>We will use the gpg itself with symetric encryption to encrypt the certificate revocation.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/.gnupg# gpg -c viel.losero@gmail.com-revocation.crt                                                                                          
+root@kali:~/data/.gnupg# ls -la                                                                                                                               
+total <span class="m">28</span>                                                                                                                                                      
+drwx------  <span class="m">4</span> root root  <span class="m">249</span> oct <span class="m">19</span> <span class="m">19</span>:49 .                                                                                                                   
+drwxr-xr-x <span class="m">29</span> root root <span class="m">4096</span> oct <span class="m">17</span> <span class="m">16</span>:21 ..                                                                                                                  
+drwx------  <span class="m">2</span> root root   <span class="m">58</span> oct <span class="m">17</span> <span class="m">16</span>:21 openpgp-revocs.d                                                                                                    
+drwx------  <span class="m">2</span> root root  <span class="m">110</span> oct <span class="m">17</span> <span class="m">16</span>:21 private-keys-v1.d                                                                                                   
+-rw-r--r--  <span class="m">1</span> root root <span class="m">2477</span> oct <span class="m">17</span> <span class="m">16</span>:21 pubring.kbx                                                                                                         
+-rw-------  <span class="m">1</span> root root   <span class="m">32</span> oct <span class="m">17</span> <span class="m">16</span>:21 pubring.kbx~                                                                                                        
+-rw-------  <span class="m">1</span> root root <span class="m">1280</span> oct <span class="m">17</span> <span class="m">16</span>:21 trustdb.gpg                                                                                                         
+-rw-r--r--  <span class="m">1</span> root root <span class="m">3134</span> oct <span class="m">17</span> <span class="m">16</span>:27 viel.losero@gmail.com-public-key.gpg                                                                                
+-rw-------  <span class="m">1</span> root root  <span class="m">926</span> oct <span class="m">19</span> <span class="m">19</span>:39 viel.losero@gmail.com-revocation.crt                                                                                
+-rw-r--r--  <span class="m">1</span> root root  <span class="m">829</span> oct <span class="m">19</span> <span class="m">19</span>:49 viel.losero@gmail.com-revocation.crt.gpg  </code></pre></div>
+<p>Now we can delete the certificate revocation file with <a href="https://linux.die.net/man/1/wipe">wipe</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/.gnupg# wipe viel.losero@gmail.com-revocation.crt
+Okay to WIPE <span class="m">1</span> regular file ? <span class="o">(</span>Yes/No<span class="o">)</span> yes
+Wiping viel.losero@gmail.com-revocation, pass <span class="m">34</span> <span class="o">(</span><span class="m">34</span><span class="o">)</span>   
+Operation finished.                                                           
+<span class="m">1</span> file wiped and <span class="m">0</span> special files ignored in <span class="m">0</span> directories, <span class="m">0</span> symlinks removed but not followed, <span class="m">0</span> errors occurred.
+root@kali:~/data/.gnupg# </code></pre></div>
+<p>And change the new encrypted certificate revocation file permissions to read only.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/.gnupg# chmod <span class="m">400</span> viel.losero@gmail.com-revocation.crt.gpg 
+root@kali:~/data/.gnupg# ls -la
+total <span class="m">24</span>
+drwx------  <span class="m">4</span> root root  <span class="m">205</span> oct <span class="m">19</span> <span class="m">19</span>:51 .
+drwxr-xr-x <span class="m">29</span> root root <span class="m">4096</span> oct <span class="m">17</span> <span class="m">16</span>:21 ..
+drwx------  <span class="m">2</span> root root   <span class="m">58</span> oct <span class="m">17</span> <span class="m">16</span>:21 openpgp-revocs.d
+drwx------  <span class="m">2</span> root root  <span class="m">110</span> oct <span class="m">17</span> <span class="m">16</span>:21 private-keys-v1.d
+-rw-r--r--  <span class="m">1</span> root root <span class="m">2477</span> oct <span class="m">17</span> <span class="m">16</span>:21 pubring.kbx
+-rw-------  <span class="m">1</span> root root   <span class="m">32</span> oct <span class="m">17</span> <span class="m">16</span>:21 pubring.kbx~
+-rw-------  <span class="m">1</span> root root <span class="m">1280</span> oct <span class="m">17</span> <span class="m">16</span>:21 trustdb.gpg
+-rw-r--r--  <span class="m">1</span> root root <span class="m">3134</span> oct <span class="m">17</span> <span class="m">16</span>:27 viel.losero@gmail.com-public-key.gpg
+-r--------  <span class="m">1</span> root root  <span class="m">829</span> oct <span class="m">19</span> <span class="m">19</span>:49 viel.losero@gmail.com-revocation.crt.gpg
+root@kali:~/data/.gnupg# </code></pre></div>
+<p>Now it only remains to copy the files on an external device.</p>
+
+<p><a href="#" class="back">back</a></p>
+
+<p>References:</p>
+
+<p><a href="https://es.wikipedia.org/wiki/GNU_Privacy_Guard">GNU_Privacy_Guard</a></p>
+
+<p><a href="https://www.gnupg.org/gph/en/manual.html">Manual gnupg.org</a></p>
+
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages">How to use GPG </a></p>
+
+<p><a href="https://puri.sm/about/team/">Purism Core Team</a></p>
+
+<p>License: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+	Send your coments here --> 
+	<a href="https://twitter.com/VLosero">[Twitter]</a>
+	<a href="https://github.com/VielLosero">[Git]</a>
+	<a href="mailto:viel.losero@gmail.com">[Email]</a>
+	&lt;-- Envia tus comentarios aquí
+	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
+	<p>Copyright © 2019 Viel Losero</p>
+	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+</footer>
+</body>
+</html>

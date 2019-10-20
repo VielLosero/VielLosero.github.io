@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Viel Losero&#39;s Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
-    <lastBuildDate>Tue, 15 Oct 2019 12:22:20 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 18 Oct 2019 10:06:06 +0200</lastBuildDate>
     
 	<atom:link href="/en/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Using GPG: Gnu Privacy Guard.</title>
+      <link>/en/posts/4-create-a-gpg-key/</link>
+      <pubDate>Fri, 18 Oct 2019 10:06:06 +0200</pubDate>
+      
+      <guid>/en/posts/4-create-a-gpg-key/</guid>
+      <description>Creation of public and private keys To create the GPG keys we can use **gpg &amp;ndash;generate-key ** or **gpg &amp;ndash;full-generate-key ** the first command will create the keys without asking other options than necessary. If we want more control over some options such as size or validity period we will use **gpg &amp;ndash;full-generate-key **.
+The size of the key is related to its security but also to the performance since it has to process with larger numbers.</description>
+    </item>
     
     <item>
       <title>Hugo Static site generator: Script to generate the initial configuration.</title>

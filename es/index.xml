@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Uso de GPG: Gnu Privacy Guard.</title>
+      <link>/es/posts/4-create-a-gpg-key/</link>
+      <pubDate>Fri, 18 Oct 2019 10:06:06 +0200</pubDate>
+      
+      <guid>/es/posts/4-create-a-gpg-key/</guid>
+      <description>Creación de las claves publica y privada Para crear las claves GPG podemos utilizar gpg &amp;ndash;generate-key o gpg &amp;ndash;full-generate-key el primer comando nos creará las claves sin preguntarnos otras opciones más que las necesarias. Si queremos un poco mas de control sobre algunas opciones como el tamaño o el periodo de validez usaremos gpg &amp;ndash;full-generate-key.
+El tamaño de la clave va relacionado con su seguridad pero también con el rendimiento ya que ha de procesar con números mas largos.</description>
+    </item>
+    
+    <item>
       <title>Hugo generador de páginas web estáticas: Script para generar la configuración inicial.</title>
       <link>/es/posts/3-hugo-script-basic-site/</link>
       <pubDate>Tue, 15 Oct 2019 12:22:20 +0200</pubDate>
@@ -49,7 +59,8 @@ Una vez creada la cuenta github, añadida la clave ssh para la gestión remota y
       <guid>/es/contacto/</guid>
       <description>Email: viel.losero@gmail.com
 Twitter: @VLosero
-GitHub: VielLosero</description>
+GitHub: VielLosero
+PGP: 1418 39E8 065C 95F4 8E8D C329 F878 16F5 B769 CD83</description>
     </item>
     
     <item>

@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Pagina Web de Viel Losero</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
-    <lastBuildDate>Tue, 15 Oct 2019 12:22:20 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 18 Oct 2019 10:06:06 +0200</lastBuildDate>
     
 	<atom:link href="/es/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Uso de GPG: Gnu Privacy Guard.</title>
+      <link>/es/posts/4-create-a-gpg-key/</link>
+      <pubDate>Fri, 18 Oct 2019 10:06:06 +0200</pubDate>
+      
+      <guid>/es/posts/4-create-a-gpg-key/</guid>
+      <description>Creación de las claves publica y privada Para crear las claves GPG podemos utilizar gpg &amp;ndash;generate-key o gpg &amp;ndash;full-generate-key el primer comando nos creará las claves sin preguntarnos otras opciones más que las necesarias. Si queremos un poco mas de control sobre algunas opciones como el tamaño o el periodo de validez usaremos gpg &amp;ndash;full-generate-key.
+El tamaño de la clave va relacionado con su seguridad pero también con el rendimiento ya que ha de procesar con números mas largos.</description>
+    </item>
     
     <item>
       <title>Hugo generador de páginas web estáticas: Script para generar la configuración inicial.</title>
