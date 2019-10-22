@@ -12,6 +12,22 @@
     
     
     <item>
+      <title>Apoyo</title>
+      <link>/es/support/</link>
+      <pubDate>Mon, 21 Oct 2019 10:47:14 +0200</pubDate>
+      
+      <guid>/es/support/</guid>
+      <description>Cracias por tu apoyo.
+Hay muchas maneras en las que puedes apoyar:
+ Ayuda simplemente con un link o un retweet a los articulos.
+ Comparte información de este sitio con otros, corre la voz.
+ Si quieres ayudar a este sitio con una donación esta es la dirección Bitcoin:
+1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq
+Todas las donaciones son apreciadas!
+  </description>
+    </item>
+    
+    <item>
       <title>Uso de GPG: Gnu Privacy Guard.</title>
       <link>/es/posts/4-create-a-gpg-key/</link>
       <pubDate>Fri, 18 Oct 2019 10:06:06 +0200</pubDate>
@@ -36,8 +52,12 @@ El tamaño de la clave va relacionado con su seguridad pero también con el rend
       <pubDate>Sat, 12 Oct 2019 10:15:39 +0200</pubDate>
       
       <guid>/es/acerca/</guid>
-      <description>Viel Losero es un seudonimo. Si puedes encontrarme a lo mejor puedas contratrme.
-Si tienes algun comentario o necesitas ayuda con algun problema informático no dudes en contactarme.</description>
+      <description>Viel Losero es un seudonimo. Si puedes encontrarme a lo mejor puedas contratarme.
+Por qué un seudónimo? Muchos sitios web de buena reputación, investigadores y expertos en seguridad utilizan un &amp;ldquo;seudónimo&amp;rdquo; para proteger su seguridad y privacidad.
+Mis reglas: (se conocen como VLR: del inglés Viel Losero Rules o Reglas KiKoDoCo).
+ Mantenlo simple, independiente, honesto, seguro y gratuito.
+ Mantenlo fuera de anuncios, rastreadores, patrocinadores, &amp;hellip;
+ Se totalmente transparente, usa las mejores prácticas, no rastrees, haz hacking ético &amp;hellip;</description>
     </item>
     
     <item>

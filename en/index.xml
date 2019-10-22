@@ -12,6 +12,22 @@
     
     
     <item>
+      <title>Support</title>
+      <link>/en/support/</link>
+      <pubDate>Mon, 21 Oct 2019 10:47:14 +0200</pubDate>
+      
+      <guid>/en/support/</guid>
+      <description>Thank you for yout support.
+There are mani ways you can support:
+ Help simply with a link or retweet to the articles.
+ Share information on this site with others, spread the word.
+ If you want to support this site with a donation, here is our Bitcoin address:
+1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq
+All donations are appreciated!
+  </description>
+    </item>
+    
+    <item>
       <title>Using GPG: Gnu Privacy Guard.</title>
       <link>/en/posts/4-create-a-gpg-key/</link>
       <pubDate>Fri, 18 Oct 2019 10:06:06 +0200</pubDate>
@@ -49,8 +65,12 @@ Once the github account has been created, the ssh key has been added for remote 
       <pubDate>Sat, 12 Oct 2019 18:03:16 +0200</pubDate>
       
       <guid>/en/about/</guid>
-      <description>Viel Losero is a pseudonym. If you can find me maybe you can hire me.
-If u have some feedback or need help with some computer problems, feel free to contact me.</description>
+      <description>Viel Losero is a pen name. If you can find me maybe you can hire me.
+Why a pen name? Many reputable websites, researchers, and security experts use a “pen name” to protect their safety and privacy.
+Mi rules:(Know as VLR - Viel Losero Rules or KiKoDoCo rules).
+ Keep it simply, independent, honest, secure and free.
+ Keep out ads, trackers, sponsors, &amp;hellip;
+ Do Full transparency, best practices, do not track, do ethical hacking &amp;hellip;</description>
     </item>
     
     <item>
