@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html><head>
+<title>Viel Losero - Firefox privacity: Configuration and script.</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="../../../css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="../../../"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item active" href="../../../en/posts/" title="">Posts</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/about/" title="">About</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/support/" title="">Support</a>
+		
+        </nav>        
+</div>
+</div>
+
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Firefox privacity: Configuration and script.</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Oct 24, 2019 - [ 840 Words ] 
+		
+		    
+		       - [ <a href="../../../es/posts/5-firefox-privacy/">es</a> ]
+		    
+                                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents">
+<ul>
+<li><a href="#setting">Setting.</a>
+<ul>
+<li><a href="#backup">Backup.</a></li>
+<li><a href="#starting-with-the-basics">Starting with the basics.</a></li>
+<li><a href="#configuring-user-js">Configuring user.js.</a></li>
+<li><a href="#result">Result</a>
+<ul>
+<li><a href="#privacy-tests">Privacy tests</a></li>
+<li><a href="#comparing-with-torbrowser">Comparing with torbrowser</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#automating">Automating.</a>
+<ul>
+<li><a href="#script-operation-summary">Script operation summary</a></li>
+<li><a href="#script-to-navigate-with-firefox-more-privately">Script to navigate with firefox more privately.</a></li>
+<li><a href="#what-remains-to-be-done">What remains to be done</a></li>
+</ul></li>
+</ul>
+</nav></p>
+		
+
+<h1 id="setting">Setting.</h1>
+
+<p>Today to navigate with a little of privacy we can:
+Use a text browser like <a href="https://en.wikipedia.org/wiki/Lynx_%28web_browser%29">linx</a> without features like java, videos, css, &hellip;, use <a href="https://support.torproject.org/en/tbb/">torbrowser</a>, or configure firefox to navigate as safely and privately as possible.</p>
+
+<h2 id="backup">Backup.</h2>
+
+<p>The first thing we have to do to avoid losing our data is a copy of our firefox profile, it is under the user directory.</p>
+
+<pre><code>~/.mozilla/firefox/xxxxxxxx.default 
+</code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# cp .mozilla/firefox/l50cihg0.default .mozilla/firefox/l50cihg0.default.bkp</code></pre></div>
+<p>We could also copy only the files that interest us as bookmarks or history.</p>
+
+<h2 id="starting-with-the-basics">Starting with the basics.</h2>
+
+<p>To raise our privacy when we browse, as our Arch Linux friends explain in <a href="https://wiki.archlinux.org/index.php/Firefox/Privacy">Firefox Privacy</a> and <a href="https://restoreprivacy.com/firefox-privacy/">restoreprivacy</a>, we will change the configuration in about:config or in the $home/.mozilla/firefox/$profile/prefs.js with the parameters:</p>
+
+<ul>
+<li>user_pref(&ldquo;browser.safebrowsing.malware.enabled&rdquo;, false);</li>
+<li>user_pref(&ldquo;browser.safebrowsing.phishing.enabled&rdquo;, false);</li>
+<li>user_pref(&ldquo;dom.event.clipboardevents.enabled&rdquo;, false);</li>
+<li>user_pref(&ldquo;geo.enabled&rdquo;, false);</li>
+<li>user_pref(&ldquo;media.eme.enabled&rdquo;, false);</li>
+<li>user_pref(&ldquo;media.navigator.enabled&rdquo;, false);</li>
+<li>user_pref(&ldquo;media.peerconnection.enabled&rdquo;, false);</li>
+<li>user_pref(&ldquo;network.cookie.cookieBehavior&rdquo;, 4);</li>
+<li>user_pref(&ldquo;network.cookie.lifetimePolicy&rdquo;, 2);</li>
+<li>user_pref(&ldquo;network.dns.disablePrefetch&rdquo;, true);</li>
+<li>user_pref(&ldquo;network.prefetch-next&rdquo;, false);</li>
+<li>user_pref(&ldquo;privacy.firstparty.isolate&rdquo;, true);</li>
+<li>user_pref(&ldquo;privacy.resistFingerprinting&rdquo;, true);</li>
+<li>user_pref(&ldquo;privacy.trackingprotection.enabled&rdquo;, true);</li>
+<li>user_pref(&ldquo;privacy.trackingprotection.fingerprinting.enabled&rdquo; , true);</li>
+<li>user_pref(&ldquo;privacy.trackingprotection.cryptomining.enabled&rdquo; , true);</li>
+<li>user_pref(&ldquo;webgl.disabled&rdquo;, true);</li>
+</ul>
+
+<p>we will install some addons,</p>
+
+<ul>
+<li><a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/">Ublock</a></li>
+<li><a href="https://addons.mozilla.org/en-US/firefox/addon/decentraleyes/">Decentraleyes</a></li>
+</ul>
+
+<p>we will start firefox without a time zone,</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# <span class="nv">TZ</span><span class="o">=</span>UTC firefox
+root@kali:~# </code></pre></div>
+<p>we will remove hidden extensions for the entire system,</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# ls -la /usr/lib/firefox-esr/browser/features/
+total <span class="m">5496</span>
+drwxr-xr-x <span class="m">2</span> root root     <span class="m">319</span> sep  <span class="m">6</span> <span class="m">20</span>:05 .
+drwxr-xr-x <span class="m">4</span> root root     <span class="m">163</span> sep  <span class="m">6</span> <span class="m">20</span>:09 ..
+-rw-r--r-- <span class="m">1</span> root root <span class="m">2603859</span> jul <span class="m">10</span> <span class="m">00</span>:13 activity-stream@mozilla.org.xpi
+-rw-r--r-- <span class="m">1</span> root root    <span class="m">8671</span> jul <span class="m">10</span> <span class="m">00</span>:13 aushelper@mozilla.org.xpi
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">864581</span> jul <span class="m">10</span> <span class="m">00</span>:13 firefox@getpocket.com.xpi
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">19037</span> jul <span class="m">10</span> <span class="m">00</span>:13 followonsearch@mozilla.com.xpi
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">464592</span> jul <span class="m">10</span> <span class="m">00</span>:13 formautofill@mozilla.org.xpi
+-rw-r--r-- <span class="m">1</span> root root    <span class="m">5741</span> jul <span class="m">10</span> <span class="m">00</span>:13 jaws-esr@mozilla.org.xpi
+-rw-r--r-- <span class="m">1</span> root root  <span class="m">566768</span> jul <span class="m">10</span> <span class="m">00</span>:13 onboarding@mozilla.org.xpi
+-rw-r--r-- <span class="m">1</span> root root <span class="m">1064261</span> jul <span class="m">10</span> <span class="m">00</span>:13 screenshots@mozilla.org.xpi
+-rw-r--r-- <span class="m">1</span> root root    <span class="m">9783</span> jul <span class="m">10</span> <span class="m">00</span>:13 webcompat@mozilla.org.xpi
+root@kali:~# 
+root@kali:~# mv  /usr/lib/firefox-esr/browser/features /usr/lib/firefox-esr/browser/features.bkp</code></pre></div>
+<p>and we will change the default search engines that firefox uses.</p>
+
+<ul>
+<li><a href="https://addons.mozilla.org/en-US/firefox/addon/startpage-https-privacy-search/?src=search">Startpage</a></li>
+<li><a href="https://addons.mozilla.org/en-US/firefox/addon/duckduckgo-html/?src=search">Duckduckgo</a></li>
+</ul>
+
+<h2 id="configuring-user-js">Configuring user.js.</h2>
+
+<p>As we see in <a href="http://kb.mozillazine.org/User.js_file">users.js</a>, when we start firefox the valid preferences that we have added to the user.js file are automatically copied to the prefs.js file.</p>
+
+<p>To further raise the privacy of firefox we have the option to create our own user.js file. A good start is the <a href="https://github.com/pyllyukko/user.js">pyllyukko</a>. We will simply copy it after reading the <a href="https://github.com/pyllyukko/user.js#known-problems-and-limitations">Problems and limitations</a> and add our specific configuration lines.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">//Mi proxy rules <span class="k">for</span> tor
+//
+user_pref<span class="o">(</span><span class="s2">&#34;network.proxy.no_proxies_on&#34;</span>, <span class="s2">&#34;localhost, 127.0.0.1, 192.168.8.0&#34;</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;network.proxy.socks&#34;</span>, <span class="s2">&#34;127.0.0.1&#34;</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;network.proxy.socks_port&#34;</span>, <span class="m">9050</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;network.proxy.type&#34;</span>, <span class="m">1</span><span class="o">)</span><span class="p">;</span>
+
+// Remove <span class="nb">time</span> marks
+user_pref<span class="o">(</span><span class="s2">&#34;app.update.lastUpdateTime.addon-background-update-timer&#34;</span>, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;app.update.lastUpdateTime.blocklist-background-update-timer&#34;</span>, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;app.update.lastUpdateTime.browser-cleanup-thumbnails&#34;</span>, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;app.update.lastUpdateTime.experiments-update-timer&#34;</span>, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;app.update.lastUpdateTime.search-engine-update-timer&#34;</span>, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+user_pref<span class="o">(</span><span class="s2">&#34;app.update.lastUpdateTime.xpi-signature-verification&#34;</span>, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+
+// Disable Kali bookmark 
+user_pref<span class="o">(</span><span class="s2">&#34;distribution.Kali.bookmarksProcessed&#34;</span>, <span class="nb">true</span><span class="o">)</span><span class="p">;</span></code></pre></div>
+<h2 id="result">Result</h2>
+
+<p>We have a functional version of firefox and a little less exposed to crawls that will allow us to navigate with certain limitations.</p>
+
+<p>We don&rsquo;t have to confuse security with privacy, since they are different things. We are not configuring firefox to be more secure but to be less traceable. It is a topic for another post like hardening firefox and surfing safely.</p>
+
+<h3 id="privacy-tests">Privacy tests</h3>
+
+<p>Now we can test if our browser is trackable. There are some online tests to test how unique our browser is and that we are exposing to third parties.</p>
+
+<p>Links to test the privacy of our browser.</p>
+
+<ul>
+<li><p><a href="https://browserleaks.com/webrtc">WebRTC Leak Test</a></p></li>
+
+<li><p><a href="https://browserleaks.com/canvas">Test Canvas fingerprint</a></p></li>
+
+<li><p><a href="http://jcarlosnorte.com/assets/ubercookie/">Test Ubercookie</a></p></li>
+
+<li><p><a href="https://panopticlick.eff.org/">Test fingerprint</a></p></li>
+
+<li><p><a href="https://ipleak.net/">Test web browser leak</a></p></li>
+
+<li><p><a href="https://www.whatismybrowser.com/">Test genericos</a></p></li>
+</ul>
+
+<h3 id="comparing-with-torbrowser">Comparing with torbrowser</h3>
+
+<p>Our firefox configuration+tor compared to torbrowser does not differ too much.</p>
+
+<p><img src="../../../en/posts/images/5-comparative-fingerpirnt.png" alt="Tor-firefox fingerprint comparative image" /></p>
+
+<p><img src="../../../en/posts/images/5-comparative-unique.png" alt="Comparative image unique id tor-firefox" /></p>
+
+<p>As we can see we have the Canvas Hash that gives us away &hellip;</p>
+
+<h1 id="automating">Automating.</h1>
+
+<h2 id="script-operation-summary">Script operation summary</h2>
+
+<p>The script creates a <strong>firefox_backup</strong> directory under the user&rsquo;s <strong>$HOME/.mozilla/</strong> directory, where it will download the addons, the user.js file and where it will backup the user&rsquo;s firefox profiles.</p>
+
+<p>You will install the addons for all users in <strong>/usr/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/</strong> or for a single user in <strong>$HOME/.mozilla/firefox/xxxxxxxx.default/extensions</strong>. By default they will be installed for all users.</p>
+
+<p>It will move the hidden addons of <strong>/usr/lib/firefox-esr/browser/features</strong> in case we want to recover them to <strong>/usr/lib/firefox-esr/browser/features.bkp</strong>, it will delete the pref file .js and will copy the user.js file with our preferences from the <strong>firefox_backup</strong> folder instead. To change the preferences we will have to delete $HOME/.mozilla/firefox/xxxxxxxx.default/user.js to copy again from the backup.</p>
+
+<p>And firefox will start with UTC time zone.</p>
+
+<p>On the other side we can change the <strong>user</strong> inside the script to start firefox with another different user that will be created only to contain the firefox data and then wil be deleted with all the content of the user. To download we will use <strong>/tmp</strong> to not lose downloaded data.</p>
+
+<h2 id="script-to-navigate-with-firefox-more-privately">Script to navigate with firefox more privately.</h2>
+
+<p>Here my automation script to create a copy of firefox profiles, download and install addons automatically, remove prefs.js, hidden addons, download and install user.js and start firefox with the UTC time zone.</p>
+
+<p>You can download the script from my <a href="https://github.com/VielLosero/scripts">public scripts</a>.</p>
+
+<p><a href="https://github.com/VielLosero/scripts/blob/master/firefox/firefox-private.sh">Firefox-private.sh</a></p>
+
+<p>And an example of execution.</p>
+
+<p><img src="../../../en/posts/images/5-firefox-private.gif" alt="Gif image running the firefox privacy script" /></p>
+
+<h2 id="what-remains-to-be-done">What remains to be done</h2>
+
+<ul>
+<li><p>Investigate how to remove Canvas Hash.</p></li>
+
+<li><p>Save our browsing history from sqlite after each session.</p></li>
+
+<li><p>Start firefox with third user and functionalities for X. (Sound &hellip;)</p></li>
+
+<li><p>Automate the change of the default search engines to use:
+-<a href="https://addons.mozilla.org/firefox/downloads/file/240217/duckduckgo_html_ssl-20140120.xml">Duckduckgo</a>
+-<a href="https://addons.mozilla.org/firefox/downloads/file/58729/startpage_https-20090713.xml">Startpage</a></p></li>
+</ul>
+
+<p>References:</p>
+
+<p><a href="https://wiki.archlinux.org/index.php/Firefox/Privacy">https://wiki.archlinux.org/index.php/Firefox/Privacy</a></p>
+
+<p><a href="https://github.com/pyllyukko/user.js">https://github.com/pyllyukko/user.js</a></p>
+
+<p><a href="https://github.com/ghacksuserjs/ghacks-user.js">https://github.com/ghacksuserjs/ghacks-user.js</a></p>
+
+<p><a href="https://www.privacytools.io/browsers/#addons">https://www.privacytools.io/browsers/#addons</a></p>
+
+<p><a href="https://restoreprivacy.com/firefox-privacy/">https://restoreprivacy.com/firefox-privacy/</a></p>
+
+<p><a href="https://askubuntu.com/questions/73474/how-to-install-firefox-addon-from-command-line-in-scripts">https://askubuntu.com/questions/73474/how-to-install-firefox-addon-from-command-line-in-scripts</a></p>
+
+<p><a href="https://extensionworkshop.com/documentation/publish/distribute-sideloading/#Add_the_add-on_XPI_file_to_a_standard_extensions_folder">https://extensionworkshop.com/documentation/publish/distribute-sideloading/#Add_the_add-on_XPI_file_to_a_standard_extensions_folder</a>.</p>
+
+<p><a href="http://jcarlosnorte.com/security/2016/03/06/advanced-tor-browser-fingerprinting.html">http://jcarlosnorte.com/security/2016/03/06/advanced-tor-browser-fingerprinting.html</a></p>
+
+<p>License: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+	Send your coments here --> 
+	<a href="https://twitter.com/VLosero">[Twitter]</a>
+	<a href="https://github.com/VielLosero/VielLosero.github.io">[Git]</a>
+	<a href="mailto:viel.losero@gmail.com">[Email]</a>
+	&lt;-- Envia tus comentarios aquí
+	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
+	<p class=post-meta >Donate Bitcoin Address: 1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq</p>
+	<p>Copyright © 2019 Viel Losero</p>
+	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+</footer>
+</body>
+</html>

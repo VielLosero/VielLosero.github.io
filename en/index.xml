@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Firefox privacity: Configuration and script.</title>
+      <link>/en/posts/5-firefox-privacy/</link>
+      <pubDate>Thu, 24 Oct 2019 06:00:00 +0200</pubDate>
+      
+      <guid>/en/posts/5-firefox-privacy/</guid>
+      <description>Setting. Today to navigate with a little of privacy we can: Use a text browser like linx without features like java, videos, css, &amp;hellip;, use torbrowser, or configure firefox to navigate as safely and privately as possible.
+Backup. The first thing we have to do to avoid losing our data is a copy of our firefox profile, it is under the user directory.
+~/.mozilla/firefox/xxxxxxxx.default  root@kali:~# cp .mozilla/firefox/l50cihg0.default .mozilla/firefox/l50cihg0.default.bkp We could also copy only the files that interest us as bookmarks or history.</description>
+    </item>
+    
+    <item>
       <title>Support</title>
       <link>/en/support/</link>
       <pubDate>Mon, 21 Oct 2019 10:47:14 +0200</pubDate>
@@ -70,7 +81,7 @@ Why a pen name? Many reputable websites, researchers, and security experts use a
 Mi rules:(Know as VLR - Viel Losero Rules or KiKoDoCo rules).
  Keep it simply, independent, honest, secure and free.
  Keep out ads, trackers, sponsors, &amp;hellip;
- Do Full transparency, best practices, do not track, do ethical hacking &amp;hellip;</description>
+ Do Full transparency, best practices, ethical hacking, do not track &amp;hellip;</description>
     </item>
     
     <item>

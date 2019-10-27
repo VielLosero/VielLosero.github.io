@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Privacidad con Firefox: Configuración y script.</title>
+      <link>/es/posts/5-firefox-privacy/</link>
+      <pubDate>Thu, 24 Oct 2019 06:00:00 +0200</pubDate>
+      
+      <guid>/es/posts/5-firefox-privacy/</guid>
+      <description>Configuración. Hoy en día para navegar con un poco de privacidad podemos: Usar un navegador de texto como linx sin funcionalidades como java, videos, css, &amp;hellip; , usar torbrowser, o configurar firefox para navegar de manera lo mas segura y privada posible.
+Copia de seguridad. Lo primero que tenemos que hacer para no perder nuestros datos es una copia de nuestro perfil de firefox, se encuentra bajo el direcotrio de usuario.</description>
+    </item>
+    
+    <item>
       <title>Apoyo</title>
       <link>/es/support/</link>
       <pubDate>Mon, 21 Oct 2019 10:47:14 +0200</pubDate>
@@ -57,7 +67,7 @@ Por qué un seudónimo? Muchos sitios web de buena reputación, investigadores y
 Mis reglas: (se conocen como VLR: del inglés Viel Losero Rules o Reglas KiKoDoCo).
  Mantenlo simple, independiente, honesto, seguro y gratuito.
  Mantenlo fuera de anuncios, rastreadores, patrocinadores, &amp;hellip;
- Se totalmente transparente, usa las mejores prácticas, no rastrees, haz hacking ético &amp;hellip;</description>
+ Se totalmente transparente, usa las mejores prácticas, haz hacking ético, no rastrees &amp;hellip;</description>
     </item>
     
     <item>
