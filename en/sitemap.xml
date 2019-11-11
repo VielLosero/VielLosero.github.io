@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/en/posts/7-escape-from-systemd/</loc>
+    <lastmod>2019-11-08T14:44:20+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/posts/7-escape-from-systemd/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/posts/7-escape-from-systemd/"
+                />
+  </url>
+  
+  <url>
+    <loc>/en/posts/</loc>
+    <lastmod>2019-11-08T14:44:20+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/posts/"
+                />
+  </url>
+  
+  <url>
     <loc>/en/posts/5-firefox-privacy/</loc>
     <lastmod>2019-10-24T06:00:00+02:00</lastmod>
     <xhtml:link
@@ -14,21 +44,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="/en/posts/5-firefox-privacy/"
-                />
-  </url>
-  
-  <url>
-    <loc>/en/posts/</loc>
-    <lastmod>2019-10-24T06:00:00+02:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="es"
-                href="/es/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/posts/"
                 />
   </url>
   

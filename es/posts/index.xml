@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Pagina Web de Viel Losero</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
-    <lastBuildDate>Thu, 24 Oct 2019 06:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 08 Nov 2019 14:44:20 +0200</lastBuildDate>
     
 	<atom:link href="/es/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Escapar de systemd: Creando nuestra propia iso kali-i3-viel.</title>
+      <link>/es/posts/7-escape-from-systemd/</link>
+      <pubDate>Fri, 08 Nov 2019 14:44:20 +0200</pubDate>
+      
+      <guid>/es/posts/7-escape-from-systemd/</guid>
+      <description>Por que escapar de systemd Porque quiero iniciar mi systema de manera kiss, usando lo mínimo necesario para que funcione bien y rápido.
+En la mayoría de distros linux vienen activadas por defecto muchas cosas que no se acaban utilizando y usan recursos. Por suerte linux permite configurar el sistema a gusto bajo un control completo, pero &amp;hellip; que pasa si quiero hacerme mi propio sistema de inicio?
+Systemd es cada vez mas complicado, es un binario y cambiar cualquier cosa que no este predefinida implica cambiar el código fuente, compilar y probar.</description>
+    </item>
     
     <item>
       <title>Privacidad con Firefox: Configuración y script.</title>

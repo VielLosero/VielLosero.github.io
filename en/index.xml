@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Escape from systemd: Making a custom iso kali-i3-viel.</title>
+      <link>/en/posts/7-escape-from-systemd/</link>
+      <pubDate>Fri, 08 Nov 2019 14:44:20 +0200</pubDate>
+      
+      <guid>/en/posts/7-escape-from-systemd/</guid>
+      <description>Why escape from systemd Because I want to start my system in a kiss way, using the minimum necessary for it to work well and quickly.
+In most Linux distros, many things that are not used and use resources are activated by default. Luckily Linux allows you to configure the system at ease under complete control, but &amp;hellip; what if I want to make my own startup system?
+Systemd is becoming more complicated, it is a binary and changing anything that is not predefined involves changing the source code, compiling and testing.</description>
+    </item>
+    
+    <item>
       <title>Firefox privacity: Configuration and script.</title>
       <link>/en/posts/5-firefox-privacy/</link>
       <pubDate>Thu, 24 Oct 2019 06:00:00 +0200</pubDate>
