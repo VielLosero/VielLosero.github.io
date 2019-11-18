@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html><head>
+<title>Viel Losero - Resolver: Automating the security of dns resolutions.</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="../../../css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="../../../"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item active" href="../../../en/posts/" title="">Posts</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/about/" title="">About</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/support/" title="">Support</a>
+		
+        </nav>        
+</div>
+</div>
+
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Resolver: Automating the security of dns resolutions.</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Nov 11, 2019 - [ 641 Words ] 
+		
+		    
+		       - [ <a href="../../../es/posts/8-resolver-automate-dns-privacy/">es</a> ]
+		    
+                                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents">
+<ul>
+<li><a href="#what-is-resolver">What is resolver?</a>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#files">Files</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#video">Video</a></li>
+</ul></li>
+</ul>
+</nav></p>
+		
+
+<h1 id="what-is-resolver">What is resolver?</h1>
+
+<p>Resolver is a small script that configures the name resolution of our system. If installed, also configure <strong>dnsmasq</strong>, <strong>tor</strong> and <strong>stubby</strong> to provide encrypted and secure name resolution.</p>
+
+<ul>
+<li><p>Filter web pages with malware, publicity, inappropriate content, &hellip; using the [Steven Black] hosts file (<a href="https://github.com/StevenBlack/hosts">https://github.com/StevenBlack/hosts</a>).</p></li>
+
+<li><p>Reduce the footprints of user DNS requests using the <strong>dnsmasq</strong> cache and the &ldquo;dnsmasq addn-hosts&rdquo; option to resolve names locally. It also saves bandwidth and data.</p></li>
+
+<li><p>Darkens and protects browsing history if is used with &ldquo;DNS over TLS with round_robin_upstreams&rdquo; of <strong>stubby</strong> and Prevents Dnsleak and Dnshijacking, also escaping from DNS-based content filters.</p></li>
+
+<li><p>Together with Tor and <a href="https://viellosero.github.io/es/posts/5-firefox-privacy/">Firefox-private.sh</a> automate the configuration to navigate a little safer and more privately.</p></li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">apt-get install tor dnsmasq stubby</code></pre></div>
+<p>Download resolver in &ldquo;/usr/sbin/&rdquo;.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# wget https://raw.githubusercontent.com/VielLosero/scripts/master/resolver/resolver -O /usr/sbin/resolver 
+--2019-11-17 <span class="m">18</span>:34:56--  https://raw.githubusercontent.com/VielLosero/scripts/master/resolver/resolver
+Resolviendo raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>... <span class="m">151</span>.101.128.133, <span class="m">151</span>.101.192.133, <span class="m">151</span>.101.0.133, ...
+Conectando con raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)[</span><span class="m">151</span>.101.128.133<span class="o">]</span>:443... conectado.
+Petición HTTP enviada, esperando respuesta... <span class="m">200</span> OK
+Longitud: <span class="m">20695</span> <span class="o">(</span>20K<span class="o">)</span> <span class="o">[</span>text/plain<span class="o">]</span>
+Grabando a: “/usr/sbin/resolver”
+
+/usr/sbin/resolver                      <span class="m">100</span>%<span class="o">[=============================================================================</span>&gt;<span class="o">]</span>  <span class="m">20</span>,21K  --.-KB/s    en <span class="m">0</span>,03s   
+
+<span class="m">2019</span>-11-17 <span class="m">18</span>:34:57 <span class="o">(</span><span class="m">616</span> KB/s<span class="o">)</span> - “/usr/sbin/resolver” guardado <span class="o">[</span><span class="m">20695</span>/20695<span class="o">]</span>
+root@kali:~#</code></pre></div>
+<p>Verify checksum</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# sha256sum /usr/sbin/resolver 
+f996cfd52468e9798914250ed0a6c6f04ae38e667232ac57a8b3f2e7b7041e95  /usr/sbin/resolver
+root@kali:~#</code></pre></div>
+<p>Change permissions</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# chmod <span class="m">700</span> /usr/sbin/resolver</code></pre></div>
+<p>Execute</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# resolver 
+Usage: /usr/sbin/resolver <span class="o">{</span>info<span class="p">|</span>install<span class="p">|</span>start<span class="p">|</span>stop<span class="p">|</span>status<span class="p">|</span>update<span class="p">|</span>restart<span class="p">|</span>remove<span class="o">}</span>
+root@kali:~# resolver update
+Usage: /usr/sbin/resolver <span class="o">{</span>update hosts<span class="p">|</span>update cache<span class="p">|</span>update dns<span class="o">}</span>
+root@kali:~# </code></pre></div>
+<h2 id="usage">Usage</h2>
+
+<p>Usage: /usr/sbin/resolver {info|install|start|stop|status|update|restart|remove}</p>
+
+<ul>
+<li>resolver info
+
+<ul>
+<li>Muestra información del script.</li>
+</ul></li>
+<li>resolver install
+
+<ul>
+<li>Crea el directorio de trabajo &ldquo;.resolver&rdquo;.</li>
+<li>Respalda si existen de los ficheros: hosts, resolv.conf, dnsmasq, torrc, stubby.yml.</li>
+<li>Descarga el archivo hosts.filter con el filtro antimalware y lo copia a hosts.</li>
+<li>Configura el DNS para implementar la solucion mas privada y segura usando hosts, resolv.conf, resolv.dnsmasq, torrc, stubby.yml.</li>
+</ul></li>
+<li>resolver start
+
+<ul>
+<li>Inicia resolver, dnsmasq, tor y stubby si estan instalados.</li>
+</ul></li>
+<li>resolver stop
+
+<ul>
+<li>Para los setvicios de resolver, dnsmasq, tor y stubby.</li>
+</ul></li>
+<li>resolver status
+
+<ul>
+<li>Muestra el estado.</li>
+</ul></li>
+<li>resolver update hosts
+
+<ul>
+<li>hosts: Actualiza el fichero hosts con las actualizaciones antimalware.</li>
+</ul></li>
+<li>resolver update cache
+
+<ul>
+<li>Actualiza el fichero dnsmasq.hosts con las nuevas peticiones dns para cache addn-hosts.</li>
+</ul></li>
+<li>resolver update dns
+
+<ul>
+<li>Actualiza el fichero resolv,conf o resolv.dnsmasq con nuevos dns aleatorios de la lista.</li>
+</ul></li>
+<li>resolver restart
+
+<ul>
+<li>Para y arranca servicios.</li>
+</ul></li>
+<li>resolver remove
+
+<ul>
+<li>Restableze los ficheros respaldados.</li>
+<li>Borra el direcotrio de trabajo &ldquo;.resolver&rdquo;.</li>
+</ul></li>
+</ul>
+
+<h2 id="files">Files</h2>
+
+<p>Description of the files used in the work directory.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# ls -la .resolver/
+total <span class="m">3824</span>
+drwxr-xr-x  <span class="m">2</span> root root     <span class="m">234</span> nov <span class="m">16</span> <span class="m">20</span>:01 .
+drwxr-xr-x <span class="m">40</span> root root    <span class="m">4096</span> nov <span class="m">17</span> <span class="m">16</span>:44 ..
+-rw-r--r--  <span class="m">1</span> root root   <span class="m">30579</span> nov <span class="m">16</span> <span class="m">18</span>:24 dnsmasq.conf		--&gt; Backup
+-rw-r--r--  <span class="m">1</span> root root  <span class="m">370785</span> nov <span class="m">17</span> <span class="m">16</span>:26 dnsmasq.hosts		--&gt; Archivo usado por dnsmasq addn-hosts para resolver
+-rw-r--r--  <span class="m">1</span> root root <span class="m">1295751</span> nov <span class="m">17</span> <span class="m">16</span>:26 dnsmasq.hosts.new		--&gt; Archivo con las peticiones dns nuevas
+-rw-r--r--  <span class="m">1</span> root root  <span class="m">370160</span> nov <span class="m">17</span> <span class="m">16</span>:26 dnsmasq.hosts.old		--&gt; Archivo con petciones dns antiguas, para merge
+-rw-r--r--  <span class="m">1</span> root root  <span class="m">501736</span> nov <span class="m">17</span> <span class="m">16</span>:26 dnsmasq.reply		--&gt; Filtro de Logs con las peticiones reply para cachear
+-rw-r--r--  <span class="m">1</span> root root     <span class="m">213</span> nov <span class="m">16</span> <span class="m">18</span>:24 hosts			--&gt; Backup
+-rw-r--r--  <span class="m">1</span> root root <span class="m">1279133</span> nov <span class="m">16</span> <span class="m">18</span>:28 hosts.filter_16-11-2019	--&gt; Archivo con los filtros antimalware para hosts
+-rw-r--r--  <span class="m">1</span> root root      <span class="m">51</span> nov <span class="m">16</span> <span class="m">18</span>:24 resolv.conf		--&gt; Backup
+-rw-r--r--  <span class="m">1</span> root root      <span class="m">74</span> nov <span class="m">17</span> <span class="m">16</span>:51 resolv.dnsmasq		--&gt; Archivo usado por dsnamsq para peticiones dns
+-rw-r--r--  <span class="m">1</span> root root   <span class="m">21056</span> nov <span class="m">16</span> <span class="m">18</span>:24 stubby.yml			--&gt; Backup 
+-rw-r--r--  <span class="m">1</span> root root    <span class="m">8939</span> nov <span class="m">16</span> <span class="m">18</span>:24 torrc			--&gt; Backup
+root@kali:~# </code></pre></div>
+<h2 id="examples">Examples</h2>
+
+<p>Status</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# resolver status
+Status of resolver 
+<span class="o">[</span>*<span class="o">]</span> Resolver daemon running
+<span class="o">[</span>*<span class="o">]</span> Dnsmasq running
+<span class="o">[</span>*<span class="o">]</span> Tor running
+<span class="o">[</span>*<span class="o">]</span> Stubby running
+<span class="o">[</span>*<span class="o">]</span> Hosts backup <span class="k">done</span>
+<span class="o">[</span>*<span class="o">]</span> Resolv.conf backup <span class="k">done</span>
+<span class="o">[</span>*<span class="o">]</span> Dnsmasq.conf backup <span class="k">done</span>
+<span class="o">[</span>*<span class="o">]</span> Last download of hosts.filter <span class="m">16</span>-11-2019
+<span class="o">[</span>*<span class="o">]</span> Lines in hosts <span class="m">44896</span>
+<span class="o">[</span>*<span class="o">]</span> Cached entries on dnsmasq.hosts <span class="m">7584</span>
+root@kali:~# </code></pre></div>
+<h2 id="video">Video</h2>
+
+<p>Demo of installation use and uninstall.</p>
+
+<p><img src="../../../en/posts/images/8-resolver.gif" alt="Video demo installation usage and uninstall of resolver" /></p>
+
+<p><a href="#" class="back">back</a></p>
+
+<p>References:</p>
+
+<p>DNS privacy.</p>
+
+<ul>
+<li><p><a href="https://blokt.com/guides/dns-leak">DNS Leaks</a></p></li>
+
+<li><p><a href="https://freedom-to-tinker.com/2016/09/29/the-effect-of-dns-on-tors-anonymity/">Effect of dns on tor anonymity</a></p></li>
+
+<li><p><a href="https://dnsprivacy.org/wiki/display/DP/DNS+Privacy+-+The+Solutions">Privacity on name resolution</a></p></li>
+</ul>
+
+<p>Options for secure DNS.</p>
+
+<ul>
+<li><p><a href="https://dnsprivacy.org/wiki/display/DP/DNS+Privacy+Clients#DNSPrivacyClients-Unbound">DNS Privacy Clients</a></p></li>
+
+<li><p><a href="https://dnscrypt.info/implementations">DnsCrypt implementations</a></p></li>
+
+<li><p><a href="https://developers.cloudflare.com/1.1.1.1/fun-stuff/dns-over-tor/">DoH or DoT using Cloudflare over tor</a></p></li>
+</ul>
+
+<p><a href="https://www.netsparker.com/blog/web-security/pros-cons-dns-over-https/">DoH pros and cons</a></p>
+
+<p>Licence: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+	Send your coments here --> 
+	<a href="https://twitter.com/VLosero">[Twitter]</a>
+	<a href="https://github.com/VielLosero/VielLosero.github.io">[Git]</a>
+	<a href="mailto:viel.losero@gmail.com">[Email]</a>
+	&lt;-- Envia tus comentarios aquí
+	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
+	<p class=post-meta >Donate Bitcoin Address: 1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq</p>
+	<p>Copyright © 2019 Viel Losero</p>
+	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+</footer>
+</body>
+</html>

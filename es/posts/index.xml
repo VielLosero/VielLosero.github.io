@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Pagina Web de Viel Losero</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
-    <lastBuildDate>Fri, 08 Nov 2019 14:44:20 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 11 Nov 2019 14:44:20 +0200</lastBuildDate>
     
 	<atom:link href="/es/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Resolver: Automatizando la seguridad de nuestras peticiones dns.</title>
+      <link>/es/posts/8-resolver-automate-dns-privacy/</link>
+      <pubDate>Mon, 11 Nov 2019 14:44:20 +0200</pubDate>
+      
+      <guid>/es/posts/8-resolver-automate-dns-privacy/</guid>
+      <description>Qué es resolver? Resolver es un pequeño script que configura la resolución de nombres de nuestro sistema. Si están instalados también configura dnsmasq, tor y stubby para proporcionar resolución de nombres cifrada y segura.
+ Filtra paginas web con malware, publicidad, contenido inapropiado, &amp;hellip; usando el fichero hosts de Steven Black.
+ Reduce las huellas de las peticiones DNS de usuario usando la cache de dnsmasq y la opcion &amp;ldquo;dnsmasq addn-hosts&amp;rdquo; para resolver nombres localmente.</description>
+    </item>
     
     <item>
       <title>Escapar de systemd: Creando nuestra propia iso kali-i3-viel.</title>
