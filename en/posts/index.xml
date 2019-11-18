@@ -18,7 +18,7 @@
       
       <guid>/en/posts/8-resolver-automate-dns-privacy/</guid>
       <description>What is resolver? Resolver is a small script that configures the name resolution of our system. If installed, also configure dnsmasq, tor and stubby to provide encrypted and secure name resolution.
- Filter web pages with malware, publicity, inappropriate content, &amp;hellip; using the [Steven Black] hosts file (https://github.com/StevenBlack/hosts).
+ Filter web pages with malware, publicity, inappropriate content, &amp;hellip; using the Steven Black hosts file.
  Reduce the footprints of user DNS requests using the dnsmasq cache and the &amp;ldquo;dnsmasq addn-hosts&amp;rdquo; option to resolve names locally. It also saves bandwidth and data.</description>
     </item>
     
