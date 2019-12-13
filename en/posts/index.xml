@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Viel Losero&#39;s Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
-    <lastBuildDate>Mon, 11 Nov 2019 14:44:20 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 05 Dec 2019 06:06:06 +0200</lastBuildDate>
     
 	<atom:link href="/en/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Automating arch linux instalation.</title>
+      <link>/en/posts/9-automating-arch-install/</link>
+      <pubDate>Thu, 05 Dec 2019 06:06:06 +0200</pubDate>
+      
+      <guid>/en/posts/9-automating-arch-install/</guid>
+      <description>Automating the installation of Arch linux I recently reinstalled my arch linux to reorganize my partitions and encrypt the home. I have been running smoothly since the last installation for more than 4 years but I have seen the need to reorganize the space. I had the home at 70% and the partition for virtual disks at 30% and a chaos in the organization, besides having installed partitions without encryption, etc.</description>
+    </item>
     
     <item>
       <title>Resolver: Automating the security of dns resolutions.</title>

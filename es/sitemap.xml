@@ -3,8 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/es/posts/9-automating-arch-install/</loc>
+    <lastmod>2019-12-05T06:06:06+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/posts/9-automating-arch-install/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="es"
+                href="/es/posts/9-automating-arch-install/"
+                />
+  </url>
+  
+  <url>
     <loc>/es/posts/</loc>
-    <lastmod>2019-11-11T14:44:20+02:00</lastmod>
+    <lastmod>2019-12-05T06:06:06+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
