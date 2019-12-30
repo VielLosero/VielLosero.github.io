@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Ugly firewall</title>
+      <link>/es/posts/10-ugly-firewall/</link>
+      <pubDate>Sat, 28 Dec 2019 12:06:06 +0200</pubDate>
+      
+      <guid>/es/posts/10-ugly-firewall/</guid>
+      <description>Ugly Firewall Estos son mis scripts para configurar linux netfilter iptables, trato de no instalar terceras herramientas que no pueden hacer lo que necesito, son ultra complicadas o necesitan compilar para correr un binario, añadiendo mas capas a netfilter. Es mas fácil leer un simple script para ver que es lo que hace, y solo con pocas lineas de codigo (menos de 200) y un poco de organización podemos administrar nuestro firewall en linux.</description>
+    </item>
+    
+    <item>
       <title>Automatizando la instalación de arch linux.</title>
       <link>/es/posts/9-automating-arch-install/</link>
       <pubDate>Thu, 05 Dec 2019 06:06:06 +0200</pubDate>

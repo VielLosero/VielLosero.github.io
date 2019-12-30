@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html><head>
+<title>Viel Losero - Ugly firewall</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="../../../css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="../../../"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item active" href="../../../en/posts/" title="">Posts</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/about/" title="">About</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/support/" title="">Support</a>
+		
+        </nav>        
+</div>
+</div>
+
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Ugly firewall</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Dec 28, 2019 - [ 765 Words ] 
+		
+		    
+		       - [ <a href="../../../es/posts/10-ugly-firewall/">es</a> ]
+		    
+                                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents">
+<ul>
+<li><a href="#ugly-firewall">Ugly Firewall</a>
+<ul>
+<li><a href="#how-it-works">How it works</a></li>
+<li><a href="#getting-started">Getting Started</a>
+<ul>
+<li><a href="#installing">Installing</a></li>
+</ul></li>
+<li><a href="#running-ugly-firewall">Running ugly-firewall</a>
+<ul>
+<li><a href="#output-while-running">Output While Running</a></li>
+</ul></li>
+<li><a href="#options">Options</a></li>
+<li><a href="#how-to-make-rulescripts">How to make rulescripts</a></li>
+<li><a href="#extra-config">Extra config</a></li>
+<li><a href="#contributing-and-support">Contributing and support</a></li>
+<li><a href="#author">Author</a></li>
+</ul></li>
+</ul>
+</nav></p>
+		
+
+<h1 id="ugly-firewall">Ugly Firewall</h1>
+
+<p>This is mi scripts to manage linux netfilter iptables, i tried to do not install 3th tools that can&rsquo;t do what i want, are ultra complicated, or need compiled code to run as binarys files, adding more layers to netfilter tools. It is easy to read a simple bash script to see what it do, and only with few lines of code (less than 200) and some organized files we can manage our firewall in linux.</p>
+
+<p>There isn&rsquo;t a tool/script to manage iptables whitout know how iptables works, to make custom rulescripts to load it is hight recomended to learn a few of iptables.</p>
+
+<h2 id="how-it-works">How it works</h2>
+
+<p>Macking some user chains like LOG-ACCEPT-OUTPUT to jump in when packet match and grep only rules with our LOG- prefix to show status.</p>
+
+<p>A base rulescript file that can be customized with our own policy to drop all, permit only loopback, permit only output packeds, etc.</p>
+
+<p>Some custom user rulescript files like <strong>iptables.output.http.https.dns.uf.sh</strong> to easy load fast some prebuild rules we need.</p>
+
+<p>And more.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>These instructions will get you a copy of the project.</p>
+
+<h3 id="installing">Installing</h3>
+
+<p>git clone <a href="https://github.com/VielLosero/ugly-firewall.git">https://github.com/VielLosero/ugly-firewall.git</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/git-repos/vielLosero# git clone https://github.com/VielLosero/ugly-firewall.git                                                              
+Clonando en <span class="s1">&#39;ugly-firewall&#39;</span>...                                                                                                                                
+remote: Enumerating objects: <span class="m">4</span>, <span class="k">done</span>.                                                                                                                         
+remote: Counting objects: <span class="m">100</span>% <span class="o">(</span><span class="m">4</span>/4<span class="o">)</span>, <span class="k">done</span>.                                                                                                                   
+remote: Compressing objects: <span class="m">100</span>% <span class="o">(</span><span class="m">4</span>/4<span class="o">)</span>, <span class="k">done</span>.                                                                                                                
+remote: Total <span class="m">4</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, pack-reused <span class="m">0</span>                                                                                                  
+Desempaquetando objetos: <span class="m">100</span>% <span class="o">(</span><span class="m">4</span>/4<span class="o">)</span>, listo.                  </code></pre></div>
+<h2 id="running-ugly-firewall">Running ugly-firewall</h2>
+
+<p>After cloning the repository change to ugly-firewall dir and run ./uf</p>
+
+<p>Or make a link for easy run: ln -s PATH/ugly-firewall/uf /usr/bin/fw</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# <span class="nb">cd</span> ugly-firewall/                                                                         
+root@kali:~/ugly-firewall# ./uf
+
+root@kali:~# fw                                                                                                                              </code></pre></div>
+<h3 id="output-while-running">Output While Running</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ip4 pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+ <span class="m">7002</span> 9017K LOG-RAW-PREROUTING  all  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0           
+ <span class="m">6784</span> 5298K LOG-RAW-OUTPUT  all  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0           
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all  --  !lo    *       <span class="m">0</span>.0.0.0/0            <span class="m">127</span>.0.0.0/8         
+ <span class="m">4103</span> 4326K LOG-ACCEPT-INPUT  all  --  lo     *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0           
+ <span class="m">2899</span> 4692K LOG-ACCEPT-INPUT  all  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0            ctstate RELATED,ESTABLISHED
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all  --  eth0   *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0            state INVALID,NEW
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0            ctstate INVALID
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0           
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-FORWARD  all  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0           
+ <span class="m">2041</span>  661K LOG-ACCEPT-OUTPUT  all  --  *      eth0    <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0            owner UID match <span class="m">127</span>
+  <span class="m">254</span> <span class="m">24774</span> LOG-ACCEPT-OUTPUT  tcp  --  *      eth0    <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0            tcp dpt:853
+ <span class="m">4103</span> 4326K LOG-ACCEPT-OUTPUT  all  --  *      lo      <span class="m">0</span>.0.0.0/0            <span class="m">127</span>.0.0.1           
+    <span class="m">0</span>     <span class="m">0</span> LOG-ACCEPT-OUTPUT  udp  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0            udp spt:68
+    <span class="m">0</span>     <span class="m">0</span> LOG-ACCEPT-OUTPUT  icmp --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0           
+  <span class="m">386</span>  286K LOG-DROP-OUTPUT  all  --  *      *       <span class="m">0</span>.0.0.0/0            <span class="m">0</span>.0.0.0/0           
+ip6 pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+   <span class="m">30</span>  <span class="m">3078</span> LOG-RAW-PREROUTING  all      *      *       ::/0                 ::/0                
+   <span class="m">31</span>  <span class="m">3134</span> LOG-RAW-OUTPUT  all      *      *       ::/0                 ::/0                
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all      !lo    *       ::/0                 ::1                 
+   <span class="m">30</span>  <span class="m">3078</span> LOG-ACCEPT-INPUT  all      lo     *       ::/0                 ::/0                
+    <span class="m">0</span>     <span class="m">0</span> LOG-ACCEPT-INPUT  all      *      *       ::/0                 ::/0                 ctstate RELATED,ESTABLISHED
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all      eth0   *       ::/0                 ::/0                 state INVALID,NEW
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all      *      *       ::/0                 ::/0                 ctstate INVALID
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-INPUT  all      *      *       ::/0                 ::/0                
+    <span class="m">0</span>     <span class="m">0</span> LOG-DROP-FORWARD  all      *      *       ::/0                 ::/0                
+    <span class="m">0</span>     <span class="m">0</span> LOG-ACCEPT-OUTPUT  all      *      eth0    ::/0                 ::/0                 owner UID match <span class="m">127</span>
+    <span class="m">0</span>     <span class="m">0</span> LOG-ACCEPT-OUTPUT  tcp      *      eth0    ::/0                 ::/0                 tcp dpt:853
+   <span class="m">30</span>  <span class="m">3078</span> LOG-ACCEPT-OUTPUT  all      *      *       ::/0                 ::/64               
+    <span class="m">0</span>     <span class="m">0</span> LOG-ACCEPT-OUTPUT  udp      *      *       ::/0                 ::/0                 udp spt:546
+    <span class="m">0</span>     <span class="m">0</span> LOG-ACCEPT-OUTPUT  icmp     *      *       ::/0                 ::/0                
+    <span class="m">1</span>    <span class="m">56</span> LOG-DROP-OUTPUT  all      *      *       ::/0                 ::/0                
+UGLY-FIREWALL: <span class="o">[</span>quit<span class="o">]</span> <span class="o">[</span>zero-counters<span class="o">]</span> <span class="o">[</span>flush<span class="o">]</span> <span class="o">[</span>base<span class="o">]</span> <span class="o">[</span>load<span class="o">]</span> <span class="o">[</span>policy<span class="o">]</span> <span class="o">[</span>ip4<span class="o">]</span> <span class="o">[</span>ip6<span class="o">]</span></code></pre></div>
+<p><img src="../../../en/posts/images/10-ugly-firewall.gif" alt="Ugly-firewall running Gif" /></p>
+
+<h2 id="options">Options</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">UGLY-FIREWALL: <span class="o">[</span>quit<span class="o">]</span> <span class="o">[</span>zero-counters<span class="o">]</span> <span class="o">[</span>flush<span class="o">]</span> <span class="o">[</span>base<span class="o">]</span> <span class="o">[</span>load<span class="o">]</span> <span class="o">[</span>policy<span class="o">]</span> <span class="o">[</span>ip4<span class="o">]</span> <span class="o">[</span>ip6<span class="o">]</span></code></pre></div>
+<ul>
+<li>q quit</li>
+<li>z reset counters</li>
+<li>f delete all rules and chains</li>
+<li>b load prebuild base rules</li>
+<li>l load additional user rules</li>
+<li>p policy menu</li>
+<li>4 show/hide ip4</li>
+<li>6 show/hide ip6</li>
+<li>r undocumented: list iptables rules</li>
+</ul>
+
+<h2 id="how-to-make-rulescripts">How to make rulescripts</h2>
+
+<ol>
+<li><p>We need a bash script file that load the ugly-firewall config file:</p>
+
+<pre><code>#!/bin/bash
+source $(dirname $0)/uf.config.sh
+</code></pre></li>
+
+<li><p>with the iptables rules we desire, for example:</p>
+
+<pre><code>$iptables -I OUTPUT 1 -o $out_int -j LOG-ACCEPT-OUTPUT
+$ip6tables -I OUTPUT 1 -o $out_int -j LOG-ACCEPT-OUTPUT
+</code></pre></li>
+
+<li><p>and save it in the ugly-firewall directory with the name we want ended with &ldquo;.uf.sh&rdquo; so that uglu-firewall can find it and be available in the loading menu.</p>
+
+<pre><code>iptables.output.accept.all.uf.sh
+</code></pre></li>
+</ol>
+
+<h2 id="extra-config">Extra config</h2>
+
+<p>To see or change available interfaces edit <strong>uf.config.sh</strong></p>
+
+<p>To see or change available LOG-RULES edit <strong>iptables.log.sh</strong></p>
+
+<h2 id="contributing-and-support">Contributing and support</h2>
+
+<p>Please read <a href="https://www.contributor-covenant.org/">Contributor covenant</a> for details, and  <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct">code of conduct</a> before submitting pull requests or issues.</p>
+
+<p>If you want to support this project with a donation, here is mi Bitcoin address:</p>
+
+<p>1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq</p>
+
+<p>All donations are appreciated!</p>
+
+<h2 id="author">Author</h2>
+
+<ul>
+<li><strong>Viel Losero</strong> - <em>Initial work</em> - <a href="https://github.com/VielLosero">Viel Losero</a></li>
+</ul>
+
+<p><a href="#" class="back">back</a></p>
+
+<p>References:</p>
+
+<p><a href="https://www.netfilter.org/">Netfilter</a></p>
+
+<p><a href="https://www.gnu.org/software/bash/">Bash</a></p>
+
+<p>Licence: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+	Send your coments here --> 
+	<a href="https://twitter.com/VLosero">[Twitter]</a>
+	<a href="https://github.com/VielLosero/VielLosero.github.io">[Git]</a>
+	<a href="mailto:viel.losero@gmail.com">[Email]</a>
+	&lt;-- Envia tus comentarios aquí
+	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
+	<p class=post-meta >Donate Bitcoin Address: 1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq</p>
+	<p>Copyright © 2019 Viel Losero</p>
+	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+</footer>
+</body>
+</html>

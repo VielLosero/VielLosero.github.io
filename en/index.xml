@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Ugly firewall</title>
+      <link>/en/posts/10-ugly-firewall/</link>
+      <pubDate>Sat, 28 Dec 2019 12:06:06 +0200</pubDate>
+      
+      <guid>/en/posts/10-ugly-firewall/</guid>
+      <description>Ugly Firewall This is mi scripts to manage linux netfilter iptables, i tried to do not install 3th tools that can&amp;rsquo;t do what i want, are ultra complicated, or need compiled code to run as binarys files, adding more layers to netfilter tools. It is easy to read a simple bash script to see what it do, and only with few lines of code (less than 200) and some organized files we can manage our firewall in linux.</description>
+    </item>
+    
+    <item>
       <title>Automating arch linux instalation.</title>
       <link>/en/posts/9-automating-arch-install/</link>
       <pubDate>Thu, 05 Dec 2019 06:06:06 +0200</pubDate>
