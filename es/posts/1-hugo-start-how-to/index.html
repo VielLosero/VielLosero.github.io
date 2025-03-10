@@ -13,7 +13,7 @@
         <nav class="MenuNav"> 
                                                                                                                                      
                                                                                                                                   
-                <a class="sidebar-nav-item active" href="../../../es/posts/" title="">Publicaciones</a>
+                <a class="sidebar-nav-item" href="../../../es/posts/" title="">Publicaciones</a>
 		                                                                                                                  
                 <a class="sidebar-nav-item" href="../../../es/contacto/" title="">Contacto</a>
 		                                                                                                                  
@@ -43,166 +43,138 @@
                                                                                                                                                      
 		</p>
 		</div>
-		 <p id="toc">Table of contents <nav id="TableOfContents">
-<ul>
-<li><a href="#porqué-hugo">Porqué Hugo</a></li>
-<li><a href="#instalación-de-hugo">Instalación de Hugo</a></li>
-<li><a href="#creación-de-la-estructura-del-sitio">Creación de la estructura del sitio</a></li>
-<li><a href="#creación-del-repositorio-git">Creación del repositorio git</a></li>
-<li><a href="#instalación-de-un-tema-como-submódulo">Instalación de un tema como submódulo</a></li>
-<li><a href="#creación-de-un-post-de-prueba">Creación de un post de prueba</a></li>
-<li><a href="#resultado">Resultado</a></li>
-</ul>
-</nav></p>
-		
-
-<h1 id="porqué-hugo">Porqué Hugo</h1>
-
+		 <p id="toc">Table of contents <nav id="TableOfContents"></nav></p>
+		<h1 id="porqué-hugo">Porqué Hugo</h1>
 <p>Escogí hugo después de comparar los <a href="https://www.staticgen.com/">top static site gen</a> y leer un par de posts de jekyll vs hugo, cada uno tendrá sus preferencias. Este és el primer SSG que uso ya que por alguno tenia que empezar, la <a href="https://gohugo.io/documentation/">documentación de Hugo</a> es bastante amplia y fácil de entender.</p>
-
 <h1 id="instalación-de-hugo">Instalación de Hugo</h1>
-
 <p>Instalar Hugo dependerá del sistema operativo que tengamos. En Devian es tan fácil como usar apt.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data# apt-get install hugo</code></pre></div>
-<p>Después de instalar, crearemos un nuevo directorio para trabajar ordenadamente.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data# mkdir hugo
-root@kali:~/data# <span class="nb">cd</span> hugo</code></pre></div>
-<h1 id="creación-de-la-estructura-del-sitio">Creación de la estructura del sitio</h1>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data# apt-get install hugo
+</span></span></code></pre></div><p>Después de instalar, crearemos un nuevo directorio para trabajar ordenadamente.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data# mkdir hugo
+</span></span><span class="line"><span class="cl">root@kali:~/data# <span class="nb">cd</span> hugo
+</span></span></code></pre></div><h1 id="creación-de-la-estructura-del-sitio">Creación de la estructura del sitio</h1>
 <p>Con Hugo podemos crear una  <a href="https://gohugo.io/getting-started/directory-structure/">estructura básica</a> para el nuevo sitio web.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo# hugo new site viel_losero                                                                                                                   
-Congratulations! Your new Hugo site is created in /root/data/hugo/viel_losero.                                                                                     
-                                                                                                                                                              
-Just a few more steps and you<span class="err">&#39;</span>re ready to go:
-
-<span class="m">1</span>. Download a theme into the same-named folder.
-   Choose a theme from https://themes.gohugo.io/ or
-   create your own with the <span class="s2">&#34;hugo new theme &lt;THEMENAME&gt;&#34;</span> command.
-<span class="m">2</span>. Perhaps you want to add some content. You can add single files
-   with <span class="s2">&#34;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&#34;</span>.
-<span class="m">3</span>. Start the built-in live server via <span class="s2">&#34;hugo server&#34;</span>.
-
-Visit https://gohugo.io/ <span class="k">for</span> quickstart guide and full documentation.</code></pre></div>
-<p>Veamos que estructura básica nos ha creado.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo# tree
-.
-└── viel_losero
-    ├── archetypes
-    │   └── default.md
-    ├── config.toml
-    ├── content
-    ├── data
-    ├── layouts
-    ├── static
-    └── themes
-
-<span class="m">7</span> directories, <span class="m">2</span> files</code></pre></div>
-<h1 id="creación-del-repositorio-git">Creación del repositorio git</h1>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo# hugo new site viel_losero                                                                                                                   
+</span></span><span class="line"><span class="cl">Congratulations! Your new Hugo site is created in /root/data/hugo/viel_losero.                                                                                     
+</span></span><span class="line"><span class="cl">                                                                                                                                                              
+</span></span><span class="line"><span class="cl">Just a few more steps and you<span class="err">&#39;</span>re ready to go:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1. Download a theme into the same-named folder.
+</span></span><span class="line"><span class="cl">   Choose a theme from https://themes.gohugo.io/ or
+</span></span><span class="line"><span class="cl">   create your own with the <span class="s2">&#34;hugo new theme &lt;THEMENAME&gt;&#34;</span> command.
+</span></span><span class="line"><span class="cl">2. Perhaps you want to add some content. You can add single files
+</span></span><span class="line"><span class="cl">   with <span class="s2">&#34;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&#34;</span>.
+</span></span><span class="line"><span class="cl">3. Start the built-in live server via <span class="s2">&#34;hugo server&#34;</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Visit https://gohugo.io/ <span class="k">for</span> quickstart guide and full documentation.
+</span></span></code></pre></div><p>Veamos que estructura básica nos ha creado.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo# tree
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">└── viel_losero
+</span></span><span class="line"><span class="cl">    ├── archetypes
+</span></span><span class="line"><span class="cl">    │   └── default.md
+</span></span><span class="line"><span class="cl">    ├── config.toml
+</span></span><span class="line"><span class="cl">    ├── content
+</span></span><span class="line"><span class="cl">    ├── data
+</span></span><span class="line"><span class="cl">    ├── layouts
+</span></span><span class="line"><span class="cl">    ├── static
+</span></span><span class="line"><span class="cl">    └── themes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="m">7</span> directories, <span class="m">2</span> files
+</span></span></code></pre></div><h1 id="creación-del-repositorio-git">Creación del repositorio git</h1>
 <p>Una vez creada la estructura básica entraremos en el nuevo directorio del sitio web y iniciaremos un repositorio git.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo# <span class="nb">cd</span> viel_losero/
-root@kali:~/data/hugo/viel_losero# 
-root@kali:~/data/hugo/viel_losero# git init
-Inicializado repositorio Git vacío en /root/data/hugo/viel_losero/.git/</code></pre></div>
-<p>Un simple listado nos dejara ver el nuevo repositorio .git,</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# ls -la
-total <span class="m">4</span>
-drwxr-xr-x <span class="m">9</span> root root <span class="m">125</span> oct  <span class="m">3</span> <span class="m">15</span>:08 .
-drwxr-xr-x <span class="m">3</span> root root  <span class="m">41</span> oct  <span class="m">3</span> <span class="m">15</span>:08 ..
-drwxr-xr-x <span class="m">2</span> root root  <span class="m">24</span> oct  <span class="m">3</span> <span class="m">15</span>:08 archetypes
--rw-r--r-- <span class="m">1</span> root root  <span class="m">82</span> oct  <span class="m">3</span> <span class="m">15</span>:08 config.toml
-drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 content
-drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 data
-drwxr-xr-x <span class="m">7</span> root root <span class="m">119</span> oct  <span class="m">3</span> <span class="m">15</span>:08 .git
-drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 layouts
-drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 static
-drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> <span class="m">15</span>:08 themes</code></pre></div>
-<h1 id="instalación-de-un-tema-como-submódulo">Instalación de un tema como submódulo</h1>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo# <span class="nb">cd</span> viel_losero/
+</span></span><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# 
+</span></span><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# git init
+</span></span><span class="line"><span class="cl">Inicializado repositorio Git vacío en /root/data/hugo/viel_losero/.git/
+</span></span></code></pre></div><p>Un simple listado nos dejara ver el nuevo repositorio .git,</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">4</span>
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">9</span> root root <span class="m">125</span> oct  <span class="m">3</span> 15:08 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">3</span> root root  <span class="m">41</span> oct  <span class="m">3</span> 15:08 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root  <span class="m">24</span> oct  <span class="m">3</span> 15:08 archetypes
+</span></span><span class="line"><span class="cl">-rw-r--r-- <span class="m">1</span> root root  <span class="m">82</span> oct  <span class="m">3</span> 15:08 config.toml
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> 15:08 content
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> 15:08 data
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">7</span> root root <span class="m">119</span> oct  <span class="m">3</span> 15:08 .git
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> 15:08 layouts
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> 15:08 static
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">2</span> root root   <span class="m">6</span> oct  <span class="m">3</span> 15:08 themes
+</span></span></code></pre></div><h1 id="instalación-de-un-tema-como-submódulo">Instalación de un tema como submódulo</h1>
 <p>El servidor de pruevas de Hugo no se inicia sin un tema, nos dará un error.
 Para instalar un tema de hugo como submódulo git podemos descargarlo desde <a href="https://themes.gohugo.io/">https://themes.gohugo.io/</a>. Instalar el tema como un submodulo git nos permitirá mantenerlo actualizado.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal
-Clonando en <span class="s1">&#39;/root/data/hugo/viel_losero/themes/terminal&#39;</span>...
-remote: Enumerating objects: <span class="m">779</span>, <span class="k">done</span>.
-remote: Total <span class="m">779</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, pack-reused <span class="m">779</span>
-Recibiendo objetos: <span class="m">100</span>% <span class="o">(</span><span class="m">779</span>/779<span class="o">)</span>, <span class="m">1</span>.91 MiB <span class="p">|</span> <span class="m">869</span>.00 KiB/s, listo.
-Resolviendo deltas: <span class="m">100</span>% <span class="o">(</span><span class="m">407</span>/407<span class="o">)</span>, listo.</code></pre></div>
-<p>Elegido el tema, yo he escogido <a href="https://themes.gohugo.io/hugo-theme-terminal/">terminal</a> para esta prueba, copiaremos la configuración inicial como sugiere el creador,</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# cat <span class="s">&lt;&lt;EOF&gt;config.toml
-</span><span class="s">baseurl = &#34;/&#34;
-</span><span class="s">languageCode = &#34;en-us&#34;
-</span><span class="s">theme = &#34;terminal&#34;
-</span><span class="s">paginate = 5
-</span><span class="s">
-</span><span class="s">[params]
-</span><span class="s">  # dir name of your blog content (default is `content/posts`)
-</span><span class="s">  contentTypeName = &#34;posts&#34;
-</span><span class="s">  # [&#34;orange&#34;, &#34;blue&#34;, &#34;red&#34;, &#34;green&#34;, &#34;pink&#34;]
-</span><span class="s">  themeColor = &#34;orange&#34;
-</span><span class="s">  # if you set this to 0, only submenu trigger will be visible
-</span><span class="s">  showMenuItems = 2
-</span><span class="s">  # show selector to switch language
-</span><span class="s">  showLanguageSelector = false
-</span><span class="s">  # set theme to full screen width
-</span><span class="s">  fullWidthTheme = false
-</span><span class="s">  # center theme with default width
-</span><span class="s">  centerTheme = false
-</span><span class="s">  # set a custom favicon (default is a `themeColor` square)
-</span><span class="s">  # favicon = &#34;favicon.ico&#34;
-</span><span class="s">
-</span><span class="s">[languages]
-</span><span class="s">  [languages.en]
-</span><span class="s">    languageName = &#34;English&#34;
-</span><span class="s">    title = &#34;Terminal&#34;
-</span><span class="s">    subtitle = &#34;Vel006 public things&#34;
-</span><span class="s">    keywords = &#34;&#34;
-</span><span class="s">    copyright = &#34;&#34;
-</span><span class="s">    menuMore = &#34;Show more&#34;
-</span><span class="s">    readMore = &#34;Read more&#34;
-</span><span class="s">    readOtherPosts = &#34;Read other posts&#34;
-</span><span class="s">
-</span><span class="s">    [languages.en.params.logo]
-</span><span class="s">      logoText = &#34;Terminal&#34;
-</span><span class="s">      logoHomeLink = &#34;/&#34;
-</span><span class="s">
-</span><span class="s">    [languages.en.menu]
-</span><span class="s">      [[languages.en.menu.main]]
-</span><span class="s">        identifier = &#34;about&#34;
-</span><span class="s">        name = &#34;About&#34;
-</span><span class="s">        url = &#34;/about&#34;
-</span><span class="s">      [[languages.en.menu.main]]
-</span><span class="s">        identifier = &#34;showcase&#34;
-</span><span class="s">        name = &#34;Showcase&#34;
-</span><span class="s">        url = &#34;/showcase&#34;
-</span><span class="s">EOF</span></code></pre></div>
-<h1 id="creación-de-un-post-de-prueba">Creación de un post de prueba</h1>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal
+</span></span><span class="line"><span class="cl">Clonando en <span class="s1">&#39;/root/data/hugo/viel_losero/themes/terminal&#39;</span>...
+</span></span><span class="line"><span class="cl">remote: Enumerating objects: 779, <span class="k">done</span>.
+</span></span><span class="line"><span class="cl">remote: Total <span class="m">779</span> <span class="o">(</span>delta 0<span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta 0<span class="o">)</span>, pack-reused <span class="m">779</span>
+</span></span><span class="line"><span class="cl">Recibiendo objetos: 100% <span class="o">(</span>779/779<span class="o">)</span>, 1.91 MiB <span class="p">|</span> 869.00 KiB/s, listo.
+</span></span><span class="line"><span class="cl">Resolviendo deltas: 100% <span class="o">(</span>407/407<span class="o">)</span>, listo.
+</span></span></code></pre></div><p>Elegido el tema, yo he escogido <a href="https://themes.gohugo.io/hugo-theme-terminal/">terminal</a> para esta prueba, copiaremos la configuración inicial como sugiere el creador,</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# cat <span class="s">&lt;&lt;EOF&gt;config.toml
+</span></span></span><span class="line"><span class="cl"><span class="s">baseurl = &#34;/&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">languageCode = &#34;en-us&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">theme = &#34;terminal&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">paginate = 5
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">[params]
+</span></span></span><span class="line"><span class="cl"><span class="s">  # dir name of your blog content (default is `content/posts`)
+</span></span></span><span class="line"><span class="cl"><span class="s">  contentTypeName = &#34;posts&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">  # [&#34;orange&#34;, &#34;blue&#34;, &#34;red&#34;, &#34;green&#34;, &#34;pink&#34;]
+</span></span></span><span class="line"><span class="cl"><span class="s">  themeColor = &#34;orange&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">  # if you set this to 0, only submenu trigger will be visible
+</span></span></span><span class="line"><span class="cl"><span class="s">  showMenuItems = 2
+</span></span></span><span class="line"><span class="cl"><span class="s">  # show selector to switch language
+</span></span></span><span class="line"><span class="cl"><span class="s">  showLanguageSelector = false
+</span></span></span><span class="line"><span class="cl"><span class="s">  # set theme to full screen width
+</span></span></span><span class="line"><span class="cl"><span class="s">  fullWidthTheme = false
+</span></span></span><span class="line"><span class="cl"><span class="s">  # center theme with default width
+</span></span></span><span class="line"><span class="cl"><span class="s">  centerTheme = false
+</span></span></span><span class="line"><span class="cl"><span class="s">  # set a custom favicon (default is a `themeColor` square)
+</span></span></span><span class="line"><span class="cl"><span class="s">  # favicon = &#34;favicon.ico&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">[languages]
+</span></span></span><span class="line"><span class="cl"><span class="s">  [languages.en]
+</span></span></span><span class="line"><span class="cl"><span class="s">    languageName = &#34;English&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    title = &#34;Terminal&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    subtitle = &#34;Vel006 public things&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    keywords = &#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    copyright = &#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    menuMore = &#34;Show more&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    readMore = &#34;Read more&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    readOtherPosts = &#34;Read other posts&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">    [languages.en.params.logo]
+</span></span></span><span class="line"><span class="cl"><span class="s">      logoText = &#34;Terminal&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">      logoHomeLink = &#34;/&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">    [languages.en.menu]
+</span></span></span><span class="line"><span class="cl"><span class="s">      [[languages.en.menu.main]]
+</span></span></span><span class="line"><span class="cl"><span class="s">        identifier = &#34;about&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">        name = &#34;About&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">        url = &#34;/about&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">      [[languages.en.menu.main]]
+</span></span></span><span class="line"><span class="cl"><span class="s">        identifier = &#34;showcase&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">        name = &#34;Showcase&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">        url = &#34;/showcase&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span></code></pre></div><h1 id="creación-de-un-post-de-prueba">Creación de un post de prueba</h1>
 <p>Instalado el tema, crearemos un nuevo post de prueba con el lenguaje de marcas <a href="https://es.wikipedia.org/wiki/Markdown">Markdown</a>, esta es una de las características de Hugo publicar archivos con extensión md.</p>
-
 <p>Para el nuevo post de prueba usaré este propio archivo .md  de notas sobre la instalación y testeo de Hugo.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# hugo new posts/hugo-start-how-to.md
-root@kali:~/data/hugo/viel_losero# vi content/posts/hugo-start-how-to.md</code></pre></div>
-<p>Una vez todo listo, iniciamos el servidor de pruebas local que viene con Hugo para ver el resultado.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# hugo server -D</code></pre></div>
-<p>Finalmente haremos una captura de pantalla del resultado y la añadiremos al post.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/data/hugo/viel_losero# mkdir static/images
-root@kali:~/data/hugo/viel_losero# cp /root/Imágenes/Captura<span class="se">\ </span>de<span class="se">\ </span>pantalla<span class="se">\ </span>-2019-10-03<span class="se">\ </span><span class="m">17</span>-27-33.png static/images/hugo-dev.png</code></pre></div>
-<h1 id="resultado">Resultado</h1>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# hugo new posts/hugo-start-how-to.md
+</span></span><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# vi content/posts/hugo-start-how-to.md
+</span></span></code></pre></div><p>Una vez todo listo, iniciamos el servidor de pruebas local que viene con Hugo para ver el resultado.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# hugo server -D
+</span></span></code></pre></div><p>Finalmente haremos una captura de pantalla del resultado y la añadiremos al post.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# mkdir static/images
+</span></span><span class="line"><span class="cl">root@kali:~/data/hugo/viel_losero# cp /root/Imágenes/Captura<span class="se">\ </span>de<span class="se">\ </span>pantalla<span class="se">\ </span>-2019-10-03<span class="se">\ </span>17-27-33.png static/images/hugo-dev.png
+</span></span></code></pre></div><h1 id="resultado">Resultado</h1>
 <p>Aquí tenemos la captura de pantalla con el resultado de mi primera prueba con Hugo.</p>
-
-<p><img src="../../../en/posts/images/hugo-local-server.png" alt="Imágen del servidor Hugo en local" /></p>
-
-<p><a href="#" class="back">back</a></p>
-
+<p><img src="../../../en/posts/images/hugo-local-server.png" alt="Imágen del servidor Hugo en local"></p>
+<p><!-- raw HTML omitted -->back<!-- raw HTML omitted --></p>
 <p>Referencias:</p>
-
 <p><a href="https://gohugo.io/getting-started/quick-start/">Hugo getting started</a></p>
-
 <p><a href="https://themes.gohugo.io/">Hugo themes</a></p>
-
 <p><a href="https://themes.gohugo.io/hugo-theme-terminal/">Terminal Hugo theme</a></p>
-
 <p>Licencia: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
 
 	 </article>
@@ -217,7 +189,7 @@ root@kali:~/data/hugo/viel_losero# cp /root/Imágenes/Captura<span class="se">\ 
 	<a href="mailto:viel.losero@gmail.com">[Email]</a>
 	&lt;-- Envia tus comentarios aquí
 	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
-	<p class=post-meta >Donate Bitcoin Address: 1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq</p>
+	<p class=post-meta >Donate Bitcoin Address: bc1q6d245chm8t5sdkqjugwg3ce2c92m276ee4ksv4</p>
 	<p>Copyright © 2019 Viel Losero</p>
 	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
 </footer>

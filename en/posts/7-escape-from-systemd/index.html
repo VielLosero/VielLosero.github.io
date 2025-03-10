@@ -13,7 +13,7 @@
         <nav class="MenuNav"> 
                                                                                                                                      
                                                                                                                                   
-                <a class="sidebar-nav-item active" href="../../../en/posts/" title="">Posts</a>
+                <a class="sidebar-nav-item" href="../../../en/posts/" title="">Posts</a>
 		                                                                                                                  
                 <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
 		                                                                                                                  
@@ -35,7 +35,7 @@
         </header>
 	 <article>
 		<div class="post-meta">
-		<p id="post-date"> Posted: Nov 8, 2019 - [ 3095 Words ] 
+		<p id="post-date"> Posted: Nov 8, 2019 - [ 3096 Words ] 
 		
 		    
 		       - [ <a href="../../../es/posts/7-escape-from-systemd/">es</a> ]
@@ -44,383 +44,333 @@
 		</p>
 		</div>
 		 <p id="toc">Table of contents <nav id="TableOfContents">
-<ul>
-<li><a href="#why-escape-from-systemd">Why escape from systemd</a>
-<ul>
-<li><a href="#comparing-startup-systems">Comparing startup systems</a></li>
-<li><a href="#why-sysv-init">Why sysV-init</a></li>
-<li><a href="#removing-systemd">Removing systemd</a></li>
-<li><a href="#all-depends-on-systemd">All depends on systemd</a></li>
-</ul></li>
-<li><a href="#customizing-kali-linux">Customizing Kali linux</a>
-<ul>
-<li><a href="#cloning-live-build-config">Cloning live-build-config</a>
-<ul>
-<li><a href="#making-our-variant">Making our variant</a></li>
-</ul></li>
-<li><a href="#first-try-to-make-the-iso">First try to make the iso</a>
-<ul>
-<li><a href="#copying-mi-i3-config">Copying mi i3 config</a></li>
-<li><a href="#adding-some-packages">Adding some packages</a></li>
-<li><a href="#building-the-iso">Building the iso &hellip;</a></li>
-</ul></li>
-<li><a href="#second-try-round-two">Second try .. round two.</a>
-<ul>
-<li><a href="#changing-systemd-to-sysvinit">Changing systemd to sysvinit</a>
-<ul>
-<li><a href="#in-the-face">In the face &hellip;</a></li>
-</ul></li>
-<li><a href="#starting-with-the-minimum">Starting with the minimum</a>
-<ul>
-<li><a href="#more-dependecy-errors">More dependecy errors</a></li>
-<li><a href="#definitely-removing-systemd">Definitely removing systemd</a></li>
-</ul></li>
-<li><a href="#changing-locales">Changing locales</a></li>
-<li><a href="#screen-resolution">Screen resolution</a></li>
-<li><a href="#disabling-services">Disabling services</a></li>
-</ul></li>
-<li><a href="#result">Result</a></li>
-</ul></li>
-<li><a href="#what-remains-to-be-done">What remains to be done</a>
-<ul>
-<li><a href="#more-customization">More customization</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#comparing-startup-systems">Comparing startup systems</a></li>
+    <li><a href="#why-sysv-init">Why sysV-init</a></li>
+    <li><a href="#removing-systemd">Removing systemd</a></li>
+    <li><a href="#all-depends-on-systemd">All depends on systemd</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#cloning-live-build-config">Cloning live-build-config</a>
+      <ul>
+        <li><a href="#making-our-variant">Making our variant</a></li>
+      </ul>
+    </li>
+    <li><a href="#first-try-to-make-the-iso">First try to make the iso</a>
+      <ul>
+        <li><a href="#copying-mi-i3-config">Copying mi i3 config</a></li>
+        <li><a href="#adding-some-packages">Adding some packages</a></li>
+        <li><a href="#building-the-iso-">Building the iso &hellip;</a></li>
+      </ul>
+    </li>
+    <li><a href="#second-try--round-two">Second try .. round two.</a>
+      <ul>
+        <li><a href="#changing-systemd-to-sysvinit">Changing systemd to sysvinit</a></li>
+        <li><a href="#starting-with-the-minimum">Starting with the minimum</a></li>
+        <li><a href="#changing-locales">Changing locales</a></li>
+        <li><a href="#screen-resolution">Screen resolution</a></li>
+        <li><a href="#disabling-services">Disabling services</a></li>
+      </ul>
+    </li>
+    <li><a href="#result">Result</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#more-customization">More customization</a></li>
+  </ul>
 </nav></p>
-		
-
-<h1 id="why-escape-from-systemd">Why escape from systemd</h1>
-
+		<h1 id="why-escape-from-systemd">Why escape from systemd</h1>
 <p>Because I want to start my system in a kiss way, using the minimum necessary for it to work well and quickly.</p>
-
 <p>In most Linux distros, many things that are not used and use resources are activated by default. Luckily Linux allows you to configure the system at ease under complete control, but &hellip; what if I want to make my own startup system?</p>
-
 <p>Systemd is becoming more complicated, it is a binary and changing anything that is not predefined involves changing the source code, compiling and testing. Systemd unit service files are specific to systemd only, they are not scripts that can work without systemd. Every time they make more systemd dependent applications like <a href="https://wiki.archlinux.org/index.php/Netctl">netctl de arch linux</a>.</p>
-
 <p>Do not follow the Unix philosophy, do one thing and do it well. Nor does it follow my KISS philosophy, make it simple. It makes no sense to make things bigger and bigger with more features &hellip; in the end we will have a program (systemd) that will do everything, logs, user control, X, file management, video editing, we won&rsquo;t need anything else but &hellip; I will not enter into a debate or give a conference about whether it is good or not to rely solely on a system, a program, etc. Everyone can search, compare and choose.</p>
-
 <h2 id="comparing-startup-systems">Comparing startup systems</h2>
-
 <ul>
-<li><p><a href="https://www.slant.co/topics/4663/~linux-init-systems">Comparison of the different startup systems.</a></p></li>
-
-<li><p><a href="https://www.distrowatch.com/search.php?ostype=All&amp;category=All&amp;origin=All&amp;basedon=All&amp;notbasedon=None&amp;desktop=All&amp;architecture=All&amp;package=All&amp;rolling=All&amp;isosize=All&amp;netinstall=All&amp;language=All&amp;defaultinit=SysV&amp;status=Active#simple">To see which startup system has the different distributions.</a></p></li>
+<li>
+<p><a href="https://www.slant.co/topics/4663/~linux-init-systems">Comparison of the different startup systems.</a></p>
+</li>
+<li>
+<p><a href="https://www.distrowatch.com/search.php?ostype=All&amp;category=All&amp;origin=All&amp;basedon=All&amp;notbasedon=None&amp;desktop=All&amp;architecture=All&amp;package=All&amp;rolling=All&amp;isosize=All&amp;netinstall=All&amp;language=All&amp;defaultinit=SysV&amp;status=Active#simple">To see which startup system has the different distributions.</a></p>
+</li>
 </ul>
-
-<p><img src="../../../en/posts/images/7-pstree.png" alt="Comparative image of systemd and sysVinit" /></p>
-
+<p><img src="../../../en/posts/images/7-pstree.png" alt="Comparative image of systemd and sysVinit"></p>
 <h2 id="why-sysv-init">Why sysV-init</h2>
-
 <p>After investigating a little about openrc, and without any startup system just convincing me at all, I will use SysVinit because it is the first one, it is extensively tested, it is simple to understand and we can reuse the scritps if we want to create our own startup system .</p>
-
 <p>Everyone will have their preferred startup system, this is the advantage of using free software. We have several options and if we don&rsquo;t like it we can do it. Each startup system has its dependencies, advantages and disadvantages.</p>
-
 <h2 id="removing-systemd">Removing systemd</h2>
-
-<p>We start from a kali-mate-desktop where I installed i3 and adjusted several keys and shortcuts to mate applications, such as mate-screenshoot. To replace systemd with sysV-init <a href="https://linuxconfig.org/how-to-replace-systemd-with-sysv-init-on-debian-linux">I will follow this link</a> but I will not add devuan repositories because kali has sysV-init in its repositories.</p>
-
+<p>We start from a kali-mate-desktop where I installed i3 and adjusted several keys and shortcuts to mate applications, such as mate-screenshoot. To replace systemd with sysV-init [I will follow this link] (<a href="https://linuxconfig.org/how-to-replace-systemd-with-sysv-init-on-debian-linux">https://linuxconfig.org/how-to-replace-systemd-with-sysv-init-on-debian-linux</a>) but I will not add devuan repositories because kali has sysV-init in its repositories.</p>
 <p>Verifying that sysvinit is in the repositories</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# apt-cache search sysvinit
-acct - GNU Accounting utilities <span class="k">for</span> process and login accounting
-dumb-init - wrapper script which proxies signals to a child
-git-daemon-run - fast, scalable, distributed revision control system <span class="o">(</span>git-daemon service<span class="o">)</span>
-git-daemon-sysvinit - fast, scalable, distributed revision control system <span class="o">(</span>git-daemon service<span class="o">)</span>
-init-system-helpers - helper tools <span class="k">for</span> all init systems
-live-config-sysvinit - Live System Configuration Components <span class="o">(</span>sysvinit backend<span class="o">)</span>
-systemd-sysv - system and service manager - SysV links
-sysvinit-core - System-V-like init utilities
-sysvinit-utils - System-V-like utilities
-root@kali:~/live-build-config# </code></pre></div>
-<p>Installing sysvinit we see how it removes some packages that depend on systed.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# apt install sysvinit-core sysvinit-utils
-Leyendo lista de paquetes... Hecho
-Creando árbol de dependencias       
-Leyendo la información de estado... Hecho
-Los paquetes indicados a continuación se instalaron de forma automática y ya no son necesarios.
-  accountsservice caja-common engrampa engrampa-common eom eom-common exfat-fuse exfat-utils ffmpegthumbnailer fonts-cantarell gir1.2-eom-1.0
-  gir1.2-matemenu-2.0 gvfs-common gvfs-libs libaccountsservice0 libappstream4 libatasmart4 libayatana-appindicator3-1 libayatana-ido3-0.4-0
-  libayatana-indicator3-7 libblockdev-crypto2 libblockdev-fs2 libblockdev-loop2 libblockdev-part-err2 libblockdev-part2 libblockdev-swap2 libblockdev-utils2
-  libblockdev2 libcpufreq0 libdbusmenu-glib4 libdbusmenu-gtk3-4 libexempi8 libffmpegthumbnailer4v5 libgdata-common libgdata22 libgoa-1.0-0b
-  libgoa-1.0-common libgphoto2-6 libgphoto2-l10n libgphoto2-port12 libgtkmm-3.0-1v5 libgucharmap-2-90-7 libindicator3-7 liblightdm-gobject-1-0
-  libmate-desktop-2-17 libmate-menu2 libmate-panel-applet-4-1 libmate-slab0 libmate-window-settings1 libmatedict6 libmatekbd-common libmatekbd4
-  libmatemixer-common libmatemixer0 libmateweather-common libmateweather1 libndp0 libnfs12 libnma0 liboauth0 librda-common librda0 libstemmer0d libteamdctl0
-  libudisks2-0 libvolume-key1 libxklavier16 lightdm-gtk-greeter mate-applets-common mate-backgrounds mate-calc mate-calc-common mate-control-center-common
-  mate-desktop mate-icon-theme mate-media mate-media-common mate-menus mate-panel-common mate-polkit-common mate-power-manager-common mate-screensaver
-  mate-screensaver-common mate-settings-daemon-common mate-system-monitor mate-system-monitor-common mate-themes mate-user-guide mate-utils
-  mate-utils-common menu menu-xdg mobile-broadband-provider-info
-Utilice «apt autoremove» para eliminarlos.
-Se instalarán los siguientes paquetes adicionales:
-  caja-common gvfs-libs initscripts insserv libmate-panel-applet-4-1 libmate-slab0 libmate-window-settings1 libnm0 libnss-systemd libsystemd0
-  mate-applets-common mate-control-center-common mate-panel-common mate-power-manager-common startpar systemd sysv-rc
-Paquetes sugeridos:
-  bootchart2 systemd-container policykit-1 bootlogd
-Paquetes recomendados:
-  libpam-systemd
-Los siguientes paquetes se ELIMINARÁN:
-  caja dbus-user-session ettercap-graphical gvfs gvfs-backends gvfs-daemons kali-desktop-core kali-desktop-i3 kali-desktop-mate libpam-systemd lightdm
-  mate-applet-brisk-menu mate-applets mate-control-center mate-desktop-environment mate-desktop-environment-core mate-panel mate-polkit mate-power-manager
-  mate-settings-daemon network-manager network-manager-gnome packagekit packagekit-tools policykit-1 systemd-sysv udisks2
-Se instalarán los siguientes paquetes NUEVOS:
-  initscripts insserv startpar sysv-rc sysvinit-core
-Se actualizarán los siguientes paquetes:
-  caja-common gvfs-libs libmate-panel-applet-4-1 libmate-slab0 libmate-window-settings1 libnm0 libnss-systemd libsystemd0 mate-applets-common
-  mate-control-center-common mate-panel-common mate-power-manager-common systemd sysvinit-utils
-<span class="m">14</span> actualizados, <span class="m">5</span> nuevos se instalarán, <span class="m">27</span> para eliminar y <span class="m">667</span> no actualizados.
-Se necesita descargar <span class="m">19</span>,9 MB de archivos.
-Se liberarán <span class="m">36</span>,1 MB después de esta operación.
-¿Desea continuar? <span class="o">[</span>S/n<span class="o">]</span> 
-
----skipped---
-
-Desinstalando systemd-sysv <span class="o">(</span><span class="m">241</span>-7<span class="o">)</span> ...                                                                                                                        
-Seleccionando el paquete sysvinit-core previamente no seleccionado.                                                                                           
-<span class="o">(</span>Leyendo la base de datos ... <span class="m">535426</span> ficheros o directorios instalados actualmente.<span class="o">)</span>                                                                          
-Preparando para desempaquetar .../sysvinit-core_2.96-1_amd64.deb ...                                                                                          
-Desempaquetando sysvinit-core <span class="o">(</span><span class="m">2</span>.96-1<span class="o">)</span> ...                                                                                                                    
-Preparando para desempaquetar .../libnss-systemd_242-8_amd64.deb ...                                                                                          
-Desempaquetando libnss-systemd:amd64 <span class="o">(</span><span class="m">242</span>-8<span class="o">)</span> sobre <span class="o">(</span><span class="m">241</span>-7<span class="o">)</span> ...                                                                                                
-Preparando para desempaquetar .../systemd_242-8_amd64.deb ...                                                                                                 
-Desempaquetando systemd <span class="o">(</span><span class="m">242</span>-8<span class="o">)</span> sobre <span class="o">(</span><span class="m">241</span>-7<span class="o">)</span> ...                                                                                                             
-Preparando para desempaquetar .../libsystemd0_242-8_amd64.deb ...                                                                                             
-Desempaquetando libsystemd0:amd64 <span class="o">(</span><span class="m">242</span>-8<span class="o">)</span> sobre <span class="o">(</span><span class="m">241</span>-7<span class="o">)</span> ...                                                                                                   
-Configurando libsystemd0:amd64 <span class="o">(</span><span class="m">242</span>-8<span class="o">)</span> ...                                             
-
-Progreso: <span class="o">[</span>  <span class="m">8</span>%<span class="o">]</span> <span class="o">[</span><span class="c1">###########.............................................................................................................................]</span></code></pre></div>
-<p>Copying inittab to our etc.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# cp /usr/share/sysvinit/inittab /etc/inittab
-root@kali:~#</code></pre></div>
-<p>Restarting the pc.</p>
-
-<pre><code>reboot 
-</code></pre>
-
-<p>After restarting we remove systemd that remove more packages that depend of it.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# apt remove  --purge --auto-remove systemd
-Leyendo lista de paquetes... Hecho
-Creando árbol de dependencias       
-Leyendo la información de estado... Hecho
-Los siguientes paquetes se ELIMINARÁN:
-  accountsservice* caja-common* engrampa* engrampa-common* eom* eom-common* exfat-fuse* exfat-utils* ffmpegthumbnailer* fonts-cantarell* gir1.2-eom-1.0*
-  gir1.2-matemenu-2.0* gvfs-common* gvfs-libs* iio-sensor-proxy* libaccountsservice0* libappstream4* libatasmart4* libayatana-appindicator3-1*
-  libayatana-ido3-0.4-0* libayatana-indicator3-7* libblockdev-crypto2* libblockdev-fs2* libblockdev-loop2* libblockdev-part-err2* libblockdev-part2*
-  libblockdev-swap2* libblockdev-utils2* libblockdev2* libcpufreq0* libdbusmenu-glib4* libdbusmenu-gtk3-4* libexempi8* libffmpegthumbnailer4v5*
-  libgdata-common* libgdata22* libgoa-1.0-0b* libgoa-1.0-common* libgphoto2-6* libgphoto2-l10n* libgphoto2-port12* libgtkmm-3.0-1v5* libgucharmap-2-90-7*
-  libindicator3-7* liblightdm-gobject-1-0* libmate-desktop-2-17* libmate-menu2* libmate-panel-applet-4-1* libmate-slab0* libmate-window-settings1*
-  libmatedict6* libmatekbd-common* libmatekbd4* libmatemixer-common* libmatemixer0* libmateweather-common* libmateweather1* libndp0* libnfs12* libnma0*
-  libnss-systemd* liboauth0* libplymouth4* librda-common* librda0* libstemmer0d* libteamdctl0* libudisks2-0* libvolume-key1* libxklavier16*
-  lightdm-gtk-greeter* mate-applets-common* mate-backgrounds* mate-calc* mate-calc-common* mate-control-center-common* mate-desktop* mate-icon-theme*
-  mate-media* mate-media-common* mate-menus* mate-panel-common* mate-polkit-common* mate-power-manager-common* mate-screensaver* mate-screensaver-common*
-  mate-settings-daemon-common* mate-system-monitor* mate-system-monitor-common* mate-themes* mate-user-guide* mate-utils* mate-utils-common* menu* menu-xdg*
-  mobile-broadband-provider-info* plymouth* plymouth-label* systemd*
-<span class="m">0</span> actualizados, <span class="m">0</span> nuevos se instalarán, <span class="m">99</span> para eliminar y <span class="m">915</span> no actualizados.
-Se liberarán <span class="m">482</span> MB después de esta operación.
-¿Desea continuar? <span class="o">[</span>S/n<span class="o">]</span> 
-
----skipped---
-
-Desinstalando libmateweather-common <span class="o">(</span><span class="m">1</span>.22.0-1<span class="o">)</span> ...
-Desinstalando libndp0:amd64 <span class="o">(</span><span class="m">1</span>.6-1+b1<span class="o">)</span> ...
-Desinstalando libnfs12:amd64 <span class="o">(</span><span class="m">3</span>.0.0-2<span class="o">)</span> ...
-
-Progreso: <span class="o">[</span> <span class="m">61</span>%<span class="o">]</span> <span class="o">[</span><span class="c1">###################################################################################.....................................................]</span> </code></pre></div>
-<h2 id="all-depends-on-systemd">All depends on systemd</h2>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# apt-cache search sysvinit
+</span></span><span class="line"><span class="cl">acct - GNU Accounting utilities <span class="k">for</span> process and login accounting
+</span></span><span class="line"><span class="cl">dumb-init - wrapper script which proxies signals to a child
+</span></span><span class="line"><span class="cl">git-daemon-run - fast, scalable, distributed revision control system <span class="o">(</span>git-daemon service<span class="o">)</span>
+</span></span><span class="line"><span class="cl">git-daemon-sysvinit - fast, scalable, distributed revision control system <span class="o">(</span>git-daemon service<span class="o">)</span>
+</span></span><span class="line"><span class="cl">init-system-helpers - helper tools <span class="k">for</span> all init systems
+</span></span><span class="line"><span class="cl">live-config-sysvinit - Live System Configuration Components <span class="o">(</span>sysvinit backend<span class="o">)</span>
+</span></span><span class="line"><span class="cl">systemd-sysv - system and service manager - SysV links
+</span></span><span class="line"><span class="cl">sysvinit-core - System-V-like init utilities
+</span></span><span class="line"><span class="cl">sysvinit-utils - System-V-like utilities
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><p>Installing sysvinit we see how it removes some packages that depend on systed.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~# apt install sysvinit-core sysvinit-utils
+</span></span><span class="line"><span class="cl">Leyendo lista de paquetes... Hecho
+</span></span><span class="line"><span class="cl">Creando árbol de dependencias       
+</span></span><span class="line"><span class="cl">Leyendo la información de estado... Hecho
+</span></span><span class="line"><span class="cl">Los paquetes indicados a continuación se instalaron de forma automática y ya no son necesarios.
+</span></span><span class="line"><span class="cl">  accountsservice caja-common engrampa engrampa-common eom eom-common exfat-fuse exfat-utils ffmpegthumbnailer fonts-cantarell gir1.2-eom-1.0
+</span></span><span class="line"><span class="cl">  gir1.2-matemenu-2.0 gvfs-common gvfs-libs libaccountsservice0 libappstream4 libatasmart4 libayatana-appindicator3-1 libayatana-ido3-0.4-0
+</span></span><span class="line"><span class="cl">  libayatana-indicator3-7 libblockdev-crypto2 libblockdev-fs2 libblockdev-loop2 libblockdev-part-err2 libblockdev-part2 libblockdev-swap2 libblockdev-utils2
+</span></span><span class="line"><span class="cl">  libblockdev2 libcpufreq0 libdbusmenu-glib4 libdbusmenu-gtk3-4 libexempi8 libffmpegthumbnailer4v5 libgdata-common libgdata22 libgoa-1.0-0b
+</span></span><span class="line"><span class="cl">  libgoa-1.0-common libgphoto2-6 libgphoto2-l10n libgphoto2-port12 libgtkmm-3.0-1v5 libgucharmap-2-90-7 libindicator3-7 liblightdm-gobject-1-0
+</span></span><span class="line"><span class="cl">  libmate-desktop-2-17 libmate-menu2 libmate-panel-applet-4-1 libmate-slab0 libmate-window-settings1 libmatedict6 libmatekbd-common libmatekbd4
+</span></span><span class="line"><span class="cl">  libmatemixer-common libmatemixer0 libmateweather-common libmateweather1 libndp0 libnfs12 libnma0 liboauth0 librda-common librda0 libstemmer0d libteamdctl0
+</span></span><span class="line"><span class="cl">  libudisks2-0 libvolume-key1 libxklavier16 lightdm-gtk-greeter mate-applets-common mate-backgrounds mate-calc mate-calc-common mate-control-center-common
+</span></span><span class="line"><span class="cl">  mate-desktop mate-icon-theme mate-media mate-media-common mate-menus mate-panel-common mate-polkit-common mate-power-manager-common mate-screensaver
+</span></span><span class="line"><span class="cl">  mate-screensaver-common mate-settings-daemon-common mate-system-monitor mate-system-monitor-common mate-themes mate-user-guide mate-utils
+</span></span><span class="line"><span class="cl">  mate-utils-common menu menu-xdg mobile-broadband-provider-info
+</span></span><span class="line"><span class="cl">Utilice «apt autoremove» para eliminarlos.
+</span></span><span class="line"><span class="cl">Se instalarán los siguientes paquetes adicionales:
+</span></span><span class="line"><span class="cl">  caja-common gvfs-libs initscripts insserv libmate-panel-applet-4-1 libmate-slab0 libmate-window-settings1 libnm0 libnss-systemd libsystemd0
+</span></span><span class="line"><span class="cl">  mate-applets-common mate-control-center-common mate-panel-common mate-power-manager-common startpar systemd sysv-rc
+</span></span><span class="line"><span class="cl">Paquetes sugeridos:
+</span></span><span class="line"><span class="cl">  bootchart2 systemd-container policykit-1 bootlogd
+</span></span><span class="line"><span class="cl">Paquetes recomendados:
+</span></span><span class="line"><span class="cl">  libpam-systemd
+</span></span><span class="line"><span class="cl">Los siguientes paquetes se ELIMINARÁN:
+</span></span><span class="line"><span class="cl">  caja dbus-user-session ettercap-graphical gvfs gvfs-backends gvfs-daemons kali-desktop-core kali-desktop-i3 kali-desktop-mate libpam-systemd lightdm
+</span></span><span class="line"><span class="cl">  mate-applet-brisk-menu mate-applets mate-control-center mate-desktop-environment mate-desktop-environment-core mate-panel mate-polkit mate-power-manager
+</span></span><span class="line"><span class="cl">  mate-settings-daemon network-manager network-manager-gnome packagekit packagekit-tools policykit-1 systemd-sysv udisks2
+</span></span><span class="line"><span class="cl">Se instalarán los siguientes paquetes NUEVOS:
+</span></span><span class="line"><span class="cl">  initscripts insserv startpar sysv-rc sysvinit-core
+</span></span><span class="line"><span class="cl">Se actualizarán los siguientes paquetes:
+</span></span><span class="line"><span class="cl">  caja-common gvfs-libs libmate-panel-applet-4-1 libmate-slab0 libmate-window-settings1 libnm0 libnss-systemd libsystemd0 mate-applets-common
+</span></span><span class="line"><span class="cl">  mate-control-center-common mate-panel-common mate-power-manager-common systemd sysvinit-utils
+</span></span><span class="line"><span class="cl"><span class="m">14</span> actualizados, <span class="m">5</span> nuevos se instalarán, <span class="m">27</span> para eliminar y <span class="m">667</span> no actualizados.
+</span></span><span class="line"><span class="cl">Se necesita descargar 19,9 MB de archivos.
+</span></span><span class="line"><span class="cl">Se liberarán 36,1 MB después de esta operación.
+</span></span><span class="line"><span class="cl">¿Desea continuar? <span class="o">[</span>S/n<span class="o">]</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---skipped---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Desinstalando systemd-sysv <span class="o">(</span>241-7<span class="o">)</span> ...                                                                                                                        
+</span></span><span class="line"><span class="cl">Seleccionando el paquete sysvinit-core previamente no seleccionado.                                                                                           
+</span></span><span class="line"><span class="cl"><span class="o">(</span>Leyendo la base de datos ... <span class="m">535426</span> ficheros o directorios instalados actualmente.<span class="o">)</span>                                                                          
+</span></span><span class="line"><span class="cl">Preparando para desempaquetar .../sysvinit-core_2.96-1_amd64.deb ...                                                                                          
+</span></span><span class="line"><span class="cl">Desempaquetando sysvinit-core <span class="o">(</span>2.96-1<span class="o">)</span> ...                                                                                                                    
+</span></span><span class="line"><span class="cl">Preparando para desempaquetar .../libnss-systemd_242-8_amd64.deb ...                                                                                          
+</span></span><span class="line"><span class="cl">Desempaquetando libnss-systemd:amd64 <span class="o">(</span>242-8<span class="o">)</span> sobre <span class="o">(</span>241-7<span class="o">)</span> ...                                                                                                
+</span></span><span class="line"><span class="cl">Preparando para desempaquetar .../systemd_242-8_amd64.deb ...                                                                                                 
+</span></span><span class="line"><span class="cl">Desempaquetando systemd <span class="o">(</span>242-8<span class="o">)</span> sobre <span class="o">(</span>241-7<span class="o">)</span> ...                                                                                                             
+</span></span><span class="line"><span class="cl">Preparando para desempaquetar .../libsystemd0_242-8_amd64.deb ...                                                                                             
+</span></span><span class="line"><span class="cl">Desempaquetando libsystemd0:amd64 <span class="o">(</span>242-8<span class="o">)</span> sobre <span class="o">(</span>241-7<span class="o">)</span> ...                                                                                                   
+</span></span><span class="line"><span class="cl">Configurando libsystemd0:amd64 <span class="o">(</span>242-8<span class="o">)</span> ...                                             
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Progreso: <span class="o">[</span>  8%<span class="o">]</span> <span class="o">[</span><span class="c1">###########.............................................................................................................................]</span>
+</span></span></code></pre></div><p>Copying inittab to our etc.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~# cp /usr/share/sysvinit/inittab /etc/inittab
+</span></span><span class="line"><span class="cl">root@kali:~#
+</span></span></code></pre></div><p>Restarting the pc.</p>
+<pre tabindex="0"><code>reboot 
+</code></pre><p>After restarting we remove systemd that remove more packages that depend of it.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~# apt remove  --purge --auto-remove systemd
+</span></span><span class="line"><span class="cl">Leyendo lista de paquetes... Hecho
+</span></span><span class="line"><span class="cl">Creando árbol de dependencias       
+</span></span><span class="line"><span class="cl">Leyendo la información de estado... Hecho
+</span></span><span class="line"><span class="cl">Los siguientes paquetes se ELIMINARÁN:
+</span></span><span class="line"><span class="cl">  accountsservice* caja-common* engrampa* engrampa-common* eom* eom-common* exfat-fuse* exfat-utils* ffmpegthumbnailer* fonts-cantarell* gir1.2-eom-1.0*
+</span></span><span class="line"><span class="cl">  gir1.2-matemenu-2.0* gvfs-common* gvfs-libs* iio-sensor-proxy* libaccountsservice0* libappstream4* libatasmart4* libayatana-appindicator3-1*
+</span></span><span class="line"><span class="cl">  libayatana-ido3-0.4-0* libayatana-indicator3-7* libblockdev-crypto2* libblockdev-fs2* libblockdev-loop2* libblockdev-part-err2* libblockdev-part2*
+</span></span><span class="line"><span class="cl">  libblockdev-swap2* libblockdev-utils2* libblockdev2* libcpufreq0* libdbusmenu-glib4* libdbusmenu-gtk3-4* libexempi8* libffmpegthumbnailer4v5*
+</span></span><span class="line"><span class="cl">  libgdata-common* libgdata22* libgoa-1.0-0b* libgoa-1.0-common* libgphoto2-6* libgphoto2-l10n* libgphoto2-port12* libgtkmm-3.0-1v5* libgucharmap-2-90-7*
+</span></span><span class="line"><span class="cl">  libindicator3-7* liblightdm-gobject-1-0* libmate-desktop-2-17* libmate-menu2* libmate-panel-applet-4-1* libmate-slab0* libmate-window-settings1*
+</span></span><span class="line"><span class="cl">  libmatedict6* libmatekbd-common* libmatekbd4* libmatemixer-common* libmatemixer0* libmateweather-common* libmateweather1* libndp0* libnfs12* libnma0*
+</span></span><span class="line"><span class="cl">  libnss-systemd* liboauth0* libplymouth4* librda-common* librda0* libstemmer0d* libteamdctl0* libudisks2-0* libvolume-key1* libxklavier16*
+</span></span><span class="line"><span class="cl">  lightdm-gtk-greeter* mate-applets-common* mate-backgrounds* mate-calc* mate-calc-common* mate-control-center-common* mate-desktop* mate-icon-theme*
+</span></span><span class="line"><span class="cl">  mate-media* mate-media-common* mate-menus* mate-panel-common* mate-polkit-common* mate-power-manager-common* mate-screensaver* mate-screensaver-common*
+</span></span><span class="line"><span class="cl">  mate-settings-daemon-common* mate-system-monitor* mate-system-monitor-common* mate-themes* mate-user-guide* mate-utils* mate-utils-common* menu* menu-xdg*
+</span></span><span class="line"><span class="cl">  mobile-broadband-provider-info* plymouth* plymouth-label* systemd*
+</span></span><span class="line"><span class="cl"><span class="m">0</span> actualizados, <span class="m">0</span> nuevos se instalarán, <span class="m">99</span> para eliminar y <span class="m">915</span> no actualizados.
+</span></span><span class="line"><span class="cl">Se liberarán <span class="m">482</span> MB después de esta operación.
+</span></span><span class="line"><span class="cl">¿Desea continuar? <span class="o">[</span>S/n<span class="o">]</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---skipped---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Desinstalando libmateweather-common <span class="o">(</span>1.22.0-1<span class="o">)</span> ...
+</span></span><span class="line"><span class="cl">Desinstalando libndp0:amd64 <span class="o">(</span>1.6-1+b1<span class="o">)</span> ...
+</span></span><span class="line"><span class="cl">Desinstalando libnfs12:amd64 <span class="o">(</span>3.0.0-2<span class="o">)</span> ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Progreso: <span class="o">[</span> 61%<span class="o">]</span> <span class="o">[</span><span class="c1">###################################################################################.....................................................] </span>
+</span></span></code></pre></div><h2 id="all-depends-on-systemd">All depends on systemd</h2>
 <p>We can use <strong>&ldquo;apt-cache depends package&rdquo;</strong> to see the dependencies of a package, in this case the default file manager of the mate desktop, &ldquo;caja&rdquo;. To see the whole tree of dependencies or indirect dependencies we can use apt-rdepends. Indirect dependencies are those that do not depend directly but if through other packages.</p>
-
 <p>To install apt-rdepends</p>
-
-<pre><code>apt install apt-rdepends
-</code></pre>
-
-<p>We can see the caja dependencies</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# apt-rdepends caja <span class="p">|</span> grep systemd
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-  Depends: libsystemd0
-libsystemd0
-  Depends: libpam-systemd
-  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">209</span><span class="o">)</span>
-  Depends: libsystemd0
-  Depends: libsystemd0
-  PreDepends: libsystemd0
-libpam-systemd
-  Depends: systemd <span class="o">(=</span> <span class="m">242</span>-7<span class="o">)</span>
-  Depends: systemd-sysv
-systemd
-  Depends: libsystemd0 <span class="o">(=</span> <span class="m">242</span>-7<span class="o">)</span>
-systemd-sysv
-  PreDepends: systemd
-  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">213</span><span class="o">)</span>
-  Depends: systemd-sysv
-root@kali:~# </code></pre></div>
-<p>All caja dependencies</p>
-
-<pre><code>caja --&gt; gvfs --&gt; gvfs-daemons --&gt; libsystemd0 --&gt; libpam-systemd --&gt; systemd
-</code></pre>
-
-<p>We can see that many packages like “caja” or “network-manager” depend on systemd&hellip;.</p>
-
+<pre tabindex="0"><code>apt install apt-rdepends
+</code></pre><p>We can see the caja dependencies</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~# apt-rdepends caja <span class="p">|</span> grep systemd
+</span></span><span class="line"><span class="cl">Reading package lists... Done
+</span></span><span class="line"><span class="cl">Building dependency tree       
+</span></span><span class="line"><span class="cl">Reading state information... Done
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0
+</span></span><span class="line"><span class="cl">libsystemd0
+</span></span><span class="line"><span class="cl">  Depends: libpam-systemd
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> 209<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0
+</span></span><span class="line"><span class="cl">  PreDepends: libsystemd0
+</span></span><span class="line"><span class="cl">libpam-systemd
+</span></span><span class="line"><span class="cl">  Depends: systemd <span class="o">(=</span> 242-7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Depends: systemd-sysv
+</span></span><span class="line"><span class="cl">systemd
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0 <span class="o">(=</span> 242-7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">systemd-sysv
+</span></span><span class="line"><span class="cl">  PreDepends: systemd
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> 213<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Depends: systemd-sysv
+</span></span><span class="line"><span class="cl">root@kali:~# 
+</span></span></code></pre></div><p>All caja dependencies</p>
+<pre tabindex="0"><code>caja --&gt; gvfs --&gt; gvfs-daemons --&gt; libsystemd0 --&gt; libpam-systemd --&gt; systemd
+</code></pre><p>We can see that many packages like “caja” or “network-manager” depend on systemd&hellip;.</p>
 <p>After purging systemd we see that we have a broken system, because we need to start the network manually, it does not turn off well, it is missing packages like the file-manager of mate (caja), etc.</p>
-
 <p>At this point I decide to do my own kali iso to install non-dependent applications such as lxterminal, pcmanfs etc.</p>
-
 <h1 id="customizing-kali-linux">Customizing Kali linux</h1>
-
 <p>Goals</p>
-
 <ul>
 <li>Use sysVinit</li>
 <li>i3wm as a desktop</li>
 <li>Non-dependent and light applications.</li>
 </ul>
-
 <h2 id="cloning-live-build-config">Cloning live-build-config</h2>
-
 <p>In order to clone the kali git and start creating our iso we need to install, if we don&rsquo;t have it already,</p>
-
-<pre><code>apt install curl git live-build cdebootstrap
-</code></pre>
-
-<p>Once the necessary thing is installed, we will clone the kali-live git</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~# git clone https://gitlab.com/kalilinux/build-scripts/live-build-config.git
-Clonando en <span class="s1">&#39;live-build-config&#39;</span>...
-remote: Enumerating objects: <span class="m">3</span>, <span class="k">done</span>.  
-remote: Counting objects: <span class="m">100</span>% <span class="o">(</span><span class="m">3</span>/3<span class="o">)</span>, <span class="k">done</span>.                                    
-remote: Compressing objects: <span class="m">100</span>% <span class="o">(</span><span class="m">3</span>/3<span class="o">)</span>, <span class="k">done</span>.                                 
-remote: Total <span class="m">1308</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, reused <span class="m">1</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>                               
-Recibiendo objetos: <span class="m">100</span>% <span class="o">(</span><span class="m">1308</span>/1308<span class="o">)</span>, <span class="m">3</span>.76 MiB <span class="p">|</span> <span class="m">654</span>.00 KiB/s, listo.
-Resolviendo deltas: <span class="m">100</span>% <span class="o">(</span><span class="m">682</span>/682<span class="o">)</span>, listo.
-root@kali:~# <span class="nb">cd</span> live-build-config/
-root@kali:~/live-build-config# ls -la
-total <span class="m">24</span>
-drwxr-xr-x  <span class="m">5</span> root root  <span class="m">138</span> nov  <span class="m">2</span> <span class="m">19</span>:07 .
-drwxr-xr-x <span class="m">33</span> root root <span class="m">4096</span> nov  <span class="m">2</span> <span class="m">19</span>:07 ..
-drwxr-xr-x  <span class="m">2</span> root root   <span class="m">33</span> nov  <span class="m">2</span> <span class="m">19</span>:07 auto
-lrwxrwxrwx  <span class="m">1</span> root root    <span class="m">8</span> nov  <span class="m">2</span> <span class="m">19</span>:07 build_all.sh -&gt; build.sh
--rwxr-xr-x  <span class="m">1</span> root root <span class="m">4688</span> nov  <span class="m">2</span> <span class="m">19</span>:07 build.sh
--rw-r--r--  <span class="m">1</span> root root  <span class="m">350</span> nov  <span class="m">2</span> <span class="m">19</span>:07 .getopt.sh
-drwxr-xr-x  <span class="m">8</span> root root  <span class="m">163</span> nov  <span class="m">2</span> <span class="m">19</span>:07 .git
--rw-r--r--  <span class="m">1</span> root root  <span class="m">181</span> nov  <span class="m">2</span> <span class="m">19</span>:07 .gitignore
-drwxr-xr-x <span class="m">13</span> root root  <span class="m">247</span> nov  <span class="m">2</span> <span class="m">19</span>:07 kali-config
--rw-r--r--  <span class="m">1</span> root root  <span class="m">174</span> nov  <span class="m">2</span> <span class="m">19</span>:07 README.md
-root@kali:~# <span class="nb">cd</span> live-build-config/
-root@kali:~/live-build-config#</code></pre></div>
-<h3 id="making-our-variant">Making our variant</h3>
-
+<pre tabindex="0"><code>apt install curl git live-build cdebootstrap
+</code></pre><p>Once the necessary thing is installed, we will clone the kali-live git</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~# git clone https://gitlab.com/kalilinux/build-scripts/live-build-config.git
+</span></span><span class="line"><span class="cl">Clonando en <span class="s1">&#39;live-build-config&#39;</span>...
+</span></span><span class="line"><span class="cl">remote: Enumerating objects: 3, <span class="k">done</span>.  
+</span></span><span class="line"><span class="cl">remote: Counting objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span>.                                    
+</span></span><span class="line"><span class="cl">remote: Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span>.                                 
+</span></span><span class="line"><span class="cl">remote: Total <span class="m">1308</span> <span class="o">(</span>delta 0<span class="o">)</span>, reused <span class="m">1</span> <span class="o">(</span>delta 0<span class="o">)</span>                               
+</span></span><span class="line"><span class="cl">Recibiendo objetos: 100% <span class="o">(</span>1308/1308<span class="o">)</span>, 3.76 MiB <span class="p">|</span> 654.00 KiB/s, listo.
+</span></span><span class="line"><span class="cl">Resolviendo deltas: 100% <span class="o">(</span>682/682<span class="o">)</span>, listo.
+</span></span><span class="line"><span class="cl">root@kali:~# <span class="nb">cd</span> live-build-config/
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">24</span>
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">5</span> root root  <span class="m">138</span> nov  <span class="m">2</span> 19:07 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">33</span> root root <span class="m">4096</span> nov  <span class="m">2</span> 19:07 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root   <span class="m">33</span> nov  <span class="m">2</span> 19:07 auto
+</span></span><span class="line"><span class="cl">lrwxrwxrwx  <span class="m">1</span> root root    <span class="m">8</span> nov  <span class="m">2</span> 19:07 build_all.sh -&gt; build.sh
+</span></span><span class="line"><span class="cl">-rwxr-xr-x  <span class="m">1</span> root root <span class="m">4688</span> nov  <span class="m">2</span> 19:07 build.sh
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> root root  <span class="m">350</span> nov  <span class="m">2</span> 19:07 .getopt.sh
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">8</span> root root  <span class="m">163</span> nov  <span class="m">2</span> 19:07 .git
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> root root  <span class="m">181</span> nov  <span class="m">2</span> 19:07 .gitignore
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">13</span> root root  <span class="m">247</span> nov  <span class="m">2</span> 19:07 kali-config
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> root root  <span class="m">174</span> nov  <span class="m">2</span> 19:07 README.md
+</span></span><span class="line"><span class="cl">root@kali:~# <span class="nb">cd</span> live-build-config/
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config#
+</span></span></code></pre></div><h3 id="making-our-variant">Making our variant</h3>
 <p>NOTE: Do not use ./build yet. This command creates the iso. We need to customize before spending time and bandwidth.</p>
-
 <p>To work more comfortably without changing the existing variants, we will create a new one, copy &ldquo;variant-i3wm&rdquo; and start configuring.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config/kali-config# cp -r variant-i3wm variant-i3-custom
-root@kali:~/live-build-config/kali-config# ls -la
-total <span class="m">4</span>
-drwxr-xr-x <span class="m">14</span> root root  <span class="m">272</span> nov  <span class="m">8</span> <span class="m">11</span>:46 .
-drwxr-xr-x <span class="m">12</span> root root <span class="m">4096</span> nov  <span class="m">9</span> <span class="m">17</span>:17 ..
-drwxr-xr-x  <span class="m">9</span> root root  <span class="m">146</span> nov  <span class="m">2</span> <span class="m">19</span>:07 common
-lrwxrwxrwx  <span class="m">1</span> root root   <span class="m">17</span> nov  <span class="m">8</span> <span class="m">11</span>:46 variant-default -&gt; variant-i3-custom
-drwxr-xr-x  <span class="m">5</span> root root   <span class="m">63</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-e17
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-gnome
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:56 variant-i3-custom
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-i3wm
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-kde
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-large
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-light
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-lxde
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-mate
-drwxr-xr-x  <span class="m">2</span> root root   <span class="m">20</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-minimal
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-xfce
-root@kali:~/live-build-config/kali-config#</code></pre></div>
-<p>There are three important points that I will use to customize the iso:</p>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config# cp -r variant-i3wm variant-i3-custom
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config# ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">4</span>
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">14</span> root root  <span class="m">272</span> nov  <span class="m">8</span> 11:46 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">12</span> root root <span class="m">4096</span> nov  <span class="m">9</span> 17:17 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">9</span> root root  <span class="m">146</span> nov  <span class="m">2</span> 19:07 common
+</span></span><span class="line"><span class="cl">lrwxrwxrwx  <span class="m">1</span> root root   <span class="m">17</span> nov  <span class="m">8</span> 11:46 variant-default -&gt; variant-i3-custom
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">5</span> root root   <span class="m">63</span> nov  <span class="m">2</span> 19:07 variant-e17
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-gnome
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:56 variant-i3-custom
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-i3wm
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-kde
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-large
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-light
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-lxde
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-mate
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root   <span class="m">20</span> nov  <span class="m">2</span> 19:07 variant-minimal
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-xfce
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config#
+</span></span></code></pre></div><p>There are three important points that I will use to customize the iso:</p>
 <ul>
 <li>Packages that will contain our iso and we can install on disk. Under the dir <strong>kali-config/our-variant/package-lists/</strong></li>
 <li>Files, scripts, themes, wallpapers, which we will add to the iso, under the dir <strong>kali-config/common/includes.chroot/</strong>. This dir will be like the root /. The script will copy these files to the iso when doing the root change (chroot).</li>
 <li>Hooks to start/stop services, launch scripts, etc. Under the dir <strong>config/hooks/</strong> we will have the hooks to execute. If we start in live iso under the &ldquo;live&rdquo; dir, and to execute hooks during the installation in the &ldquo;normal&rdquo; dir.</li>
 </ul>
-
 <p>To see what metapackages I have installed in my system maybe to adding any.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config/kali-config# apt-cache show <span class="k">$(</span>dpkg-query -Wf <span class="s1">&#39;${Package}\n&#39;</span><span class="k">)</span> <span class="p">|</span> awk <span class="s1">&#39;$1 == &#34;Package:&#34; { pkg = $2 }; $1 == &#34;Section:&#34; &amp;&amp; $2 ~ /metapackage/ { print pkg }&#39;</span>
-firmware-linux
-firmware-linux
-firmware-linux-nonfree
-firmware-linux-nonfree
-init
-kali-desktop-live
-kali-desktop-live
-kali-linux-core
-kali-linux-core
-kali-linux-default
-kali-linux-default
-libreoffice
-root@kali:~/live-build-config/kali-config# </code></pre></div>
-<h2 id="first-try-to-make-the-iso">First try to make the iso</h2>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config# apt-cache show <span class="k">$(</span>dpkg-query -Wf <span class="s1">&#39;${Package}\n&#39;</span><span class="k">)</span> <span class="p">|</span> awk <span class="s1">&#39;$1 == &#34;Package:&#34; { pkg = $2 }; $1 == &#34;Section:&#34; &amp;&amp; $2 ~ /metapackage/ { print pkg }&#39;</span>
+</span></span><span class="line"><span class="cl">firmware-linux
+</span></span><span class="line"><span class="cl">firmware-linux
+</span></span><span class="line"><span class="cl">firmware-linux-nonfree
+</span></span><span class="line"><span class="cl">firmware-linux-nonfree
+</span></span><span class="line"><span class="cl">init
+</span></span><span class="line"><span class="cl">kali-desktop-live
+</span></span><span class="line"><span class="cl">kali-desktop-live
+</span></span><span class="line"><span class="cl">kali-linux-core
+</span></span><span class="line"><span class="cl">kali-linux-core
+</span></span><span class="line"><span class="cl">kali-linux-default
+</span></span><span class="line"><span class="cl">kali-linux-default
+</span></span><span class="line"><span class="cl">libreoffice
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config# 
+</span></span></code></pre></div><h2 id="first-try-to-make-the-iso">First try to make the iso</h2>
 <h3 id="copying-mi-i3-config">Copying mi i3 config</h3>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# mkdir kali-config/common/includes.chroot/root/.config
-root@kali:~/live-build-config# cp /root/data/config/.config/i3/config kali-config/common/includes.chroot/root/.config/i3/config
-root@kali:~/live-build-config# cp /root/data/config/.config/i3/i3bar-script.sh kali-config/common/includes.chroot/root/.config/i3/i3bar-script.sh</code></pre></div>
-<h3 id="adding-some-packages">Adding some packages</h3>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# cat kali-config/variant-i3-custom/package-lists/kali.list.chroot 
-<span class="c1"># You always want those</span>
-kali-linux-core
-kali-desktop-live
-
-<span class="c1"># Kali applications</span>
-<span class="c1">#&lt;package&gt;</span>
-<span class="c1"># You can customize the set of Kali metapackages (groups of tools) to install</span>
-<span class="c1"># For the complete list see: https://tools.kali.org/kali-metapackages</span>
-<span class="c1"># kali-linux-default</span>
-<span class="c1"># kali-linux-large</span>
-<span class="c1"># kali-linux-everything</span>
-<span class="c1"># kali-tools-top10</span>
-
-<span class="c1"># Graphical desktop</span>
-kali-desktop-i3
-
-<span class="c1"># Custom</span>
-ncdu htop feh dnsmasq ranger
-<span class="c1">#lxapearance gnome-theme-kali qt5ct qt4-qtconfig</span>
-<span class="c1">#vlc ffmpeg youtube-dl</span>
-
-root@kali:~/live-build-config# </code></pre></div>
-<h3 id="building-the-iso">Building the iso &hellip;</h3>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# ./build.sh --variant i3-custom  --verbose
-<span class="o">[</span><span class="m">2019</span>-11-08 <span class="m">11</span>:57:06<span class="o">]</span> lb clean --purge
-P: Executing auto/clean script.
-<span class="o">[</span><span class="m">2019</span>-11-08 <span class="m">11</span>:57:06<span class="o">]</span> lb clean noauto --purge
-P: Executing auto/clean script.
-<span class="o">[</span><span class="m">2019</span>-11-08 <span class="m">11</span>:57:06<span class="o">]</span> lb clean noauto --all
-P: Cleaning chroot
-----skipped----</code></pre></div>
-<p>The iso we get has systemd, it has bad locales and a resolution of 700x400 &hellip; we will try to change these things.</p>
-
-<h2 id="second-try-round-two">Second try .. round two.</h2>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# mkdir kali-config/common/includes.chroot/root/.config
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# cp /root/data/config/.config/i3/config kali-config/common/includes.chroot/root/.config/i3/config
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# cp /root/data/config/.config/i3/i3bar-script.sh kali-config/common/includes.chroot/root/.config/i3/i3bar-script.sh
+</span></span></code></pre></div><h3 id="adding-some-packages">Adding some packages</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# cat kali-config/variant-i3-custom/package-lists/kali.list.chroot 
+</span></span><span class="line"><span class="cl"><span class="c1"># You always want those</span>
+</span></span><span class="line"><span class="cl">kali-linux-core
+</span></span><span class="line"><span class="cl">kali-desktop-live
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Kali applications</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#&lt;package&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># You can customize the set of Kali metapackages (groups of tools) to install</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># For the complete list see: https://tools.kali.org/kali-metapackages</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-linux-default</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-linux-large</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-linux-everything</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-tools-top10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Graphical desktop</span>
+</span></span><span class="line"><span class="cl">kali-desktop-i3
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Custom</span>
+</span></span><span class="line"><span class="cl">ncdu htop feh dnsmasq ranger
+</span></span><span class="line"><span class="cl"><span class="c1">#lxapearance gnome-theme-kali qt5ct qt4-qtconfig</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#vlc ffmpeg youtube-dl</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><h3 id="building-the-iso-">Building the iso &hellip;</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# ./build.sh --variant i3-custom  --verbose
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-08 11:57:06<span class="o">]</span> lb clean --purge
+</span></span><span class="line"><span class="cl">P: Executing auto/clean script.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-08 11:57:06<span class="o">]</span> lb clean noauto --purge
+</span></span><span class="line"><span class="cl">P: Executing auto/clean script.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-08 11:57:06<span class="o">]</span> lb clean noauto --all
+</span></span><span class="line"><span class="cl">P: Cleaning chroot
+</span></span><span class="line"><span class="cl">----skipped----
+</span></span></code></pre></div><p>The iso we get has systemd, it has bad locales and a resolution of 700x400 &hellip; we will try to change these things.</p>
+<h2 id="second-try--round-two">Second try .. round two.</h2>
 <h3 id="changing-systemd-to-sysvinit">Changing systemd to sysvinit</h3>
-
 <p>When searching for systemd in packages, we find it in &ldquo;config/package-lists/live.list.chroot&rdquo;, we will copy it to our variant and change systemd to syvinit.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# cat config/package-lists/live.list.chroot                                                                                      
-live-boot                                                                                                                                                     
-live-config                                                                                                                                                   
-live-config-systemd                                                                                                                                           
-root@kali:~/live-build-config# apt-cache search live-config                                                                                                   
-live-config - Live System Configuration Components                                                                                                            
-live-config-doc - Live System Configuration Components <span class="o">(</span>documentation<span class="o">)</span>                                                                                        
-live-config-systemd - Live System Configuration Components <span class="o">(</span>systemd backend<span class="o">)</span>                                                                                  
-live-config-sysvinit - Live System Configuration Components <span class="o">(</span>sysvinit backend<span class="o">)</span>                                                                                
-root@kali:~/live-build-config#
-root@kali:~/live-build-config# cp config/package-lists/live.list.chroot  kali-config/variant-i3-custom/package-lists/
-root@kali:~/live-build-config# vi kali-config/variant-i3-custom/package-lists/live.list.chroot 
-root@kali:~/live-build-config# cat kali-config/variant-i3-custom/package-lists/live.list.chroot 
-live-boot
-live-config
-live-config-sysvinit
-root@kali:~/live-build-config# </code></pre></div>
-<h4 id="in-the-face">In the face &hellip;</h4>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# cat config/package-lists/live.list.chroot                                                                                      
+</span></span><span class="line"><span class="cl">live-boot                                                                                                                                                     
+</span></span><span class="line"><span class="cl">live-config                                                                                                                                                   
+</span></span><span class="line"><span class="cl">live-config-systemd                                                                                                                                           
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# apt-cache search live-config                                                                                                   
+</span></span><span class="line"><span class="cl">live-config - Live System Configuration Components                                                                                                            
+</span></span><span class="line"><span class="cl">live-config-doc - Live System Configuration Components <span class="o">(</span>documentation<span class="o">)</span>                                                                                        
+</span></span><span class="line"><span class="cl">live-config-systemd - Live System Configuration Components <span class="o">(</span>systemd backend<span class="o">)</span>                                                                                  
+</span></span><span class="line"><span class="cl">live-config-sysvinit - Live System Configuration Components <span class="o">(</span>sysvinit backend<span class="o">)</span>                                                                                
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config#
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# cp config/package-lists/live.list.chroot  kali-config/variant-i3-custom/package-lists/
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# vi kali-config/variant-i3-custom/package-lists/live.list.chroot 
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# cat kali-config/variant-i3-custom/package-lists/live.list.chroot 
+</span></span><span class="line"><span class="cl">live-boot
+</span></span><span class="line"><span class="cl">live-config
+</span></span><span class="line"><span class="cl">live-config-sysvinit
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><h4 id="in-the-face-">In the face &hellip;</h4>
 <p>It seems that it will not be so easy. The creation of the iso fails. Looking at the log &ldquo;build.log&rdquo; we see.</p>
-
-<pre><code>Some packages could not be installed. This may mean that you have                                                                                             
+<pre tabindex="0"><code>Some packages could not be installed. This may mean that you have                                                                                             
 requested an impossible situation or if you are using the unstable                                                                                            
 distribution that some required packages have not yet been created                                                                                            
 or been moved out of Incoming.                                                                                                                                
@@ -434,265 +384,232 @@ P: Saving caches...
 Reading package lists...                                                                                                                                      
 Building dependency tree...                                                                                                                                   
 Reading state information...        
-</code></pre>
-
-<h3 id="starting-with-the-minimum">Starting with the minimum</h3>
-
+</code></pre><h3 id="starting-with-the-minimum">Starting with the minimum</h3>
 <p>In this link <a href="https://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html">link</a> we can see the priority of the packages that mark the Debian maintainers.</p>
-
 <p>To see a list of packages by standard priority.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# grep-aptavail -n -sPackage -FPriority standard                                                                        <span class="o">[</span><span class="m">5</span>/49783<span class="o">]</span>
-apt-listchanges                                                                                                                                               
-bash-completion                                                                                                                                               
-bind9-host                                                                                                                                                    
-bzip2                                                                                                                                                         
-dbus                                                                                                                                                          
-debian-faq
-doc-debian
-file
-gettext-base
-groff-base
-krb5-locales
-libc-l10n
-libevent-2.1-6
-libgssglue1
-liblockfile-bin
-libnfsidmap2
-libnss-systemd
-libpam-systemd
-librpcsecgss3
-libswitch-perl
-locales
-lsof
-man-db
-manpages
-mime-support
-ncurses-term
-netcat-traditional
-openssh-client
-pciutils
-perl
-perl-modules-5.30
-python
-python-minimal
-python2.7
-python3-reportbug
-reportbug
-telnet
-traceroute
-ucf
-wamerican
-wget
-xz-utils
-root@kali:~/live-build-config# </code></pre></div>
-<p>To see a list of packages by required priority.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# grep-aptavail -n -sPackage -FPriority required
-apt
-base-files
-base-passwd
-bash
-bsdutils
-coreutils
-dash
-debconf
-debianutils
-diffutils
-dpkg
-e2fsprogs
-findutils
-gcc-9-base
-grep
-gzip
-hostname
-init-system-helpers
-libc-bin
-libpam-modules
-libpam-modules-bin
-libpam-runtime
-login
-mawk
-mount
-ncurses-base
-ncurses-bin
-passwd
-perl-base
-sed
-sysvinit-utils
-tar
-tzdata
-util-linux
-root@kali:~/live-build-config# </code></pre></div>
-<p>Required are the minimum packages that the ditro really needs to work. Then we can change standard.list.chroot to required. We will have to create required.list.chroot and delete or comment on standard.list.chroot.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# cat config/package-lists/required.list.chroot 
-! Packages Priority required
-root@kali:~/live-build-config# cat config/package-lists/standard.list.chroot 
-<span class="c1">#! Packages Priority standard</span>
-root@kali:~/live-build-config# </code></pre></div>
-<h4 id="more-dependecy-errors">More dependecy errors</h4>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# grep-aptavail -n -sPackage -FPriority standard                                                                        <span class="o">[</span>5/49783<span class="o">]</span>
+</span></span><span class="line"><span class="cl">apt-listchanges                                                                                                                                               
+</span></span><span class="line"><span class="cl">bash-completion                                                                                                                                               
+</span></span><span class="line"><span class="cl">bind9-host                                                                                                                                                    
+</span></span><span class="line"><span class="cl">bzip2                                                                                                                                                         
+</span></span><span class="line"><span class="cl">dbus                                                                                                                                                          
+</span></span><span class="line"><span class="cl">debian-faq
+</span></span><span class="line"><span class="cl">doc-debian
+</span></span><span class="line"><span class="cl">file
+</span></span><span class="line"><span class="cl">gettext-base
+</span></span><span class="line"><span class="cl">groff-base
+</span></span><span class="line"><span class="cl">krb5-locales
+</span></span><span class="line"><span class="cl">libc-l10n
+</span></span><span class="line"><span class="cl">libevent-2.1-6
+</span></span><span class="line"><span class="cl">libgssglue1
+</span></span><span class="line"><span class="cl">liblockfile-bin
+</span></span><span class="line"><span class="cl">libnfsidmap2
+</span></span><span class="line"><span class="cl">libnss-systemd
+</span></span><span class="line"><span class="cl">libpam-systemd
+</span></span><span class="line"><span class="cl">librpcsecgss3
+</span></span><span class="line"><span class="cl">libswitch-perl
+</span></span><span class="line"><span class="cl">locales
+</span></span><span class="line"><span class="cl">lsof
+</span></span><span class="line"><span class="cl">man-db
+</span></span><span class="line"><span class="cl">manpages
+</span></span><span class="line"><span class="cl">mime-support
+</span></span><span class="line"><span class="cl">ncurses-term
+</span></span><span class="line"><span class="cl">netcat-traditional
+</span></span><span class="line"><span class="cl">openssh-client
+</span></span><span class="line"><span class="cl">pciutils
+</span></span><span class="line"><span class="cl">perl
+</span></span><span class="line"><span class="cl">perl-modules-5.30
+</span></span><span class="line"><span class="cl">python
+</span></span><span class="line"><span class="cl">python-minimal
+</span></span><span class="line"><span class="cl">python2.7
+</span></span><span class="line"><span class="cl">python3-reportbug
+</span></span><span class="line"><span class="cl">reportbug
+</span></span><span class="line"><span class="cl">telnet
+</span></span><span class="line"><span class="cl">traceroute
+</span></span><span class="line"><span class="cl">ucf
+</span></span><span class="line"><span class="cl">wamerican
+</span></span><span class="line"><span class="cl">wget
+</span></span><span class="line"><span class="cl">xz-utils
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><p>To see a list of packages by required priority.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# grep-aptavail -n -sPackage -FPriority required
+</span></span><span class="line"><span class="cl">apt
+</span></span><span class="line"><span class="cl">base-files
+</span></span><span class="line"><span class="cl">base-passwd
+</span></span><span class="line"><span class="cl">bash
+</span></span><span class="line"><span class="cl">bsdutils
+</span></span><span class="line"><span class="cl">coreutils
+</span></span><span class="line"><span class="cl">dash
+</span></span><span class="line"><span class="cl">debconf
+</span></span><span class="line"><span class="cl">debianutils
+</span></span><span class="line"><span class="cl">diffutils
+</span></span><span class="line"><span class="cl">dpkg
+</span></span><span class="line"><span class="cl">e2fsprogs
+</span></span><span class="line"><span class="cl">findutils
+</span></span><span class="line"><span class="cl">gcc-9-base
+</span></span><span class="line"><span class="cl">grep
+</span></span><span class="line"><span class="cl">gzip
+</span></span><span class="line"><span class="cl">hostname
+</span></span><span class="line"><span class="cl">init-system-helpers
+</span></span><span class="line"><span class="cl">libc-bin
+</span></span><span class="line"><span class="cl">libpam-modules
+</span></span><span class="line"><span class="cl">libpam-modules-bin
+</span></span><span class="line"><span class="cl">libpam-runtime
+</span></span><span class="line"><span class="cl">login
+</span></span><span class="line"><span class="cl">mawk
+</span></span><span class="line"><span class="cl">mount
+</span></span><span class="line"><span class="cl">ncurses-base
+</span></span><span class="line"><span class="cl">ncurses-bin
+</span></span><span class="line"><span class="cl">passwd
+</span></span><span class="line"><span class="cl">perl-base
+</span></span><span class="line"><span class="cl">sed
+</span></span><span class="line"><span class="cl">sysvinit-utils
+</span></span><span class="line"><span class="cl">tar
+</span></span><span class="line"><span class="cl">tzdata
+</span></span><span class="line"><span class="cl">util-linux
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><p>Required are the minimum packages that the ditro really needs to work. Then we can change standard.list.chroot to required. We will have to create required.list.chroot and delete or comment on standard.list.chroot.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# cat config/package-lists/required.list.chroot 
+</span></span><span class="line"><span class="cl">! Packages Priority required
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# cat config/package-lists/standard.list.chroot 
+</span></span><span class="line"><span class="cl"><span class="c1">#! Packages Priority standard</span>
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><h4 id="more-dependecy-errors">More dependecy errors</h4>
 <p>We will need to debug more dependencies of the packages, starting with the minimum has not been enough and we get more dependency errors. After three attempts &hellip;</p>
-
-<pre><code>The following packages have unmet dependencies:
+<pre tabindex="0"><code>The following packages have unmet dependencies:
  kali-desktop-i3 : Depends: kali-desktop-core but it is not going to be installed
  kali-desktop-live : Depends: florence but it is not going to be installed
-</code></pre>
-
-<pre><code>The following packages have unmet dependencies:
+</code></pre><pre tabindex="0"><code>The following packages have unmet dependencies:
  florence : Depends: libgtk-3-0 (&gt;= 3.3.16) but it is not going to be installed
  kali-desktop-core : Depends: dbus-user-session but it is not going to be installed
-</code></pre>
-
-<pre><code>The following packages have unmet dependencies:
+</code></pre><pre tabindex="0"><code>The following packages have unmet dependencies:
  dbus-user-session : Depends: libpam-systemd but it is not going to be installed
                      Recommends: systemd-sysv but it is not going to be installed
-</code></pre>
-
-<p>fixed some errors, adding florence, adding dbus-user-session, libpam-systemd comes out again that depends on systemd, checking metapackage by metapackage we see that the one that generates the problem … the winner is &hellip; kali-desktop-i3.</p>
-
+</code></pre><p>fixed some errors, adding florence, adding dbus-user-session, libpam-systemd comes out again that depends on systemd, checking metapackage by metapackage we see that the one that generates the problem … the winner is &hellip; kali-desktop-i3.</p>
 <p>Here we can see that it effectively depends on systemd. XD</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# apt-rdepends kali-desktop-i3 <span class="p">|</span> grep systemd
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-  Depends: libsystemd0
-libsystemd0
-  Depends: libsystemd0
-  Depends: libpam-systemd
-  Depends: systemd
-  Depends: libsystemd0
-libpam-systemd
-  Depends: systemd <span class="o">(=</span> <span class="m">242</span>-7<span class="o">)</span>
-  Depends: systemd-sysv
-systemd
-  Depends: libsystemd0 <span class="o">(=</span> <span class="m">242</span>-7<span class="o">)</span>
-  PreDepends: libsystemd0
-systemd-sysv
-  PreDepends: systemd
-  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">209</span><span class="o">)</span>
-  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">221</span><span class="o">)</span>
-  PreDepends: libsystemd0
-  Depends: libsystemd0
-  Depends: systemd-sysv
-root@kali:~/live-build-config# </code></pre></div>
-<h4 id="definitely-removing-systemd">Definitely removing systemd</h4>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# apt-rdepends kali-desktop-i3 <span class="p">|</span> grep systemd
+</span></span><span class="line"><span class="cl">Reading package lists... Done
+</span></span><span class="line"><span class="cl">Building dependency tree       
+</span></span><span class="line"><span class="cl">Reading state information... Done
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0
+</span></span><span class="line"><span class="cl">libsystemd0
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0
+</span></span><span class="line"><span class="cl">  Depends: libpam-systemd
+</span></span><span class="line"><span class="cl">  Depends: systemd
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0
+</span></span><span class="line"><span class="cl">libpam-systemd
+</span></span><span class="line"><span class="cl">  Depends: systemd <span class="o">(=</span> 242-7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Depends: systemd-sysv
+</span></span><span class="line"><span class="cl">systemd
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0 <span class="o">(=</span> 242-7<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  PreDepends: libsystemd0
+</span></span><span class="line"><span class="cl">systemd-sysv
+</span></span><span class="line"><span class="cl">  PreDepends: systemd
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> 209<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0 <span class="o">(</span>&gt;<span class="o">=</span> 221<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  PreDepends: libsystemd0
+</span></span><span class="line"><span class="cl">  Depends: libsystemd0
+</span></span><span class="line"><span class="cl">  Depends: systemd-sysv
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><h4 id="definitely-removing-systemd">Definitely removing systemd</h4>
 <p>To avoid systemd we will have to replace the kali-desktop-i3 metapackage with the i3 package in kali.list.chroot.</p>
-
 <p>The package list of &ldquo;kali.list.chroot&rdquo; looks like this.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# cat kali-config/variant-i3-custom/package-lists/kali.list.chroot 
-<span class="c1"># You always want those</span>
-kali-linux-core
-
-kali-desktop-live
-florence
-libgtk-3-0
-
-<span class="c1"># Kali applications</span>
-<span class="c1">#&lt;package&gt;</span>
-<span class="c1"># You can customize the set of Kali metapackages (groups of tools) to install</span>
-<span class="c1"># For the complete list see: https://tools.kali.org/kali-metapackages</span>
-<span class="c1"># kali-linux-default</span>
-<span class="c1"># kali-linux-large</span>
-<span class="c1"># kali-linux-everything</span>
-<span class="c1"># kali-tools-top10</span>
-
-<span class="c1"># Graphical desktop</span>
-i3
-xorg
-
-<span class="c1"># Custom</span>
-ncdu htop feh dnsmasq ranger
-<span class="c1">#lxapearance gnome-theme-kali qt5ct qt4-qtconfig</span>
-<span class="c1">#vlc ffmpeg youtube-dl flameshoot</span>
-root@kali:~/live-build-config# </code></pre></div>
-<h3 id="changing-locales">Changing locales</h3>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# cat kali-config/variant-i3-custom/package-lists/kali.list.chroot 
+</span></span><span class="line"><span class="cl"><span class="c1"># You always want those</span>
+</span></span><span class="line"><span class="cl">kali-linux-core
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kali-desktop-live
+</span></span><span class="line"><span class="cl">florence
+</span></span><span class="line"><span class="cl">libgtk-3-0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Kali applications</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#&lt;package&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># You can customize the set of Kali metapackages (groups of tools) to install</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># For the complete list see: https://tools.kali.org/kali-metapackages</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-linux-default</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-linux-large</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-linux-everything</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># kali-tools-top10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Graphical desktop</span>
+</span></span><span class="line"><span class="cl">i3
+</span></span><span class="line"><span class="cl">xorg
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Custom</span>
+</span></span><span class="line"><span class="cl">ncdu htop feh dnsmasq ranger
+</span></span><span class="line"><span class="cl"><span class="c1">#lxapearance gnome-theme-kali qt5ct qt4-qtconfig</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#vlc ffmpeg youtube-dl flameshoot</span>
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><h3 id="changing-locales">Changing locales</h3>
 <p>In this link of debian live manual <a href="https://live-team.pages.debian.net/live-manual/html/live-manual/customizing-run-time-behaviours.en.html#531">Customizing locale and language </a> we can see how to change the locale.</p>
-
 <p>As the script &ldquo;build.sh&rdquo; of the Kali boys does not allow local options we will have to change the line in the script itself.</p>
-
-<pre><code>#run_and_log lb config -a $KALI_ARCH $KALI_CONFIG_OPTS &quot;$@&quot;
-run_and_log lb config -a $KALI_ARCH $KALI_CONFIG_OPTS &quot;$@&quot; --bootappend-live &quot;boot=live components locales=es_ES.UTF-8 keyboard-layouts=es&quot;
-</code></pre>
-
-<h3 id="screen-resolution">Screen resolution</h3>
-
+<pre tabindex="0"><code>#run_and_log lb config -a $KALI_ARCH $KALI_CONFIG_OPTS &#34;$@&#34;
+run_and_log lb config -a $KALI_ARCH $KALI_CONFIG_OPTS &#34;$@&#34; --bootappend-live &#34;boot=live components locales=es_ES.UTF-8 keyboard-layouts=es&#34;
+</code></pre><h3 id="screen-resolution">Screen resolution</h3>
 <p>For the first tests of the iso, it will be enough with this bungling script to change the resolution.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# cat <span class="s">&lt;&lt;EOF&gt; kali-config/common/includes.chroot/root/scripts/screen-resolution.sh 
-</span><span class="s">#!/bin/bash
-</span><span class="s">
-</span><span class="s">xrandr --output Virtual-0 --mode 1280x1024
-</span><span class="s">EOF</span>
-root@kali:~/live-build-config#
-root@kali:~/live-build-config# chmod <span class="m">700</span> kali-config/common/includes.chroot/root/scripts/screen-resolution.sh</code></pre></div>
-<h3 id="disabling-services">Disabling services</h3>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# cat <span class="s">&lt;&lt;EOF&gt; kali-config/common/includes.chroot/root/scripts/screen-resolution.sh 
+</span></span></span><span class="line"><span class="cl"><span class="s">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">xrandr --output Virtual-0 --mode 1280x1024
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config#
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# chmod <span class="m">700</span> kali-config/common/includes.chroot/root/scripts/screen-resolution.sh
+</span></span></code></pre></div><h3 id="disabling-services">Disabling services</h3>
 <p>To speed up the start of the iso, he stayed a minute waiting to up the network with dhcp, we will disable the network and some other services with a hook.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# cat <span class="s">&lt;&lt;EOF&gt; config/hooks/live/disable.services.hook.chroot
-</span><span class="s">#!/bin/bash
-</span><span class="s">
-</span><span class="s">update-rc.d ssh remove
-</span><span class="s">update-rc.d apparmor remove
-</span><span class="s">update-rc.d pcscd remove
-</span><span class="s">update-rc.d networking remove
-</span><span class="s">EOF</span>
-root@kali:~/live-build-config# </code></pre></div>
-<h2 id="result">Result</h2>
-
-<p><img src="../../../en/posts/images/7-Kali-live-iso.gif" alt="Gif image starting custom kali live iso" /></p>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# cat <span class="s">&lt;&lt;EOF&gt; config/hooks/live/disable.services.hook.chroot
+</span></span></span><span class="line"><span class="cl"><span class="s">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">update-rc.d ssh remove
+</span></span></span><span class="line"><span class="cl"><span class="s">update-rc.d apparmor remove
+</span></span></span><span class="line"><span class="cl"><span class="s">update-rc.d pcscd remove
+</span></span></span><span class="line"><span class="cl"><span class="s">update-rc.d networking remove
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# 
+</span></span></code></pre></div><h2 id="result">Result</h2>
+<p><img src="../../../en/posts/images/7-Kali-live-iso.gif" alt="Gif image starting custom kali live iso"></p>
 <h1 id="what-remains-to-be-done">What remains to be done</h1>
-
 <p>The ultimate goal is to have an iso of Kali Linux with i3, which uses few resources, where you can install applications on demand, without having many default applications that have to be updated and consume data. Functional for day to day. Maybe make another iso to use in data recovery, forensics or others. We will see.</p>
-
 <h2 id="more-customization">More customization</h2>
-
 <p>I add some scripts and packages, and I change the name to variant-i3-viel.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">root@kali:~/live-build-config# <span class="nb">cd</span> kali-config/
-root@kali:~/live-build-config/kali-config# ls -la
-total <span class="m">4</span>
-drwxr-xr-x <span class="m">14</span> root root  <span class="m">272</span> nov  <span class="m">8</span> <span class="m">11</span>:46 .
-drwxr-xr-x <span class="m">12</span> root root <span class="m">4096</span> nov  <span class="m">9</span> <span class="m">17</span>:17 ..
-drwxr-xr-x  <span class="m">9</span> root root  <span class="m">146</span> nov  <span class="m">2</span> <span class="m">19</span>:07 common
-lrwxrwxrwx  <span class="m">1</span> root root   <span class="m">17</span> nov  <span class="m">8</span> <span class="m">11</span>:46 variant-default -&gt; variant-i3-custom
-drwxr-xr-x  <span class="m">5</span> root root   <span class="m">63</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-e17
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-gnome
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:56 variant-i3-custom
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-i3wm
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-kde
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-large
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-light
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-lxde
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-mate
-drwxr-xr-x  <span class="m">2</span> root root   <span class="m">20</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-minimal
-drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> <span class="m">19</span>:07 variant-xfce
-root@kali:~/live-build-config/kali-config# mv variant-i3-custom variant-i3-viel
-root@kali:~/live-build-config/kali-config# 
-root@kali:~/live-build-config# ./build.sh --variant i3-viel  --verbose                                                                                        
-<span class="o">[</span><span class="m">2019</span>-11-10 <span class="m">19</span>:19:10<span class="o">]</span> lb clean --purge
-P: Executing auto/clean script.
-<span class="o">[</span><span class="m">2019</span>-11-10 <span class="m">19</span>:19:10<span class="o">]</span> lb clean noauto --purge
-P: Executing auto/clean script.
-<span class="o">[</span><span class="m">2019</span>-11-10 <span class="m">19</span>:19:10<span class="o">]</span> lb clean noauto --all
-P: Cleaning chroot
-P: Executing auto/clean script.
-<span class="o">[</span><span class="m">2019</span>-11-10 <span class="m">19</span>:19:36<span class="o">]</span> lb clean noauto --cache
-<span class="o">[</span><span class="m">2019</span>-11-10 <span class="m">19</span>:19:38<span class="o">]</span> lb config -a amd64 --distribution kali-rolling -- --variant i3-viel --bootappend-live <span class="nv">boot</span><span class="o">=</span>live components <span class="nv">locales</span><span class="o">=</span>es_ES.UTF-8 keyboard-
-<span class="nv">layouts</span><span class="o">=</span>es
-P: Executing auto/config script.
-----skipped----</code></pre></div>
-<p>I will continue updating the iso, when it was ready i upload it on mi dropbox.</p>
-
-<p><a href="#" class="back">back</a></p>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@kali:~/live-build-config# <span class="nb">cd</span> kali-config/
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config# ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">4</span>
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">14</span> root root  <span class="m">272</span> nov  <span class="m">8</span> 11:46 .
+</span></span><span class="line"><span class="cl">drwxr-xr-x <span class="m">12</span> root root <span class="m">4096</span> nov  <span class="m">9</span> 17:17 ..
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">9</span> root root  <span class="m">146</span> nov  <span class="m">2</span> 19:07 common
+</span></span><span class="line"><span class="cl">lrwxrwxrwx  <span class="m">1</span> root root   <span class="m">17</span> nov  <span class="m">8</span> 11:46 variant-default -&gt; variant-i3-custom
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">5</span> root root   <span class="m">63</span> nov  <span class="m">2</span> 19:07 variant-e17
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-gnome
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:56 variant-i3-custom
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-i3wm
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-kde
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-large
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-light
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-lxde
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-mate
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">2</span> root root   <span class="m">20</span> nov  <span class="m">2</span> 19:07 variant-minimal
+</span></span><span class="line"><span class="cl">drwxr-xr-x  <span class="m">3</span> root root   <span class="m">27</span> nov  <span class="m">2</span> 19:07 variant-xfce
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config# mv variant-i3-custom variant-i3-viel
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config/kali-config# 
+</span></span><span class="line"><span class="cl">root@kali:~/live-build-config# ./build.sh --variant i3-viel  --verbose                                                                                        
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-10 19:19:10<span class="o">]</span> lb clean --purge
+</span></span><span class="line"><span class="cl">P: Executing auto/clean script.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-10 19:19:10<span class="o">]</span> lb clean noauto --purge
+</span></span><span class="line"><span class="cl">P: Executing auto/clean script.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-10 19:19:10<span class="o">]</span> lb clean noauto --all
+</span></span><span class="line"><span class="cl">P: Cleaning chroot
+</span></span><span class="line"><span class="cl">P: Executing auto/clean script.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-10 19:19:36<span class="o">]</span> lb clean noauto --cache
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2019-11-10 19:19:38<span class="o">]</span> lb config -a amd64 --distribution kali-rolling -- --variant i3-viel --bootappend-live <span class="nv">boot</span><span class="o">=</span>live components <span class="nv">locales</span><span class="o">=</span>es_ES.UTF-8 keyboard-
+</span></span><span class="line"><span class="cl"><span class="nv">layouts</span><span class="o">=</span>es
+</span></span><span class="line"><span class="cl">P: Executing auto/config script.
+</span></span><span class="line"><span class="cl">----skipped----
+</span></span></code></pre></div><p>I will continue updating the iso, when it was ready i upload it on mi dropbox.</p>
+<p><!-- raw HTML omitted -->back<!-- raw HTML omitted --></p>
 <p>References:</p>
-
 <p><a href="https://www.kali.org/tutorials/my-custom-kali-linux-distribution/">My custom kali linux distribution</a></p>
-
 <p><a href="https://docs.kali.org/development/live-build-a-custom-kali-iso">Live build a custom kali iso</a></p>
-
 <p><a href="https://live-team.pages.debian.net/live-manual/html/live-manual/toc.en.html">Live iso manual from Debian</a></p>
-
 <p>Licence: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
 
 	 </article>
@@ -707,7 +624,7 @@ P: Executing auto/config script.
 	<a href="mailto:viel.losero@gmail.com">[Email]</a>
 	&lt;-- Envia tus comentarios aquí
 	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
-	<p class=post-meta >Donate Bitcoin Address: 1LMJZcpJiHkiYiHrqUZdmbHJyUvF5KUsdq</p>
+	<p class=post-meta >Donate Bitcoin Address: bc1q6d245chm8t5sdkqjugwg3ce2c92m276ee4ksv4</p>
 	<p>Copyright © 2019 Viel Losero</p>
 	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
 </footer>

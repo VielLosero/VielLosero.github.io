@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>/en/posts/</loc>
     <lastmod>2019-12-28T12:06:06+02:00</lastmod>
@@ -15,9 +14,7 @@
                 hreflang="en"
                 href="/en/posts/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/10-ugly-firewall/</loc>
     <lastmod>2019-12-28T12:06:06+02:00</lastmod>
     <xhtml:link
@@ -30,9 +27,7 @@
                 hreflang="en"
                 href="/en/posts/10-ugly-firewall/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/9-automating-arch-install/</loc>
     <lastmod>2019-12-05T06:06:06+02:00</lastmod>
     <xhtml:link
@@ -45,9 +40,7 @@
                 hreflang="en"
                 href="/en/posts/9-automating-arch-install/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/8-resolver-automate-dns-privacy/</loc>
     <lastmod>2019-11-11T14:44:20+02:00</lastmod>
     <xhtml:link
@@ -60,9 +53,10 @@
                 hreflang="en"
                 href="/en/posts/8-resolver-automate-dns-privacy/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>/en/posts/11-fake-dns-server/</loc>
+    <lastmod>2019-11-11T14:44:20+02:00</lastmod>
+  </url><url>
     <loc>/en/posts/7-escape-from-systemd/</loc>
     <lastmod>2019-11-08T14:44:20+02:00</lastmod>
     <xhtml:link
@@ -75,9 +69,7 @@
                 hreflang="en"
                 href="/en/posts/7-escape-from-systemd/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/5-firefox-privacy/</loc>
     <lastmod>2019-10-24T06:00:00+02:00</lastmod>
     <xhtml:link
@@ -90,9 +82,7 @@
                 hreflang="en"
                 href="/en/posts/5-firefox-privacy/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/support/</loc>
     <lastmod>2019-10-21T10:47:14+02:00</lastmod>
     <xhtml:link
@@ -105,9 +95,7 @@
                 hreflang="en"
                 href="/en/support/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/4-create-a-gpg-key/</loc>
     <lastmod>2019-10-18T10:06:06+02:00</lastmod>
     <xhtml:link
@@ -120,9 +108,7 @@
                 hreflang="en"
                 href="/en/posts/4-create-a-gpg-key/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/3-hugo-script-basic-site/</loc>
     <lastmod>2019-10-15T12:22:20+02:00</lastmod>
     <xhtml:link
@@ -135,9 +121,7 @@
                 hreflang="en"
                 href="/en/posts/3-hugo-script-basic-site/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/2-hosting-hugo-on-github/</loc>
     <lastmod>2019-10-13T19:54:30+02:00</lastmod>
     <xhtml:link
@@ -150,9 +134,7 @@
                 hreflang="en"
                 href="/en/posts/2-hosting-hugo-on-github/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/about/</loc>
     <lastmod>2019-10-12T18:03:16+02:00</lastmod>
     <xhtml:link
@@ -165,9 +147,7 @@
                 hreflang="en"
                 href="/en/about/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/</loc>
     <lastmod>2019-10-11T11:34:36+02:00</lastmod>
     <xhtml:link
@@ -180,9 +160,7 @@
                 hreflang="en"
                 href="/en/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/contact/</loc>
     <lastmod>2019-10-11T10:47:14+02:00</lastmod>
     <xhtml:link
@@ -195,9 +173,7 @@
                 hreflang="en"
                 href="/en/contact/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/posts/1-hugo-start-how-to/</loc>
     <lastmod>2019-10-03T14:44:20+02:00</lastmod>
     <xhtml:link
@@ -210,9 +186,7 @@
                 hreflang="en"
                 href="/en/posts/1-hugo-start-how-to/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/categories/</loc>
     <xhtml:link
                 rel="alternate"
@@ -224,9 +198,7 @@
                 hreflang="en"
                 href="/en/categories/"
                 />
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
@@ -239,5 +211,4 @@
                 href="/en/tags/"
                 />
   </url>
-  
 </urlset>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head>
+<title>Viel Losero - Resolver: Ofuscando las consultas dns.</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="../../../css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="../../../"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/posts/" title="">Posts</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/about/" title="">About</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/support/" title="">Support</a>
+		
+        </nav>        
+</div>
+</div>
+
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Resolver: Ofuscando las consultas dns.</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Nov 11, 2019 - [ 197 Words ] 
+		                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents"></nav></p>
+		<p><a href="https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-1/">https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-1/</a></p>
+<p><a href="https://tools.kali.org/sniffingspoofing/dnschef">https://tools.kali.org/sniffingspoofing/dnschef</a></p>
+<p>root@kali:~# netcat -lunvvv 5053 &ndash;exec &lsquo;/bin/nc -u 127.0.0.1 53&rsquo; &ndash;keep-open</p>
+<p>root@kali:~# tcpdump -i lo udp port 53 -XX
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on lo, link-type EN10MB (Ethernet), capture size 262144 bytes
+17:44:34.153681 IP localhost.55007 &gt; localhost.domain: 38929+ [1au] A? <a href="https://www.startpage.org">www.startpage.org</a>. (58)
+0x0000:  0000 0000 0000 0000 0000 0000 0800 4500  &hellip;&hellip;&hellip;&hellip;..E.
+0x0010:  0056 24e6 0000 4011 57af 7f00 0001 7f00  .V$&hellip;@.W&hellip;&hellip;.
+0x0020:  0001 d6df 0035 0042 fe55 9811 0120 0001  &hellip;..5.B.U&hellip;&hellip;
+0x0030:  0000 0000 0001 0377 7777 0973 7461 7274  &hellip;&hellip;.www.start
+0x0040:  7061 6765 036f 7267 0000 0100 0100 0029  page.org&hellip;&hellip;.)
+0x0050:  1000 0000 0000 000c 000a 0008 22dd 5a93  &hellip;&hellip;&hellip;&hellip;&quot;.Z.
+0x0060:  a2c6 069c                                &hellip;.
+17:44:34.153774 IP localhost.domain &gt; localhost.55007: 38929 1/0/1 A 212.129.237.78 (62)
+0x0000:  0000 0000 0000 0000 0000 0000 0800 4500  &hellip;&hellip;&hellip;&hellip;..E.
+0x0010:  005a 24e7 4000 4011 17aa 7f00 0001 7f00  .Z$.@.@&hellip;&hellip;&hellip;
+0x0020:  0001 0035 d6df 0046 fe59 9811 8180 0001  &hellip;5&hellip;F.Y&hellip;&hellip;
+0x0030:  0001 0000 0001 0377 7777 0973 7461 7274  &hellip;&hellip;.www.start
+0x0040:  7061 6765 036f 7267 0000 0100 01c0 0c00  page.org&hellip;&hellip;..
+0x0050:  0100 0100 010b 7500 04d4 81ed 4e00 0029  &hellip;&hellip;u&hellip;..N..)
+0x0060:  1000 0000 0000 0000                      &hellip;&hellip;..</p>
+<p><!-- raw HTML omitted -->back<!-- raw HTML omitted --></p>
+<p>Referencias:</p>
+<p><a href="http://example.com">Ejemplo</a></p>
+<p>Licencia: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+	Send your coments here --> 
+	<a href="https://twitter.com/VLosero">[Twitter]</a>
+	<a href="https://github.com/VielLosero/VielLosero.github.io">[Git]</a>
+	<a href="mailto:viel.losero@gmail.com">[Email]</a>
+	&lt;-- Envia tus comentarios aquí
+	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
+	<p class=post-meta >Donate Bitcoin Address: bc1q6d245chm8t5sdkqjugwg3ce2c92m276ee4ksv4</p>
+	<p>Copyright © 2019 Viel Losero</p>
+	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+</footer>
+</body>
+</html>
