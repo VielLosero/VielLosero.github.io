@@ -2,73 +2,73 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Pagina Web de Viel Losero</title>
-    <link>/es/posts/</link>
+    <link>//localhost:1313/es/posts/</link>
     <description>Recent content in Posts on Pagina Web de Viel Losero</description>
     <generator>Hugo</generator>
     <language>es</language>
     <lastBuildDate>Sat, 28 Dec 2019 12:06:06 +0200</lastBuildDate>
-    <atom:link href="/es/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/es/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ugly firewall</title>
-      <link>/es/posts/10-ugly-firewall/</link>
+      <link>//localhost:1313/es/posts/10-ugly-firewall/</link>
       <pubDate>Sat, 28 Dec 2019 12:06:06 +0200</pubDate>
-      <guid>/es/posts/10-ugly-firewall/</guid>
+      <guid>//localhost:1313/es/posts/10-ugly-firewall/</guid>
       <description>&lt;h1 id=&#34;ugly-firewall&#34;&gt;Ugly Firewall&lt;/h1&gt;&#xA;&lt;p&gt;Estos son mis scripts para configurar linux netfilter iptables, trato de no instalar terceras herramientas que no pueden hacer lo que necesito, son ultra complicadas o necesitan compilar para correr un binario, añadiendo mas capas a netfilter. Es mas fácil leer un simple script para ver que es lo que hace, y solo con pocas lineas de codigo (menos de 200) y un poco de organización podemos administrar nuestro firewall en linux.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Automatizando la instalación de arch linux.</title>
-      <link>/es/posts/9-automating-arch-install/</link>
+      <link>//localhost:1313/es/posts/9-automating-arch-install/</link>
       <pubDate>Thu, 05 Dec 2019 06:06:06 +0200</pubDate>
-      <guid>/es/posts/9-automating-arch-install/</guid>
+      <guid>//localhost:1313/es/posts/9-automating-arch-install/</guid>
       <description>&lt;h1 id=&#34;automatizando-la-instalación-de-arch-linux&#34;&gt;Automatizando la instalación de Arch linux&lt;/h1&gt;&#xA;&lt;p&gt;Recientemente he reinstalado mi arch linux para reorganizar mis particiones y encriptar la home. Hace mas de 4 años que andaba sin problemas desde la ultima instalación pero he visto la necesidad de reorganizar el espació. Tenia la home a 70% y la partición para discos virtuales a 30% y un caos en la organización, ademas de haber instaldo particiones sin encriptación, etc.&lt;/p&gt;&#xA;&lt;p&gt;Llegados a este punto he decidido, mientras instalaba arch, crear un script para automatizar un poco la instalación. La verdad es que tengo la instalación por la mano ya que he instalado arch muchas veces en diferentes ordenadores y maquinas virtuales pero se hace un poco tedioso. También espero que ayude a otros a probar arch ahunque no me convenza mucho que solo den soporte a systemd.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Resolver: Automatizando la seguridad de nuestras peticiones dns.</title>
-      <link>/es/posts/8-resolver-automate-dns-privacy/</link>
+      <link>//localhost:1313/es/posts/8-resolver-automate-dns-privacy/</link>
       <pubDate>Mon, 11 Nov 2019 14:44:20 +0200</pubDate>
-      <guid>/es/posts/8-resolver-automate-dns-privacy/</guid>
+      <guid>//localhost:1313/es/posts/8-resolver-automate-dns-privacy/</guid>
       <description>&lt;h1 id=&#34;qué-es-resolver&#34;&gt;Qué es resolver?&lt;/h1&gt;&#xA;&lt;p&gt;Resolver es un pequeño script que configura la resolución de nombres de nuestro sistema. Si están instalados también configura &lt;strong&gt;dnsmasq&lt;/strong&gt;, &lt;strong&gt;tor&lt;/strong&gt; y &lt;strong&gt;stubby&lt;/strong&gt; para proporcionar resolución de nombres cifrada y segura.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Filtra paginas web con malware, publicidad, contenido inapropiado, &amp;hellip; usando el fichero hosts de &lt;a href=&#34;https://github.com/StevenBlack/hosts&#34;&gt;Steven Black&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Reduce las huellas de las peticiones DNS de usuario usando la cache de &lt;strong&gt;dnsmasq&lt;/strong&gt; y la opcion &amp;ldquo;dnsmasq addn-hosts&amp;rdquo; para resolver nombres localmente. También ahorra ancho de banda y datos.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Escapar de systemd: Creando nuestra propia iso kali-i3-viel.</title>
-      <link>/es/posts/7-escape-from-systemd/</link>
+      <link>//localhost:1313/es/posts/7-escape-from-systemd/</link>
       <pubDate>Fri, 08 Nov 2019 14:44:20 +0200</pubDate>
-      <guid>/es/posts/7-escape-from-systemd/</guid>
+      <guid>//localhost:1313/es/posts/7-escape-from-systemd/</guid>
       <description>&lt;h1 id=&#34;por-que-escapar-de-systemd&#34;&gt;Por que escapar de systemd&lt;/h1&gt;&#xA;&lt;p&gt;Porque quiero iniciar mi systema de manera kiss, usando lo mínimo necesario para que funcione bien y rápido.&lt;/p&gt;&#xA;&lt;p&gt;En la mayoría de distros linux vienen activadas por defecto muchas cosas que no se acaban utilizando y usan recursos. Por suerte linux permite configurar el sistema a gusto bajo un control completo, pero &amp;hellip; que pasa si quiero hacerme mi propio sistema de inicio?&lt;/p&gt;&#xA;&lt;p&gt;Systemd es cada vez mas complicado, es un binario y cambiar cualquier cosa que no este predefinida implica cambiar el código fuente, compilar y probar. Los archivos de servicios unit de systemd son específicos solo para systemd, no son scripts que puedan funcionar sin systemd. Cada vez hacen mas aplicaciones dependiente de systemd como &lt;a href=&#34;https://wiki.archlinux.org/index.php/Netctl&#34;&gt;netctl de arch linux&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Privacidad con Firefox: Configuración y script.</title>
-      <link>/es/posts/5-firefox-privacy/</link>
+      <link>//localhost:1313/es/posts/5-firefox-privacy/</link>
       <pubDate>Thu, 24 Oct 2019 06:00:00 +0200</pubDate>
-      <guid>/es/posts/5-firefox-privacy/</guid>
+      <guid>//localhost:1313/es/posts/5-firefox-privacy/</guid>
       <description>&lt;h1 id=&#34;configuración&#34;&gt;Configuración.&lt;/h1&gt;&#xA;&lt;p&gt;Hoy en día para navegar con un poco de privacidad podemos:&#xA;Usar un navegador de texto como &lt;a href=&#34;https://en.wikipedia.org/wiki/Lynx_%28web_browser%29&#34;&gt;linx&lt;/a&gt; sin funcionalidades como java, videos, css, &amp;hellip; , usar &lt;a href=&#34;https://support.torproject.org/es/tbb/&#34;&gt;torbrowser&lt;/a&gt;, o configurar firefox para navegar de manera lo mas segura y privada posible.&lt;/p&gt;&#xA;&lt;h2 id=&#34;copia-de-seguridad&#34;&gt;Copia de seguridad.&lt;/h2&gt;&#xA;&lt;p&gt;Lo primero que tenemos que hacer para no perder nuestros datos es una copia de nuestro perfil de firefox, se encuentra bajo el direcotrio de usuario.&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;~/.mozilla/firefox/xxxxxxxx.default &#xA;&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@kali:~# cp .mozilla/firefox/l50cihg0.default .mozilla/firefox/l50cihg0.default.bkp&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;También podríamos hacer copia solo de los ficheros que nos interesen como marcadores o historial.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Uso de GPG: Gnu Privacy Guard.</title>
-      <link>/es/posts/4-create-a-gpg-key/</link>
+      <link>//localhost:1313/es/posts/4-create-a-gpg-key/</link>
       <pubDate>Fri, 18 Oct 2019 10:06:06 +0200</pubDate>
-      <guid>/es/posts/4-create-a-gpg-key/</guid>
+      <guid>//localhost:1313/es/posts/4-create-a-gpg-key/</guid>
       <description>&lt;h1 id=&#34;creación-de-las-claves-publica-y-privada&#34;&gt;Creación de las claves publica y privada&lt;/h1&gt;&#xA;&lt;p&gt;Para crear las claves GPG podemos utilizar &lt;strong&gt;gpg &amp;ndash;generate-key&lt;/strong&gt; o &lt;strong&gt;gpg &amp;ndash;full-generate-key&lt;/strong&gt; el primer comando nos creará las claves sin preguntarnos otras opciones más que las necesarias. Si queremos un poco mas de control sobre algunas opciones como el tamaño o el periodo de validez usaremos &lt;strong&gt;gpg &amp;ndash;full-generate-key&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;El tamaño de la clave va relacionado con su seguridad pero también con el rendimiento ya que ha de procesar con números mas largos.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hugo generador de páginas web estáticas: Script para generar la configuración inicial.</title>
-      <link>/es/posts/3-hugo-script-basic-site/</link>
+      <link>//localhost:1313/es/posts/3-hugo-script-basic-site/</link>
       <pubDate>Tue, 15 Oct 2019 12:22:20 +0200</pubDate>
-      <guid>/es/posts/3-hugo-script-basic-site/</guid>
+      <guid>//localhost:1313/es/posts/3-hugo-script-basic-site/</guid>
       <description>&lt;h1 id=&#34;código-del-script&#34;&gt;Código del Script&lt;/h1&gt;&#xA;&lt;p&gt;Este script que os dejo a continuación me ha servido para generar este sitio web en sus momento iniciales ya que para mi era un poco incomodo tener que estar editando todos los archivos de uno en uno para hace pruebas y ver el resultado de la configuración de Hugo. Con este script tenemos toda la configuración inicial en un solo archivo para poder hacer pruebas de configuración con Hugo relativamente fácil.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hugo generador de páginas web estáticas: Hosting en github.</title>
-      <link>/es/posts/2-hosting-hugo-on-github/</link>
+      <link>//localhost:1313/es/posts/2-hosting-hugo-on-github/</link>
       <pubDate>Fri, 11 Oct 2019 19:54:30 +0200</pubDate>
-      <guid>/es/posts/2-hosting-hugo-on-github/</guid>
+      <guid>//localhost:1313/es/posts/2-hosting-hugo-on-github/</guid>
       <description>&lt;h1 id=&#34;cuenta-de-github&#34;&gt;Cuenta de github&lt;/h1&gt;&#xA;&lt;p&gt;Despues de mi &lt;a href=&#34;../../es/posts/1-hugo-start-how-to/&#34;&gt;anterior post&lt;/a&gt; donde empiezo con Hugo la creación de una página web con contenido estático, ahora toca alojar dicha página en github.&lt;/p&gt;&#xA;&lt;p&gt;No voy a entrar en como crear una cuenta en github, podéis seguir las indicaciones para crear la cuenta desde este enlace. &lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-via-gh-pages-branch&#34;&gt;Hosting on github&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Una vez creada la cuenta github, añadida la clave ssh para la gestión remota y creado el repositorio, crearemos el submódulo.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hugo generador de páginas web estáticas: Empezando con Hugo.</title>
-      <link>/es/posts/1-hugo-start-how-to/</link>
+      <link>//localhost:1313/es/posts/1-hugo-start-how-to/</link>
       <pubDate>Thu, 03 Oct 2019 14:44:20 +0200</pubDate>
-      <guid>/es/posts/1-hugo-start-how-to/</guid>
+      <guid>//localhost:1313/es/posts/1-hugo-start-how-to/</guid>
       <description>&lt;h1 id=&#34;porqué-hugo&#34;&gt;Porqué Hugo&lt;/h1&gt;&#xA;&lt;p&gt;Escogí hugo después de comparar los &lt;a href=&#34;https://www.staticgen.com/&#34;&gt;top static site gen&lt;/a&gt; y leer un par de posts de jekyll vs hugo, cada uno tendrá sus preferencias. Este és el primer SSG que uso ya que por alguno tenia que empezar, la &lt;a href=&#34;https://gohugo.io/documentation/&#34;&gt;documentación de Hugo&lt;/a&gt; es bastante amplia y fácil de entender.&lt;/p&gt;&#xA;&lt;h1 id=&#34;instalación-de-hugo&#34;&gt;Instalación de Hugo&lt;/h1&gt;&#xA;&lt;p&gt;Instalar Hugo dependerá del sistema operativo que tengamos. En Devian es tan fácil como usar apt.&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@kali:~/data# apt-get install hugo&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Después de instalar, crearemos un nuevo directorio para trabajar ordenadamente.&lt;/p&gt;</description>
     </item>
   </channel>
