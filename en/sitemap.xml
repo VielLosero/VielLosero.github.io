@@ -2,213 +2,213 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/en/posts/</loc>
+    <loc>/en/posts/</loc>
     <lastmod>2019-12-28T12:06:06+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/"
+                href="/es/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/"
+                href="/en/posts/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/10-ugly-firewall/</loc>
+    <loc>/en/posts/10-ugly-firewall/</loc>
     <lastmod>2019-12-28T12:06:06+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/10-ugly-firewall/"
+                href="/es/posts/10-ugly-firewall/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/10-ugly-firewall/"
+                href="/en/posts/10-ugly-firewall/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/9-automating-arch-install/</loc>
+    <loc>/en/posts/9-automating-arch-install/</loc>
     <lastmod>2019-12-05T06:06:06+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/9-automating-arch-install/"
+                href="/es/posts/9-automating-arch-install/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/9-automating-arch-install/"
+                href="/en/posts/9-automating-arch-install/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/8-resolver-automate-dns-privacy/</loc>
+    <loc>/en/posts/8-resolver-automate-dns-privacy/</loc>
     <lastmod>2019-11-11T14:44:20+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/8-resolver-automate-dns-privacy/"
+                href="/es/posts/8-resolver-automate-dns-privacy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/8-resolver-automate-dns-privacy/"
+                href="/en/posts/8-resolver-automate-dns-privacy/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/11-fake-dns-server/</loc>
+    <loc>/en/posts/11-fake-dns-server/</loc>
     <lastmod>2019-11-11T14:44:20+02:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/en/posts/7-escape-from-systemd/</loc>
+    <loc>/en/posts/7-escape-from-systemd/</loc>
     <lastmod>2019-11-08T14:44:20+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/7-escape-from-systemd/"
+                href="/es/posts/7-escape-from-systemd/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/7-escape-from-systemd/"
+                href="/en/posts/7-escape-from-systemd/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/5-firefox-privacy/</loc>
+    <loc>/en/posts/5-firefox-privacy/</loc>
     <lastmod>2019-10-24T06:00:00+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/5-firefox-privacy/"
+                href="/es/posts/5-firefox-privacy/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/5-firefox-privacy/"
+                href="/en/posts/5-firefox-privacy/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/support/</loc>
+    <loc>/en/support/</loc>
     <lastmod>2019-10-21T10:47:14+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/support/"
+                href="/es/support/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/support/"
+                href="/en/support/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/4-create-a-gpg-key/</loc>
+    <loc>/en/posts/4-create-a-gpg-key/</loc>
     <lastmod>2019-10-18T10:06:06+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/4-create-a-gpg-key/"
+                href="/es/posts/4-create-a-gpg-key/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/4-create-a-gpg-key/"
+                href="/en/posts/4-create-a-gpg-key/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/3-hugo-script-basic-site/</loc>
+    <loc>/en/posts/3-hugo-script-basic-site/</loc>
     <lastmod>2019-10-15T12:22:20+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/3-hugo-script-basic-site/"
+                href="/es/posts/3-hugo-script-basic-site/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/3-hugo-script-basic-site/"
+                href="/en/posts/3-hugo-script-basic-site/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/2-hosting-hugo-on-github/</loc>
+    <loc>/en/posts/2-hosting-hugo-on-github/</loc>
     <lastmod>2019-10-13T19:54:30+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/2-hosting-hugo-on-github/"
+                href="/es/posts/2-hosting-hugo-on-github/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/2-hosting-hugo-on-github/"
+                href="/en/posts/2-hosting-hugo-on-github/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/about/</loc>
+    <loc>/en/about/</loc>
     <lastmod>2019-10-12T18:03:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/acerca/"
+                href="/es/acerca/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/about/"
+                href="/en/about/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/</loc>
+    <loc>/en/</loc>
     <lastmod>2019-10-11T11:34:36+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/"
+                href="/es/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/"
+                href="/en/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/contact/</loc>
+    <loc>/en/contact/</loc>
     <lastmod>2019-10-11T10:47:14+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/contacto/"
+                href="/es/contacto/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/contact/"
+                href="/en/contact/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/posts/1-hugo-start-how-to/</loc>
+    <loc>/en/posts/1-hugo-start-how-to/</loc>
     <lastmod>2019-10-03T14:44:20+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/posts/1-hugo-start-how-to/"
+                href="/es/posts/1-hugo-start-how-to/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/posts/1-hugo-start-how-to/"
+                href="/en/posts/1-hugo-start-how-to/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/categories/</loc>
+    <loc>/en/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/categories/"
+                href="/es/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/categories/"
+                href="/en/categories/"
                 />
   </url><url>
-    <loc>//localhost:1313/en/tags/</loc>
+    <loc>/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="es"
-                href="//localhost:1313/es/tags/"
+                href="/es/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/en/tags/"
+                href="/en/tags/"
                 />
   </url>
 </urlset>
