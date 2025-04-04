@@ -2,80 +2,87 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Viel Losero&#39;s Website</title>
-    <link>/en/posts/</link>
+    <link>//localhost:1313/en/posts/</link>
     <description>Recent content in Posts on Viel Losero&#39;s Website</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 28 Dec 2019 12:06:06 +0200</lastBuildDate>
-    <atom:link href="/en/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Apr 2025 08:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/en/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Make.buildpkg: Dirty system from scratch.</title>
+      <link>//localhost:1313/en/posts/12-dirty-system-from-scratch/</link>
+      <pubDate>Fri, 04 Apr 2025 08:00:00 +0000</pubDate>
+      <guid>//localhost:1313/en/posts/12-dirty-system-from-scratch/</guid>
+      <description>&lt;h2 id=&#34;the-dirty-system-from-scratch&#34;&gt;The Dirty system from scratch&lt;/h2&gt;&#xA;&lt;p&gt;This is the history about the Make.Buildpkg concept and the Dirty system from scratch, and how I update my LFS system, and how to automate it.&#xA;As a learning experience I started building a simple package manager for LFS. As I built it, I was thinking about how to make it more useful, easy and simple. Will it end up being a distribution? To know how it ends you need to continue reading.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Ugly firewall</title>
-      <link>/en/posts/10-ugly-firewall/</link>
+      <link>//localhost:1313/en/posts/10-ugly-firewall/</link>
       <pubDate>Sat, 28 Dec 2019 12:06:06 +0200</pubDate>
-      <guid>/en/posts/10-ugly-firewall/</guid>
+      <guid>//localhost:1313/en/posts/10-ugly-firewall/</guid>
       <description>&lt;h1 id=&#34;ugly-firewall&#34;&gt;Ugly Firewall&lt;/h1&gt;&#xA;&lt;p&gt;This is mi scripts to manage linux netfilter iptables, i tried to do not install 3th tools that can&amp;rsquo;t do what i want, are ultra complicated, or need compiled code to run as binarys files, adding more layers to netfilter tools. It is easy to read a simple bash script to see what it do, and only with few lines of code (less than 200) and some organized files we can manage our firewall in linux.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Automating arch linux instalation.</title>
-      <link>/en/posts/9-automating-arch-install/</link>
+      <link>//localhost:1313/en/posts/9-automating-arch-install/</link>
       <pubDate>Thu, 05 Dec 2019 06:06:06 +0200</pubDate>
-      <guid>/en/posts/9-automating-arch-install/</guid>
+      <guid>//localhost:1313/en/posts/9-automating-arch-install/</guid>
       <description>&lt;h1 id=&#34;automating-the-installation-of-arch-linux&#34;&gt;Automating the installation of Arch linux&lt;/h1&gt;&#xA;&lt;p&gt;I recently reinstalled my arch linux to reorganize my partitions and encrypt the home. I have been running smoothly since the last installation for more than 4 years but I have seen the need to reorganize the space. I had the home at 70% and the partition for virtual disks at 30% and a chaos in the organization, besides having installed partitions without encryption, etc.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Resolver: Automating the security of dns resolutions.</title>
-      <link>/en/posts/8-resolver-automate-dns-privacy/</link>
+      <link>//localhost:1313/en/posts/8-resolver-automate-dns-privacy/</link>
       <pubDate>Mon, 11 Nov 2019 14:44:20 +0200</pubDate>
-      <guid>/en/posts/8-resolver-automate-dns-privacy/</guid>
+      <guid>//localhost:1313/en/posts/8-resolver-automate-dns-privacy/</guid>
       <description>&lt;h1 id=&#34;what-is-resolver&#34;&gt;What is resolver?&lt;/h1&gt;&#xA;&lt;p&gt;Resolver is a small script that configures the name resolution of our system. If installed, also configure &lt;strong&gt;dnsmasq&lt;/strong&gt;, &lt;strong&gt;tor&lt;/strong&gt; and &lt;strong&gt;stubby&lt;/strong&gt; to provide encrypted and secure name resolution.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Filter web pages with malware, publicity, inappropriate content, &amp;hellip; using the &lt;a href=&#34;https://github.com/StevenBlack/hosts&#34;&gt;Steven Black&lt;/a&gt; hosts file.&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Reduce the footprints of user DNS requests using the &lt;strong&gt;dnsmasq&lt;/strong&gt; cache and the &amp;ldquo;dnsmasq addn-hosts&amp;rdquo; option to resolve names locally. It also saves bandwidth and data.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Resolver: Ofuscando las consultas dns.</title>
-      <link>/en/posts/11-fake-dns-server/</link>
+      <link>//localhost:1313/en/posts/11-fake-dns-server/</link>
       <pubDate>Mon, 11 Nov 2019 14:44:20 +0200</pubDate>
-      <guid>/en/posts/11-fake-dns-server/</guid>
+      <guid>//localhost:1313/en/posts/11-fake-dns-server/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-1/&#34;&gt;https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-1/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://tools.kali.org/sniffingspoofing/dnschef&#34;&gt;https://tools.kali.org/sniffingspoofing/dnschef&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;root@kali:~# netcat -lunvvv 5053 &amp;ndash;exec &amp;lsquo;/bin/nc -u 127.0.0.1 53&amp;rsquo; &amp;ndash;keep-open&lt;/p&gt;&#xA;&lt;p&gt;root@kali:~# tcpdump -i lo udp port 53 -XX&#xA;tcpdump: verbose output suppressed, use -v or -vv for full protocol decode&#xA;listening on lo, link-type EN10MB (Ethernet), capture size 262144 bytes&#xA;17:44:34.153681 IP localhost.55007 &amp;gt; localhost.domain: 38929+ [1au] A? &lt;a href=&#34;https://www.startpage.org&#34;&gt;www.startpage.org&lt;/a&gt;. (58)&#xA;0x0000:  0000 0000 0000 0000 0000 0000 0800 4500  &amp;hellip;&amp;hellip;&amp;hellip;&amp;hellip;..E.&#xA;0x0010:  0056 24e6 0000 4011 57af 7f00 0001 7f00  .V$&amp;hellip;@.W&amp;hellip;&amp;hellip;.&#xA;0x0020:  0001 d6df 0035 0042 fe55 9811 0120 0001  &amp;hellip;..5.B.U&amp;hellip;&amp;hellip;&#xA;0x0030:  0000 0000 0001 0377 7777 0973 7461 7274  &amp;hellip;&amp;hellip;.www.start&#xA;0x0040:  7061 6765 036f 7267 0000 0100 0100 0029  page.org&amp;hellip;&amp;hellip;.)&#xA;0x0050:  1000 0000 0000 000c 000a 0008 22dd 5a93  &amp;hellip;&amp;hellip;&amp;hellip;&amp;hellip;&amp;quot;.Z.&#xA;0x0060:  a2c6 069c                                &amp;hellip;.&#xA;17:44:34.153774 IP localhost.domain &amp;gt; localhost.55007: 38929 1/0/1 A 212.129.237.78 (62)&#xA;0x0000:  0000 0000 0000 0000 0000 0000 0800 4500  &amp;hellip;&amp;hellip;&amp;hellip;&amp;hellip;..E.&#xA;0x0010:  005a 24e7 4000 4011 17aa 7f00 0001 7f00  .Z$.@.@&amp;hellip;&amp;hellip;&amp;hellip;&#xA;0x0020:  0001 0035 d6df 0046 fe59 9811 8180 0001  &amp;hellip;5&amp;hellip;F.Y&amp;hellip;&amp;hellip;&#xA;0x0030:  0001 0000 0001 0377 7777 0973 7461 7274  &amp;hellip;&amp;hellip;.www.start&#xA;0x0040:  7061 6765 036f 7267 0000 0100 01c0 0c00  page.org&amp;hellip;&amp;hellip;..&#xA;0x0050:  0100 0100 010b 7500 04d4 81ed 4e00 0029  &amp;hellip;&amp;hellip;u&amp;hellip;..N..)&#xA;0x0060:  1000 0000 0000 0000                      &amp;hellip;&amp;hellip;..&lt;/p&gt;</description>
     </item>
     <item>
       <title>Escape from systemd: Making a custom iso kali-i3-viel.</title>
-      <link>/en/posts/7-escape-from-systemd/</link>
+      <link>//localhost:1313/en/posts/7-escape-from-systemd/</link>
       <pubDate>Fri, 08 Nov 2019 14:44:20 +0200</pubDate>
-      <guid>/en/posts/7-escape-from-systemd/</guid>
+      <guid>//localhost:1313/en/posts/7-escape-from-systemd/</guid>
       <description>&lt;h1 id=&#34;why-escape-from-systemd&#34;&gt;Why escape from systemd&lt;/h1&gt;&#xA;&lt;p&gt;Because I want to start my system in a kiss way, using the minimum necessary for it to work well and quickly.&lt;/p&gt;&#xA;&lt;p&gt;In most Linux distros, many things that are not used and use resources are activated by default. Luckily Linux allows you to configure the system at ease under complete control, but &amp;hellip; what if I want to make my own startup system?&lt;/p&gt;&#xA;&lt;p&gt;Systemd is becoming more complicated, it is a binary and changing anything that is not predefined involves changing the source code, compiling and testing. Systemd unit service files are specific to systemd only, they are not scripts that can work without systemd. Every time they make more systemd dependent applications like &lt;a href=&#34;https://wiki.archlinux.org/index.php/Netctl&#34;&gt;netctl de arch linux&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Firefox privacity: Configuration and script.</title>
-      <link>/en/posts/5-firefox-privacy/</link>
+      <link>//localhost:1313/en/posts/5-firefox-privacy/</link>
       <pubDate>Thu, 24 Oct 2019 06:00:00 +0200</pubDate>
-      <guid>/en/posts/5-firefox-privacy/</guid>
+      <guid>//localhost:1313/en/posts/5-firefox-privacy/</guid>
       <description>&lt;h1 id=&#34;setting&#34;&gt;Setting.&lt;/h1&gt;&#xA;&lt;p&gt;Today to navigate with a little of privacy we can:&#xA;Use a text browser like &lt;a href=&#34;https://en.wikipedia.org/wiki/Lynx_%28web_browser%29&#34;&gt;linx&lt;/a&gt; without features like java, videos, css, &amp;hellip;, use &lt;a href=&#34;https://support.torproject.org/en/tbb/&#34;&gt;torbrowser&lt;/a&gt;, or configure firefox to navigate as safely and privately as possible.&lt;/p&gt;&#xA;&lt;h2 id=&#34;backup&#34;&gt;Backup.&lt;/h2&gt;&#xA;&lt;p&gt;The first thing we have to do to avoid losing our data is a copy of our firefox profile, it is under the user directory.&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;~/.mozilla/firefox/xxxxxxxx.default &#xA;&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@kali:~# cp .mozilla/firefox/l50cihg0.default .mozilla/firefox/l50cihg0.default.bkp&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We could also copy only the files that interest us as bookmarks or history.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Using GPG: Gnu Privacy Guard.</title>
-      <link>/en/posts/4-create-a-gpg-key/</link>
+      <link>//localhost:1313/en/posts/4-create-a-gpg-key/</link>
       <pubDate>Fri, 18 Oct 2019 10:06:06 +0200</pubDate>
-      <guid>/en/posts/4-create-a-gpg-key/</guid>
+      <guid>//localhost:1313/en/posts/4-create-a-gpg-key/</guid>
       <description>&lt;h1 id=&#34;creation-of-public-and-private-keys&#34;&gt;Creation of public and private keys&lt;/h1&gt;&#xA;&lt;p&gt;To create the GPG keys we can use **gpg &amp;ndash;generate-key ** or **gpg &amp;ndash;full-generate-key ** the first command will create the keys without asking other options than necessary. If we want more control over some options such as size or validity period we will use **gpg &amp;ndash;full-generate-key **.&lt;/p&gt;&#xA;&lt;p&gt;The size of the key is related to its security but also to the performance since it has to process with larger numbers.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hugo Static site generator: Script to generate the initial configuration.</title>
-      <link>/en/posts/3-hugo-script-basic-site/</link>
+      <link>//localhost:1313/en/posts/3-hugo-script-basic-site/</link>
       <pubDate>Tue, 15 Oct 2019 12:22:20 +0200</pubDate>
-      <guid>/en/posts/3-hugo-script-basic-site/</guid>
+      <guid>//localhost:1313/en/posts/3-hugo-script-basic-site/</guid>
       <description>&lt;h1 id=&#34;script-code&#34;&gt;Script Code&lt;/h1&gt;&#xA;&lt;p&gt;This script has helped me to generate mi website at initial moment since for me it was a bit awkward to editing all the files one by one to tests and see results of Hugo&amp;rsquo;s configuration . With this script we have all the initial configuration in a single file to be able to make configuration tests with Hugo relatively easy.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/VielLosero/scripts/blob/master/hugo-SSG/hugo-script-create-basic-site.sh&#34;&gt;hugo-script-create-basic-site.sh&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;testing-the-script&#34;&gt;Testing the script&lt;/h1&gt;&#xA;&lt;h2 id=&#34;download&#34;&gt;Download&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@kali:~# wget https://raw.githubusercontent.com/VielLosero/scripts/master/hugo-SSG/hugo-script-create-basic-site.sh&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;--2019-10-15 13:59:20--  https://raw.githubusercontent.com/VielLosero/scripts/master/hugo-SSG/hugo-script-create-basic-site.sh&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Resolviendo raw.githubusercontent.com &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;raw.githubusercontent.com&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;... 151.101.0.133, 151.101.64.133, 151.101.128.133, ...&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Conectando con raw.githubusercontent.com &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;raw.githubusercontent.com&lt;span class=&#34;o&#34;&gt;)[&lt;/span&gt;151.101.0.133&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;:443... conectado.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Petición HTTP enviada, esperando respuesta... &lt;span class=&#34;m&#34;&gt;200&lt;/span&gt; OK&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Longitud: &lt;span class=&#34;m&#34;&gt;10006&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;9,8K&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;text/plain&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Grabando a: “hugo-script-create-basic-site.sh”&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo-script-create-basic-site.sh        100%&lt;span class=&#34;o&#34;&gt;[=============================================================================&lt;/span&gt;&amp;gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;   9,77K  --.-KB/s    en 0s      &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2019-10-15 13:59:21 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;39,1 MB/s&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; - “hugo-script-create-basic-site.sh” guardado &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;10006/10006&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@kali:~# &#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;execution&#34;&gt;Execution&lt;/h2&gt;&#xA;&lt;p&gt;We change the permissions&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hugo Static site generator: Hosting on github.</title>
-      <link>/en/posts/2-hosting-hugo-on-github/</link>
+      <link>//localhost:1313/en/posts/2-hosting-hugo-on-github/</link>
       <pubDate>Sun, 13 Oct 2019 19:54:30 +0200</pubDate>
-      <guid>/en/posts/2-hosting-hugo-on-github/</guid>
+      <guid>//localhost:1313/en/posts/2-hosting-hugo-on-github/</guid>
       <description>&lt;h1 id=&#34;github-account&#34;&gt;Github account&lt;/h1&gt;&#xA;&lt;p&gt;After my &lt;a href=&#34;../../en/posts/1-hugo-start-how-to/&#34;&gt;previous post&lt;/a&gt; where I start with Hugo the creation of a web page with static content, now it&amp;rsquo;s time to host that page in github.&lt;/p&gt;&#xA;&lt;p&gt;I will not go into how to create an account on github, you can follow the instructions to create the account from this link. [Hosting on github] (&lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-via-gh-pages-branch&#34;&gt;https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-via-gh-pages-branch&lt;/a&gt;)&lt;/p&gt;&#xA;&lt;p&gt;Once the github account has been created, the ssh key has been added for remote management and the repository has been created, we will create the submodule.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hugo Static site generator: Starting with Hugo.</title>
-      <link>/en/posts/1-hugo-start-how-to/</link>
+      <link>//localhost:1313/en/posts/1-hugo-start-how-to/</link>
       <pubDate>Thu, 03 Oct 2019 14:44:20 +0200</pubDate>
-      <guid>/en/posts/1-hugo-start-how-to/</guid>
+      <guid>//localhost:1313/en/posts/1-hugo-start-how-to/</guid>
       <description>&lt;h1 id=&#34;why-hugo&#34;&gt;Why Hugo&lt;/h1&gt;&#xA;&lt;p&gt;I chose hugo after comparing the [top static site gen] (&lt;a href=&#34;https://www.staticgen.com/&#34;&gt;https://www.staticgen.com/&lt;/a&gt;) and reading a couple of posts by jekyll vs hugo, everyone will have their preferences. This is the first SSG I use since for some I had to start, [Hugo&amp;rsquo;s documentation] (&lt;a href=&#34;https://gohugo.io/documentation/&#34;&gt;https://gohugo.io/documentation/&lt;/a&gt;) is quite broad and easy to understand.&lt;/p&gt;&#xA;&lt;h1 id=&#34;hugo-installation&#34;&gt;Hugo installation&lt;/h1&gt;&#xA;&lt;p&gt;Installing Hugo will depend on the operating system we have. In Devian it is as easy as using apt.&lt;/p&gt;</description>
     </item>
   </channel>
