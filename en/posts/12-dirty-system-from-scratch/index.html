@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<title>Viel Losero - Make.buildpkg: Dirty system from scratch.</title>
+<link rel="stylesheet" href="../../../css/main.css"/>
+<link rel="stylesheet" href="//localhost:1313/css/syntax.css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto&display=swap" rel="stylesheet">
+</head>
+<body><header class="homepage-header">
+<div class="banner">
+    <a href="//localhost:1313/"><img src="../../../images/v.svg" alt="logo" /></a>
+	<div>
+	<a id="name" href="../../../"><h1>Viel Losero&#39; website</h1></a>
+        <nav class="MenuNav"> 
+                                                                                                                                     
+                                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/posts/" title="">Posts</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/contact/" title="">Contact</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/about/" title="">About</a>
+		                                                                                                                  
+                <a class="sidebar-nav-item" href="../../../en/support/" title="">Support</a>
+		
+        </nav>        
+</div>
+</div>
+
+</header>
+<section>
+		<div id=content>
+<main>
+    <article>
+        <header class="article-header">
+            <h1> Make.buildpkg: Dirty system from scratch.</h1>
+        </header>
+	 <article>
+		<div class="post-meta">
+		<p id="post-date"> Posted: Mar 12, 2025 - [ 7916 Words ] 
+		                                                                                                                                     
+		</p>
+		</div>
+		 <p id="toc">Table of contents <nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-dirty-system-from-scratch">The Dirty system from scratch</a></li>
+    <li><a href="#the-concept-of-the-chain-make----build----package">The concept of the chain make &ndash;&gt; build &ndash;&gt; package.</a>
+      <ul>
+        <li><a href="#the-maker-script-makebuildpkgpkg-ver-arch-relsh">The maker script (make.buildpkg.pkg-ver-arch-rel.sh).</a></li>
+        <li><a href="#the-builder-script-buildpkgpkg-ver-arch-relsh">The builder script (buildpkg.pkg-ver-arch-rel.sh).</a></li>
+        <li><a href="#the-package-script-pkg-ver-arch-relsh">The package script (pkg-ver-arch-rel.sh).</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-visual-concept">The visual concept.</a></li>
+    <li><a href="#extensibility-portability-scalability-and-more-">Extensibility, portability, scalability and more &hellip;</a></li>
+    <li><a href="#the-pkg-directory">The /pkg directory</a>
+      <ul>
+        <li><a href="#visual-pkg-structure">Visual /pkg structure.</a></li>
+        <li><a href="#the-pkgblacklist-dir">The /pkg/blacklist dir</a></li>
+        <li><a href="#the-pkginstalled-dir">The /pkg/installed dir</a></li>
+        <li><a href="#the-pkgrepositorydirty-01-dir-the-dirty-system-is-alive">The /pkg/repository/dirty-0.1 dir (The Dirty system is alive!!).</a></li>
+        <li><a href="#the-pkgtools-dir">The /pkg/tools dir</a></li>
+        <li><a href="#the-repository-status">The repository status.</a></li>
+      </ul>
+    </li>
+    <li><a href="#check-for-updates">Check for updates.</a></li>
+    <li><a href="#downloading-sources">Downloading sources.</a></li>
+    <li><a href="#usage-of-the-packages">Usage of the packages.</a></li>
+    <li><a href="#the-run-scripts">The run scripts</a></li>
+    <li><a href="#a-new-world-is-comming">A new world is comming.</a></li>
+    <li><a href="#version-003">Version 0.0.3</a></li>
+    <li><a href="#thanks-to">Thanks to:</a></li>
+    <li><a href="#contributing-and-support">Contributing and support</a></li>
+    <li><a href="#the-author">The Author</a></li>
+  </ul>
+</nav></p>
+		<h2 id="the-dirty-system-from-scratch">The Dirty system from scratch</h2>
+<p>This is the history about the Make.Buildpkg concept and the Dirty system from scratch, and how I update my LFS system, and how to automate it.
+As a learning experience I started building a simple package manager for LFS. As I built it, I was thinking about how to make it more useful, easy and simple. Will it end up being a distribution? To know how it ends you need to continue reading.</p>
+<h2 id="the-concept-of-the-chain-make----build----package">The concept of the chain make &ndash;&gt; build &ndash;&gt; package.</h2>
+<p>I am glad to present you: The maker, the builder and the package.
+The concept was easy, make a builder that build a package that can be installed.</p>
+<p>maker &ndash;&gt; builder &ndash;&gt; package &ndash;&gt; install it.</p>
+<p>From sources to packages, it is for LFS users like me.
+All in one place but not. In shell scripts but structured and managed.</p>
+<p>Why not make a simple script to do all the job? Divide and conquest.
+Because edit a file whit 5000 lines of source code inside are hard. So we need the maker.
+Becasue not all people want to have the sources. Some people only need the packages to install it. So we need 3 scripts.
+Wait, wait, sources inside? Yes.</p>
+<h3 id="the-maker-script-makebuildpkgpkg-ver-arch-relsh">The maker script (make.buildpkg.pkg-ver-arch-rel.sh).</h3>
+<p>The maker is the script that download the sources and make an other script, the (buildpkg.pkg-ver-arch-rel.sh) with the sources inside.
+This maker script have all in one place: download the sources, check it, and make the builder script that build the package.
+If you delete the builder and the package you can recreate it with the maker.
+The headers of the maker take the script name as reference to set the variables to work, so updating only the name of the script will update the variables inside and download the according version of the new sources files. We only need to verify/update the checksum and signature of the sources downloaded, read Changelog and audit the sources if we  want of course.</p>
+<pre tabindex="0"><code># Get init data from filename.
+cd $(dirname $0) ; SWD=$(pwd) # script work directory
+full_file_name=&#34;$0&#34; ; file_name_no_path=${0##*/}
+make_pkg_name=&#34;${file_name_no_path%.*}&#34; ; build_pkg_name=&#34;${make_pkg_name/make./}&#34;
+pkg_name=${build_pkg_name/buildpkg./} ; name=&#34;${pkg_name%-*-*-*}&#34;
+pkg_ver=&#34;${pkg_name%-*-*}&#34; ; ver=&#34;${pkg_ver/$name-/}&#34;
+pkg_arch=&#34;${pkg_name%-*}&#34; ; arch=${pkg_arch/$name-$ver-/}
+rel=${pkg_name/$name-$ver-$arch-/}
+first_pkg_char=$(printf %.1s ${name,})
+echo &#34;  Package name: $name&#34;
+echo &#34;  Version: $ver&#34;
+echo &#34;  Arch: $arch&#34;
+echo &#34;  Release: $rel&#34;
+</code></pre><h3 id="the-builder-script-buildpkgpkg-ver-arch-relsh">The builder script (buildpkg.pkg-ver-arch-rel.sh).</h3>
+<p>The builder is the script with the sources in base64, it extract and compile the sources and build the (pkg-ver-arch-rel.sh) script.
+The builder have all the sources (tar.xz, tzr.xz.sig, patches) in one tar file coded in base64. If you want to rebuild a package with more or less build options that is your package. So you can copy the builder with your release name and edit the compile options to make your oun package easy (buildpkg.pkg-ver-arch-MY_RELEASE.sh).
+If you want, the builder can only extract the sources. Each time the builder extract the sources do a checksum off the extracted or existent files.
+You can grep the builder to get a sha256sum list of all the sources. Not all people that provide sources provide a sha256sum, some provide md5sum some other sha512. Lot of souces are signed. With te builder you can share easy with other people a sha256sum list of sources in same format.
+Try:</p>
+<pre tabindex="0"><code>bash-5.2# grep &#34;sha256sum -c&#34; /pkg/repository/dirty-0.1/builders/*/*/* | cut -d&#39; &#39; -f2-4 | sort -k2
+</code></pre><h4 id="why-did-you-put-the-sources-in-a-shell-script">Why did you put the sources in a shell script?</h4>
+<p>Structuring thinks like that:</p>
+<ul>
+<li>you don&rsquo;t need to seach where the sources are.</li>
+<li>you have the checksum within the same file.</li>
+<li>The builder with the sources are easy reproducible.</li>
+<li>you sign it and it is build always same.</li>
+<li>and more that you can love or hate. Will see &hellip;</li>
+</ul>
+<h4 id="how-did-you-put-the-sources-in-a-shell-script">How did you put the sources in a shell script?</h4>
+<p>Coded in base64. If you know a best way point me please.
+The size of the files increase a litlte bit but inside we have the signature and in some cases the patches.
+Only code a file in base64 it increase around 30% like uuencoded files transfered on internet.</p>
+<pre tabindex="0"><code>233K Feb 27 16:33 wayland-1.23.1.tar.xz
+329K Mar  9 17:47 buildpkg.wayland-1.23.1-x86_64-1_BLFS_Graphical.sh
+
+1.9M Mar  8 23:58 libX11-1.8.12.tar.xz
+2.5M Mar 10 08:01 /pkg/repository/dirty-0.1/builders/l/libX11/buildpkg.libX11-1.8.12-x86_64-1_BLFS_Graphical_XORGLibs.sh
+
+19M Mar 10 13:30 /tmp/dirty-0.1/sources/glibc-2.41/glibc-2.41.tar.xz
+30M Mar  3 09:24 /pkg/repository/dirty-0.1/builders/g/glibc/buildpkg.glibc-2.41-x86_64-1_LFS_r12.2_multilib.sh
+
+236M Mar 10 13:24 /tmp/dirty-0.1/sources-all/linux-6.14-rc5.tar.gz
+319M Mar  3 12:52 /pkg/repository/dirty-0.1/builders/l/linux-mainline/buildpkg.linux-mainline-6.14_rc5-x86_64-1_LFS_r12.2_multilib.sh
+</code></pre><p>Today the space in disk is not a problem and the benefit is more than the harm.</p>
+<h3 id="the-package-script-pkg-ver-arch-relsh">The package script (pkg-ver-arch-rel.sh).</h3>
+<p>The package script have a tar file inside coded in base64 too.
+With the tar file coded inside and a few lines of code we can repeat easy a custom installation. Like with a tar file we can list the files. Extract only one file and compare the files extracted/installed on the system. What about tar errors? Sort the files in the correctoorder and you get no errors.
+With few lines more of code we can made some md5sum checksum using the tar as list.
+Let me explain this in detail.
+At some point on the process of making this, I think about add by defaul the creation of an md5sum file on the system. Tar can extract: one file, a list of files or all the files. Extract all files and pipe it to the checksum program don&rsquo;t work, because the chechsum program need the files one by one. Extract the list of files from the tar and then extract one by one to the checksum program are so slow. Extract one file from tar pipe to the checksum program is usefull if we only want to check a little number of files.
+So the md5sum option on the package script use the tar list of files but check the files installed on the system. Then to easy made a checksum control of that files we have 2 options:
+- Store a checksum of the files installed just after install.
+- Check one by one the files and overload the system.
+In additional I create my tools to help me to manage that &ldquo;repository&rdquo; of files. An additional (/pkg/tools/scripts/installpkg.sh) script can install the package an then store the md5sum.
+But we always have the tar inside to check file by file if needed.</p>
+<h4 id="why-an-other-package-manager">Why an other package manager?</h4>
+<p>Realy it&rsquo;s not, tar does the hard job and is a great tool. Don&rsquo;t need to reinvent the well.
+With few lines of code, you can make a script that automate tar jobs. And if you put the sources inside you just have a little powerfull &ldquo;package script&rdquo; that you can manage.
+Easy rigth? Common.</p>
+<h2 id="the-visual-concept">The visual concept.</h2>
+<pre tabindex="0"><code>+--------------------------------+
+| make.buildpkg.pkg.sh           |
+|                                |
+|  Automate source download      |
+|  Check src and new version     |
+|  Easy to edit read plain text  |
+|  All in one place              |
+|  Cat sources in b64 to builder |
+|  make the buildpkg             |
+| +---------------------------+  |
+| | buildpkg.pkg.sh           |  |
+| |                           |  |
+| |  Have source in b64       |  |
+| |  decode and checksum      |  |
+| |  can made checks          |  |
+| |  Extract and compile src  |  |
+| |  get pkg needed libs      |  |
+| |  cat files in b64 to pkg  |  |
+| |  build the pkg.sh         |  |
+| | +--------------------+    |  |                 
+| | | pkg.sh             |    |  |   
+| | |                    |    |  |
+| | |  pkg:tar in b64    |    |  |             
+| | |                    |    |  |             
+| | |  pkg.sh list       |    |  |
+| | |  pkg.sh verbose    |    |  |
+| | |  pkg.sh compare    |    |  |
+| | |  pkg.sh install    |    |  |
+| | |  pkg.sh remove     |    |  |
+| | |  pkg.sh shared     |    |  |
+| | |  pkg.sh md5sum     |    |  |
+| | |  pkg.sh echo       |    |  |
+| | |                    |    |  |
+| | +--------------------+    |  |                 
+| +---------------------------+  |
++--------------------------------+
+</code></pre><h2 id="extensibility-portability-scalability-and-more-">Extensibility, portability, scalability and more &hellip;</h2>
+<p>Ok talk a little about.</p>
+<p>In reference at extensibility, extra funcionalities can be added by only code it in shell script, no is needed to learn Python, C, rust, go, zig &hellip; compile code or fight vs a database. With a few lines of code it is easy to make a repository manager that checks the packages installed, or the last version package in the logs, or the sources that need updates, or the packages that need upgrade. On tools you can find my script, but everyone can make their ones. It is easy to remove, or exclude when rsync, the makers and the builders and have a repository only with packages. There are advantages and disavantages on store a repository on local. If you dont have the package script to remove the package you can check in tools the removepkg script.</p>
+<p>In reference at the portability, the system package uses bash (shell scripts) that make a great portability IMO. Only depend of tar bash coreutils findutils and sed to work. And sure this can be reduced if needed.</p>
+<p>How about other arch, maybe we can change on the maker the arch and make a specific builder, but lot of space, duplicated sources coded in b64. Maybe we can add the arch on the build part of the builder. Will see on the next versions.</p>
+<p>The scalability, for now I only fight with a few packages 175, most repeated like gcc pass1 pass2 &hellip; and the cross-toolchain packages. I am planing to add TAGS on the release part of the name but who knows. Suggestions are welcome.</p>
+<p>You can immagine the maker.buildpkg organisation like jobs. Each script are a job that can exit 0 or 1. Then you can make an upper script to check/manage/run what jobs are done.</p>
+<p>I know that there is not a full reporducible build system but &hellip; wait &hellip; the builders &hellip; will &hellip; ou &hellip;
+The builder was reproducible. mmm Maybe late I can do something more. I am working now to add SOURCE_DATE_EPOCH.</p>
+<p>We can talk about security and how to harden my dirty.</p>
+<p>I don&rsquo;t forgot the dependéncies. An other funcionality I don&rsquo;t talk about, the needed_libs file that each package have.
+As example to find the packages that have been build with pam you can do:</p>
+<pre tabindex="0"><code>bash-5.2# grep &#34;libpam&#34; /pkg/installed/*/needed-libs | cut -d&#39;:&#39; -f1 | sort -u
+/pkg/installed/linux-pam-1.7.0-x86_64-1_BLFS_sysV_r12.2/needed-libs
+/pkg/installed/openssh-9.9p2-x86_64-1_BLFS_sysV_r12.2/needed-libs
+/pkg/installed/shadow-4.17.3-x86_64-1_BLFS_sysV_r12.2/needed-libs
+/pkg/installed/shadow-4.17.3-x86_64-1_LFS_r12.2_multilib/needed-libs
+</code></pre><p>And this can be coded in a search script to add functionalities.</p>
+<p>And then, how to manage all that files? Below an example of how my repository looks.
+The advantage of that simple organization  are that you have all the data sctuctured and accessible, not in a Data Base that you need to know and make the queryes. You can made your custom scripts to show or manage as you want. Powerfull?
+Try to guess what each letter is. See &ldquo;The repository status.&rdquo; section for more info.</p>
+<pre tabindex="0"><code>bash-5.2# bash /pkg/tools/scripts/repo-status.sh
+ M B P     U V - Python-3.13.2-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B P I     V L Python-3.13.2-x86_64-1_LFS_r12.2_multilib
+ M B P I     V L acl-2.3.2-x86_64-1_LFS_r12.2_multilib
+   B         V - acl-2.3.2-x86_64-1_LFS_r12.2_multilib.sh
+ M B P     U V - alsa-lib-1.2.13-x86_64-1_LFS_r12.2_multilib
+ M B P     U V - alsa-utils-1.2.13-x86_64-1_LFS_r12.2_multilib
+ M B P I     V L attr-2.5.2-x86_64-1_LFS_r12.2_multilib
+ M B P I     V L autoconf-2.72-x86_64-1_LFS_r12.2_multilib
+ M B P I     V L automake-1.17-x86_64-1_LFS_r12.2_multilib
+ M B P     U V - bash-5.2.37-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B P I     V L bash-5.2.37-x86_64-1_LFS_r12.2_multilib
+ M B P I     V L bc-1.08.1-x86_64-1_LFS_r12.2_multilib
+ M B P I     V L binutils-2.44-x86_64-1_LFS_r12.2_multilib
+ M B P     U V - binutils-pass1-2.44-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B P     U V - binutils-pass2-2.44-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B     s   V - binutils-with-gold-2.44-x86_64-1_LFS_r12.2_multilib
+ M B P     U V - bison-3.8.2-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B P I     V L bison-3.8.2-x86_64-1_LFS_r12.2_multilib
+ M B P         - blfs-bootscripts-20241209-x86_64-1_BLFS_sysV_r12.2
+ M B P I     V L blfs-bootscripts-20250225-x86_64-1_BLFS_sysV_r12.2
+ M B P I     V L bzip2-1.0.8-x86_64-1_LFS_r12.2_multilib
+ M B P     U V - coreutils-9.6-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B P I     V L coreutils-9.6-x86_64-1_LFS_r12.2_multilib
+ M B P I     V L curl-8.12.1-x86_64-1_BLFS_sysV_r12.2
+ M B P         - dhcpcd-10.2.0-x86_64-1_BLFS_sysV_r12.2
+ M B P I     V L dhcpcd-10.2.2-x86_64-1_BLFS_sysV_r12.2
+ M B P     U V - diffutils-3.11-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B P I     V L diffutils-3.11-x86_64-1_LFS_r12.2_multilib
+</code></pre><h2 id="the-pkg-directory">The /pkg directory</h2>
+<p>In the early of the make.buildpkg I used a home dir to store makers builders and packages directories with the respective files on LFS_chroot LFS and BLFS directories on an ineficient way. Late I decided to unify all in a repository and the best place to put all togheder IMO are a new place in the root directory. Hello new standard FSH location for packatges.
+Shit, I want remove all that dirty. It&rsquo;s all under /pkg.</p>
+<h3 id="visual-pkg-structure">Visual /pkg structure.</h3>
+<pre tabindex="0"><code>.
+└── pkg
+    ├── blacklist
+    ├── installed
+    ├── repository
+    │   └── dirty-0.1
+    │       ├── builders
+    │       ├── makers
+    │       └── packages
+    └── tools
+        ├── checksums
+        ├── lists_of_packages
+        ├── patches
+        └── scripts
+</code></pre><h3 id="the-pkgblacklist-dir">The /pkg/blacklist dir</h3>
+<p>This directory serve to make soft links (aka:simlinks) to the files that we want to freeze.
+If a maker is blacklisted the automated scripts like (/pkg/tools/scripts/check-updates.sh), that uses lists_of_packages to run, skip to run the blacklisted maker.
+Same whith builders and packages.
+I will expose late the automation and the lists_of_packages.
+Nothing stop you to run a maker a builer or install a package manually.
+For now you can blacklist a maker like:</p>
+<pre tabindex="0"><code>ln -s /pkg/repository/dirty-0.1/makers/b/binutils-with-gold/make.buildpkg.binutils-with-gold-2.44-x86_64-1_LFS_r12.2_multilib.sh /pkg/blacklist/
+</code></pre><p>Same for builders and packages but changing the link to respective script.</p>
+<h3 id="the-pkginstalled-dir">The /pkg/installed dir</h3>
+<p>This directory have a list of installed packages ordered in directories (showed above).</p>
+<pre tabindex="0"><code>bash-5.2# ls -l1 /pkg/installed/ | head -8
+total 432
+drwxr-xr-x 2 root root 4096 Mar 10 18:51 Python-3.13.2-x86_64-1_LFS_r12.2_multilib
+drwxr-xr-x 2 root root 4096 Mar 10 18:50 acl-2.3.2-x86_64-1_LFS_r12.2_multilib
+drwxr-xr-x 2 root root 4096 Mar 10 18:50 attr-2.5.2-x86_64-1_LFS_r12.2_multilib
+drwxr-xr-x 2 root root 4096 Mar 10 18:51 autoconf-2.72-x86_64-1_LFS_r12.2_multilib
+drwxr-xr-x 2 root root 4096 Mar 10 18:51 automake-1.17-x86_64-1_LFS_r12.2_multilib
+drwxr-xr-x 2 root root 4096 Mar 10 18:51 bash-5.2.37-x86_64-1_LFS_r12.2_multilib
+drwxr-xr-x 2 root root 4096 Mar 10 18:50 bc-1.08.1-x86_64-1_LFS_r12.2_multilib
+</code></pre><p>Inside these packages directories we have a structured system of package metadata (showed above too).</p>
+<pre tabindex="0"><code>bash-5.2# ls -la /pkg/installed/binutils-2.44-x86_64-1_LFS_r12.2_multilib/
+total 64
+drwxr-xr-x   2 root root  4096 Mar 11 09:35 .
+drwxr-xr-x 110 root root 12288 Mar 10 18:52 ..
+-rw-r--r--   1 root root    43 Mar 10 18:50 build-time
+-rw-r--r--   1 root root 13316 Mar 10 18:50 index
+-rw-r--r--   1 root root 23728 Mar 11 09:35 md5sum
+-rw-r--r--   1 root root  2952 Mar 10 18:50 needed-libs
+bash-5.2#
+</code></pre><p>I think each file name is self-explanatory.</p>
+<p>As exposed on &ldquo;The package script&rdquo; section, to get the md5sum file, after install a package we can run:</p>
+<pre tabindex="0"><code>bash-5.2# bash /pkg/repository/dirty-0.1/packages/b/binutils/binutils-2.44-x86_64-1_LFS_r12.2_multilib.sh md5sum &gt; /pkg/installed/binutils-2.44-x86_64-1_LFS_r12.2_multilib/md5sum
+</code></pre><p>or use the (/pkg/tools/scripts/installpkg.sh) script.</p>
+<h3 id="the-pkgrepositorydirty-01-dir-the-dirty-system-is-alive">The /pkg/repository/dirty-0.1 dir (The Dirty system is alive!!).</h3>
+<p>Like Victor Franquestein my monster based on LFS need a release name.
+For now is a work in progres and maybe die before see the ligth but I will try hard. No?
+Inside the dirty-0.1 directory we have the three makers builders and packages directories, then the first leter of the package name, then the name of the package and then the corresponding maker builder or package scripts. The CORE of the system.</p>
+<p>Why that long path?
+It is not the same that all the scripts are in directories inside the three makers builders packages directories or add a letter in between.</p>
+<pre tabindex="0"><code>/home/data/git-repos/vielLosero/make.buildpkg/LFS_chroot/27 maker_scripts.   &lt;-- my first atempt.
+/home/data/git-repos/vielLosero/make.buildpkg/LFS/75 maker_scripts. 
+...
+/pkg/repository/dirty-0.1/makers/175 maker_script files.
+/pkg/repository/dirty-0.1/makers/175 package_name dirs/10 maker_script files.
+/pkg/repository/dirty-0.1/packages/a/24 package_name dirs start with a/10 makers_script files.
+</code></pre><p>The last was more scalable rigth?</p>
+<h3 id="the-pkgtools-dir">The /pkg/tools dir</h3>
+<p>This directory have four directories inside. Explained above.
+There is too some files like my basic kernel config to test on qemu. Some others work trash files, and 2 that I want to enumerate:
+The lfs-user and the lfs-chroot.
+These files are two scripts that help set up the environment when I build the list of packages.
+Alarm to know when the builds have finished. Notes.txt. The script to sign the packages. The pub key. And a file for triks. Thats my dirty working caos.</p>
+<h4 id="the-pkgtoolschecksums-directory">The /pkg/tools/checksums directory</h4>
+<p>Tis directory have some checksums of the entire filesystem to compare between builds for now, the plan was to automate the creation of  master checksums of all the md5sum files from installed packages. Or something similar. I will see late. You can check it.</p>
+<pre tabindex="0"><code>bash-5.2# md5sum /pkg/tools/checksums/CHECKSUMS.mnt.lfs.chroot.md5
+c22be0227ac91facb4693e0a52e4fb74  /pkg/tools/checksums/CHECKSUMS.mnt.lfs.chroot.md5   &lt;-- MASTER KEY??
+
+bash-5.2# cat /pkg/tools/checksums/CHECKSUMS.mnt.lfs.chroot.md5 | grep pkg/installed/ | grep md5sum | head -5
+6f40c614ce7c1aeb2535a85d21e2753a  ./pkg/installed/make-4.4.1-x86_64-1_LFSCHROOT_r12.2_multilib/md5sum
+98ad8bd5ded64cd3a9bdcf83e27e3532  ./pkg/installed/findutils-4.10.0-x86_64-1_LFSCHROOT_r12.2_multilib/md5sum
+3d81473bdde94fd5cdf19bf13c73cc73  ./pkg/installed/util-linux-2.40.4-x86_64-1_LFSCHROOT_r12.2_multilib/md5sum
+121ba7c370eee6210b4baa44bda45708  ./pkg/installed/Python-3.13.2-x86_64-1_LFSCHROOT_r12.2_multilib/md5sum
+c48282068020e80d7752fecf74387179  ./pkg/installed/grep-3.11-x86_64-1_LFSCHROOT_r12.2_multilib/md5sum
+bash-5.2#
+</code></pre><h4 id="the-pkgtoolslists_of_packages-directory">The /pkg/tools/lists_of_packages directory</h4>
+<p>This directory have the list of packages ordered.
+We need ordered list to install for example the BLFS shadow after the LFS shadow package.
+Or to install gcc-pass2 after gcc-pass1.
+Maybe I can made custom lists to install custom systems? Like list_dns_server &hellip;
+The lists_of_packages contain only the relevant TAGS of the scripts like:</p>
+<pre tabindex="0"><code>bash-5.2# cat /pkg/tools/lists_of_packages/LFSCHROOT_Cross-Toolchain_and_cross_tools.txt                             15:45:16 [10/35483]
+#order list for update and build packages.
+# cat ordered.txt | grep -v &#34;#&#34; | while read line ; do ls /pkg/repository/*/*/*/*$line ; done
+# _LFSCHROOT_
+#
+# 5. Compiling a Cross-Toolchain
+.make_buildpkg_dirty_package_manager-[0-9]*_LFSCHROOT_*
+.filesystem_hierarchy-[0-9]*_LFSCHROOT_*
+.binutils-pass1-[0-9]*_LFSCHROOT_*
+.gcc-pass1-[0-9]*_LFSCHROOT_*
+.linux-headers-[0-9]*_LFSCHROOT_*
+.glibc-[0-9]*_LFSCHROOT_*
+.gcc-libstdc++-[0-9]*_LFSCHROOT_*
+#
+# 6. Cross Compiling Temporary Tools
+.m4-[0-9]*_LFSCHROOT_*
+.ncurses-[0-9]*_LFSCHROOT_*
+.bash-[0-9]*_LFSCHROOT_*
+.coreutils-[0-9]*_LFSCHROOT_*
+.diffutils-[0-9]*_LFSCHROOT_*
+.file-[0-9]*_LFSCHROOT_*
+.findutils-[0-9]*_LFSCHROOT_*
+.gawk-[0-9]*_LFSCHROOT_*
+.grep-[0-9]*_LFSCHROOT_*
+.gzip-[0-9]*_LFSCHROOT_*
+.make-[0-9]*_LFSCHROOT_*
+.patch-[0-9]*_LFSCHROOT_*
+.sed-[0-9]*_LFSCHROOT_*
+.tar-[0-9]*_LFSCHROOT_*
+.xz-[0-9]*_LFSCHROOT_*
+.binutils-pass2-[0-9]*_LFSCHROOT_*
+.gcc-pass2-[0-9]*_LFSCHROOT_*
+</code></pre><p>With that I can run my custom script to find the makers, the builders or the packages and automate thinks like check updates or install.
+Not to hard I can live with that if I can automate the work. Did you imagine figth with list of hard coded full paths?</p>
+<p>What if I make a list for the packages that need update? Wait it is on (last_update_ordered_list.txt). On Check for updates section I will explain how that works.</p>
+<h4 id="the-pkgtoolspatches-directory">The /pkg/tools/patches directory</h4>
+<p>This is the trash dir where I put my patches to retouch all the makers for big changes, like patch the license (/pkg/tools/patches/patch_license) to acomplish with the portion of lines I have used from LFS. (Thanks LFS comunity.)</p>
+<p>Don&rsquo;t look inside, you will see my errors code. XD</p>
+<h4 id="the-pkgtoolsscripts-directory">The /pkg/tools/scripts directory</h4>
+<p>This direcotry have my scripts to manage the repository for now, the plan B are to add some soft links to find the needed tools on /usr/local/sbin/ and or /usr/local/bin faster.</p>
+<p>The plan C are that you, if you are already reading this, make your custom scripts and share it with me (the joke community of &ldquo;Dirty&rdquo;) :) or not. I hope you can appreciate the power of having full system packages data ordered, accesible and simple.</p>
+<p>If you plan to try &ldquo;Dirty&rdquo; system you can use a custom script placed inside that directory to make a raw disk for qemu.</p>
+<h3 id="the-repository-status">The repository status.</h3>
+<p>Now you know a little more about my &ldquo;Dirty&rdquo; system try but that&rsquo;s not all folks!
+Surfing the web people tank about stay or not with LFS because it is hard to update and mantain.
+As learning experience LFS are awesome. I recomend you to build it at last one. When I do it a new world was opened for me. But whats next? How to manage all that?
+Data are the reponse. If we know the status of each package we can mainage it. Nothing new rigth? So where is the data? And what we need to know?</p>
+<pre tabindex="0"><code># reset vars.
+# m(maker) b(builder) p(package) i(installed) s(skipped/blacklisted) u(update/remove) v(version) l(in logs)
+#m M maker exist
+#b B builder exist
+#p P package exist
+#i I are installed
+#s s maker or builder are skipped
+#s S package are skipped
+#u u maker need update
+#u U package need upgrade
+#u R package can be removed
+#v V is the last version
+#l - package not in logs # by default
+#l   package in logs. is space &#34; &#34;
+#l L package are last in logs
+</code></pre><p>At this point you would have to know where the makers the builders and the packages scripts are, and where are the installed packages and que blacklist directories.</p>
+<p>In the next point &ldquo;Check for updates&rdquo; I will explain the update process. For now we can found (after run /pkg/tools/scripts/check-updates.sh) a temp dir with the makers that need updates. So that files are marked on the repository status as need update with a &ldquo;u&rdquo;.</p>
+<pre tabindex="0"><code>bash-5.2# ls -1 /tmp/updates/need_update/
+make.buildpkg.iana-etc-20250225-x86_64-1_LFS_r12.2_multilib.sh
+make.buildpkg.linux-6.13.5-x86_64-1_LFS_r12.2_multilib.sh
+make.buildpkg.linux-headers-6.13.5-x86_64-1_LFSCHROOT_r12.2_multilib.sh
+make.buildpkg.linux-headers-6.13.5-x86_64-1_LFS_r12.2_multilib.sh
+make.buildpkg.linux-mainline-6.14_rc5-x86_64-1_LFS_r12.2_multilib.sh
+make.buildpkg.llvm-19.1.7-x86_64-1_BLFS_sysV_r12.2.sh
+make.buildpkg.pkgconf-2.4.1-x86_64-1_LFS_r12.2_multilib.sh
+make.buildpkg.setuptools-75.8.2-x86_64-1_LFS_r12.2_multilib.sh
+make.buildpkg.vim-9.1.1179-x86_64-1_LFS_r12.2_multilib.sh
+bash-5.2#
+</code></pre><p>There is a log file (/var/log/make.buildpkg.log) to know if a old version of a package has been installed, maybe by error. In that case the last version of the package it will be marked as need upgrade with a &ldquo;U&rdquo; when runing the repo status script. At this point it is not safe to remove the old package becasue we can lose funcionalities. After restoring/update to the last version of the package we have two installed packages and the older it will be marked as safe to remove with a &ldquo;R&rdquo; when we run the repo status.
+Then you can remove/uninstall the package from the system not from the repository. XD</p>
+<h2 id="check-for-updates">Check for updates.</h2>
+<p>Thas&rsquo;s ugly I know but two months of work are not enough for more.
+First the self explained organization of files. There are 3 directories that have soft links to the makers if they are checked, failed or need update. The others files are working lists.</p>
+<p>bash-5.2# ls -la /tmp/updates/
+total 44
+drwxr-xr-x 5 root root  4096 Mar 12 04:36 .
+drwxr-xr-t 4 root root  4096 Mar 12 04:36 ..
+drwxr-xr-x 2 root root 16384 Mar 12 04:36 checked
+drwxr-xr-x 2 root root  4096 Mar 12 04:36 failed
+-rw-r&ndash;r&ndash; 1 root root   612 Mar 12 04:36 last_update_ordered_list.txt
+-rw-r&ndash;r&ndash; 1 root root  1224 Mar 12 04:36 last_version_makers_ordered_list.txt
+drwxr-xr-x 2 root root  4096 Mar 12 04:36 need_update
+-rw-r&ndash;r&ndash; 1 root root  1224 Mar 12 04:36 ordered_update_links.txt
+bash-5.2# ls -la /tmp/updates/</p>
+<p>The metodology of work was to run /pkg/tools/scripts/check-updates.sh just whitout failed checks. So all makers will be on checked or need_update.</p>
+<p>Then we only need copy the old maker with the new version name and run one by one all makers to download the sources, edit the checksums, read the sources Changelogs and audit it. Not kidding. You can automate this too. I don&rsquo;t, to risky for me. I don&rsquo;t audit the sources but depending the package and the time I do more or less controls you know.</p>
+<p>To automate a few the process I have the lists of packages, so I made 2 scripts on tools.
+One to run the makers (compile-makers.sh) sure I will change that name. To run the last_update_ordered_list.txt whitout need to write each maker path. Maybe are best to download all the sources at same time and then chekc it and edit the chekcsums but, I am happy runing one by one.
+And one to install the new packages when they be ready (/pkg/tools/scripts/installpkg.sh).</p>
+<p>That is a work in progress &hellip; and sure my automation scripts will change.</p>
+<pre tabindex="0"><code>bash-5.2# bash /pkg/tools/scripts/repo-status.sh | grep &#34; u &#34;
+ M B P I   u V L iana-etc-20250225-x86_64-1_LFS_r12.2_multilib
+ M B P     u V - linux-6.13.5-x86_64-1_LFS_r12.2_multilib
+ M B P     u V - linux-headers-6.13.5-x86_64-1_LFSCHROOT_r12.2_multilib
+ M B P I   u V L linux-headers-6.13.5-x86_64-1_LFS_r12.2_multilib
+ M B P I   u V L linux-mainline-6.14_rc5-x86_64-1_LFS_r12.2_multilib
+ M B P I   u V L pkgconf-2.4.1-x86_64-1_LFS_r12.2_multilib
+ M B P I   u V L setuptools-75.8.2-x86_64-1_LFS_r12.2_multilib
+ M B P I   u V L vim-9.1.1179-x86_64-1_LFS_r12.2_multilib
+bash-5.2#
+</code></pre><h2 id="downloading-sources">Downloading sources.</h2>
+<p>Back to updating the makers &hellip; or when make new ones &hellip;
+In the first trys I use a separate temp directory per package to store download sources and construct the builder inside. Thats ends with some duplicate sources and lose of disk space. Like LFS do, I put all the sources in a /tmp/dirty-0.1/sources-all directory and make hard links for each package to construct the builder.
+As you know the hard link use the same inode and no require additional space. So whith that structure we have an ordered per package sources and a full dir with all the sources, easy to manage as needed.</p>
+<p>I am happy to share my &ldquo;dirty&rdquo; with all you but &hellip; , automated download of souces per user is not the same as download packages from a distribution server that are ready to. So guys don&rsquo;t collapse the servers souces downloading asap. Especting 2 or 3 folks who dare to try I am not scared about rigth?. Due to github repository limits I can&rsquo;t push all my repository.
+The old organization of files moved from tree dirs LFS LFS_chroot and BLFS with makers builders and packages to the ordered repository structure showed below make the git log so big. So I will made a new clean repository to share the makers and maybe some little builders and the pacckages, dunno.</p>
+<pre tabindex="0"><code>--- /home/data/git-repos/vielLosero/make.buildpkg --------------------------------------------------------------------------------------
+   13.8 GiB [###################] /.git
+    4.3 GiB [#####              ] /pkg
+   16.0 KiB [                   ]  make.buildpkg.busybox.1.37.0-x86_64-1.sh
+   12.0 KiB [                   ]  README.md
+   12.0 KiB [                   ]  make.buildpkg.ncdu-1.21-x86_64-1.sh
+    4.0 KiB [                   ]  lfs-chroot
+    4.0 KiB [                   ]  viel.losero.pubring.gpg
+</code></pre><p>If anyone would be kind enough to provide some space/server I would appreciate it. For now I am no plan to rent any hosting just for my dirty. But I want to share it with you :)</p>
+<h2 id="usage-of-the-packages">Usage of the packages.</h2>
+<p>All this hard job I done was to have a Dirty structured system of packages to reuse them in others machines and manage them.
+If you plan to try it you can install one by one or use the orderd lists to install the packages. Like:</p>
+<pre tabindex="0"><code>bash /pkg/tools/scripts/install-list.sh /pkg/tools/lists_of_packages/LFSCHROOT_Cross-Toolchain_and_cross_tools.txt
+</code></pre><p>This will install on /mnt/lfs the Cross toolchain from your /pkg/repository/dirty-0.1/packages if you have build it or you can rsync it from internet.</p>
+<p>I know. There is a lot of work to do with the packages to automate the distribution of packages and make alive my &ldquo;Dirty&rdquo; system based on LFS. Who knows.</p>
+<h2 id="the-run-scripts">The run scripts</h2>
+<p>Build LFS toolchain and aditional tools for cross compiling, or for isolate from the host is not trivial you know. Once we have the maker is hard too to run it one by one, the run scripts make our life easy.
+The runers scripts automate some task. Like run the maker if you dont have the builder, run the builder if you dont have the package, or install the package if it are not installed. All this on /mnt/lfs of course.
+Be care about disc space I build it on ram in a 32 Ram system and I have sometimes run out of available RAM. Is for that maybe you need to adjust the scripts or make yours.
+There are two, the toolchain and the chroot:</p>
+<pre tabindex="0"><code>/pkg/tools/scripts/run.LFSCHROOT_Cross-Toolchain.sh
+</code></pre><pre tabindex="0"><code>/pkg/tools/scripts/run.LFSCHROOT_Chroot_additional_tools.sh
+</code></pre><h2 id="a-new-world-is-comming">A new world is comming.</h2>
+<p>There are lot of possibilities when make the thinks small and simple.
+As a learning experience I would do it again.
+As my main system I am working on.
+Hope you can apreciate that 2 months of job and the work behind F.O.S.S community an the distributions. I done, I do and I will do.
+Sure I forgot something but &hellip; If you&rsquo;ve read this far, I think that&rsquo;s enough for try my Dirty or hate it.</p>
+<p>Can you imagine a maker script with all (or almost a lot) of the system config files inside, that you can edit and install on a clean LFS system?
+Can you imagine the package and the config_files in separated scripts?
+Or lot of builders scripts with diferent compilation option managed easy?
+Or lot of package scripts to select your custom system as needed?
+Or lot of custom lists to install from that lot of packages and construct your system?</p>
+<p>Leave the &ldquo;dirty&rdquo; grow.</p>
+<h2 id="version-003">Version 0.0.3</h2>
+<p>On the version 0.0.3 I added autocreation of makers when check update found a new version. Added new tags on the script to find LFS commands easy. Added the SKIP option and ordered it. Remaked the metadata timings and changed md5sum to checksum inside scripts.
+There is an example of version 0.0.3.
+I need to do lot of things like a Changelog, TAGS, more packages &hellip;</p>
+<pre tabindex="0"><code>#!/bin/bash
+# --- LICENSE ---
+# Copyright 2024, 2025 Viel Losero.
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&#39;&#39; AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#  Copyright for portions of this script are held by Gerard Beekmans 1999-2025 
+#  as part of project Linux From Scratch and are provided under the MIT license.
+#
+# --- END LICENSE ---
+
+#:Maintainer: Viel Losero &lt;viel.losero@gmail.com&gt;
+#:Contributor: -
+
+#:Version:0.0.3
+
+# Get Application init data from filename.
+cd $(dirname $0) ; SWD=$(pwd) # script work directory
+full_file_name=&#34;$0&#34; ; file_name_no_path=${0##*/} 
+make_pkg_name=&#34;${file_name_no_path%.*}&#34; ; build_pkg_name=&#34;${make_pkg_name/make./}&#34; 
+pkg_name=${build_pkg_name/buildpkg./} ; name=&#34;${pkg_name%-*-*-*}&#34; 
+pkg_ver=&#34;${pkg_name%-*-*}&#34; ; ver=&#34;${pkg_ver/$name-/}&#34;
+pkg_arch=&#34;${pkg_name%-*}&#34; ; arch=${pkg_arch/$name-$ver-/}
+rel=${pkg_name/$name-$ver-$arch-/}
+first_pkg_char=$(printf %.1s ${name,})
+echo &#34;  Package name: $name&#34;
+echo &#34;  Version: $ver&#34;
+echo &#34;  Arch: $arch&#34;
+echo &#34;  Release: $rel&#34;
+# Additional info.
+short_desc=&#34;Commands for Manipulating POSIX Access Control Lists&#34;
+url=&#34;https://www.gnu.org/software/tar/&#34;
+license=&#34;&#34;
+# prevent empty var.
+if [ -z $pkg_name ] ; then exit 1 ; fi
+
+# Master vars.
+ROOT=${ROOT:-} ; TMP=&#34;$ROOT/tmp&#34;
+REPODIR=${REPODIR:-/pkg/repository}
+METADATADIR=&#34;${METADATADIR:-/pkg/metadata/$first_pkg_char/${name}/${pkg_name}}&#34;
+DIST=${DIST:-dirty} ; DISTVER=${DISTVER:-0.1}
+SOURCESDIR=${SOURCESDIR:-$TMP/$DIST-$DISTVER/sources-all}
+SOURCESPPDIR=${SOURCESPPDIR:-$TMP/$DIST-$DISTVER/sources-per-package/$name-$ver}
+BUILDDIR=${BUILDDIR:-$TMP/$DIST-$DISTVER/build/$pkg_name}
+PKGDIR=${PKGDIR:-$TMP/$DIST-$DISTVER/pkgfiles/$pkg_name}
+OUTBUILD=${OUTBUILD:-$REPODIR/$DIST-$DISTVER/builders/$first_pkg_char/${name}/${build_pkg_name}.sh}
+OUTPKG=${OUTPKG:-$REPODIR/$DIST-$DISTVER/packages/$first_pkg_char/${name}/${pkg_name}.sh}
+
+# Other need vars for example to change the default INSTALLDIR=$LFS.
+LFS=/mnt/lfs
+LFS_TGT=$(uname -m)-lfs-linux-gnu
+
+# --- END CAT SEED ---
+
+# Config get tool.
+if wget --help &gt;/dev/null 2&gt;&amp;1 ; then GETVER=&#34;wget --output-document - --quiet&#34; GETFILE=&#34;wget -c --quiet&#34; SPIDER=&#34;wget -q --method=HEAD&#34;
+elif curl --help &gt;/dev/null 2&gt;&amp;1 ; then GETVER=&#34;curl --connect-timeout 20 --silent&#34; GETFILE=&#34;curl -C - -O --silent&#34; SPIDER=&#34;curl -L --head --fail --silent&#34;
+else echo &#34;Needed wget or curl to download files or check for new versions.&#34; &amp;&amp; exit 1 ; fi
+
+# package vars.
+version_url=&#34;https://download.savannah.nongnu.org/releases/acl&#34;
+sum=&#34;md5sum&#34;
+file1_url=&#34;$version_url&#34;
+file1=$name-$ver.tar.xz
+file1_sum=590765dee95907dbc3c856f7255bd669
+file2_url=&#34;$file1_url&#34;
+file2=${file1}.sig
+file2_sum=cb1a8da8d801c2d430062add8e5949b7
+acl_gpgkey=B902B5271325F892AC251AD441633B9FE837F581
+
+# Check for new releases.
+CHECK_RELEASE=${CHECK_RELEASE:-0}
+NEW=${NEW:-1}
+if [ $CHECK_RELEASE = 1 ] ; then 
+  last_version=$(echo &#34;$($GETVER $version_url)&#34; | tr &#39; &#39; &#39;\n&#39; | grep href.*${name}-[0-9].*tar.*z\&#34; | cut -d&#39;&#34;&#39; -f2 | sort -V | tail -1 | sed &#39;s/.tar.*//&#39; | cut -d&#39;-&#39; -f2 )
+  if [ -z &#34;$last_version&#34; ] ; then
+    echo &#34;Version check: Failed.&#34; ; exit 1
+  else
+    if [ &#34;$last_version&#34; == &#34;$ver&#34; ] ; then 
+      echo &#34;Version check: No new versions found.&#34; ; exit 0
+    else
+      if [ $NEW = 0 ] ; then
+        NEWMAKE=${NEWMAKE:-$REPODIR/$DIST-$DISTVER/makers/$first_pkg_char/${name}/make.buildpkg.${name}-${last_version}-${arch}-${rel}.sh}
+        if $SPIDER ${file1_url}/${file1/$ver/$last_version} &gt;/dev/null 2&gt;&amp;1 ; then 
+          if [ -e &#34;$NEWMAKE&#34; ] ; then
+            echo &#34;Exist: $NEWMAKE&#34; ; exit 0
+          else
+            cp $0 $NEWMAKE 
+            echo &#34;Created: $NEWMAKE&#34; ; exit 2
+          fi
+        else
+          echo &#34;Failed: new version file not found.&#34; ; exit 1 
+        fi
+      else
+        echo &#34;Version check: $name $last_version  $version_url&#34; ; exit 2
+      fi
+      echo &#34;Version check: $name $last_version  $version_url&#34; ; exit 2
+    fi
+  fi
+  exit 2
+fi
+
+# Make needed dirs.
+[ -d $TMP ] || mkdir -p $TMP
+[ -d $SOURCESDIR ] || mkdir -p $SOURCESDIR
+[ -d $SOURCESPPDIR ] &amp;&amp; rm -rfv $SOURCESPPDIR # To prevent fail hard link to sources because files not checked can exist.
+[ -d $SOURCESPPDIR ] || mkdir -p $SOURCESPPDIR
+[ -d ${OUTBUILD%/*} ] || mkdir -p ${OUTBUILD%/*}
+[ -d &#34;$METADATADIR&#34; ] || mkdir -p $METADATADIR
+
+# Get sources and check.
+cd $SOURCESDIR || exit 1
+[ ! -e $file1 ] &amp;&amp; $GETFILE ${file1_url}/${file1}
+[ -e $file1 ] &amp;&amp; if echo &#34;$file1_sum $file1&#34; | $sum -c ; then ln -v $SOURCESDIR/$file1 $SOURCESPPDIR/ ; else $sum $file1 ; exit 1 ; fi
+[ ! -e $file2 ] &amp;&amp; $GETFILE ${file2_url}/${file2}
+[ -e $file2 ] &amp;&amp; if echo &#34;$file2_sum $file2&#34; | $sum -c ; then ln -v $SOURCESDIR/$file2 $SOURCESPPDIR/ ; else $sum $file2 ; exit 1 ; fi
+
+# Check signaure if needed
+gpg --receive-keys $acl_gpgkey
+gpg --verify $file2 $file1 || exit 1
+
+# Prepare sources or patches.
+echo &#34;Preparing sources.&#34;
+cd $SOURCESPPDIR || exit 1
+# Do something if needed.
+
+# Making Buildpkg.sh $OUTBUILD (The builder)
+echo &#34;Making buildpkg.&#34;
+# echo first line to builder.
+echo &#34;#!/bin/bash&#34; &gt; $OUTBUILD
+# copy header to builder
+sed -n &#39;/^# --- LICENSE ---$/,/^# --- END CAT SEED ---$/p&#39; $SWD/$file_name_no_path &gt;&gt; $OUTBUILD
+# Cat EPOCH and dirs to builder.
+cat &lt;&lt; &#39;EOF_OUTBUILD&#39; &gt;&gt; $OUTBUILD
+
+# Get start builder date
+start_builder_date=$(date +&#34;%s&#34;)
+
+# Set source date epoch for reporducible builds
+SOURCE_DATE_EPOCH=&#34;${SOURCE_DATE_EPOCH:-$(date +%s)}&#34;
+
+# Create dirs for builder.
+[ -d $TMP ] || mkdir -p $TMP
+[ -d $SOURCESDIR ] || mkdir -p $SOURCESDIR
+[ -d $BUILDDIR ] || mkdir -p $BUILDDIR
+[ -d $PKGDIR ] || mkdir -p $PKGDIR
+[ -d ${OUTPKG%/*} ] || mkdir -p ${OUTPKG%/*}
+[ -d &#34;$METADATADIR&#34; ] || mkdir -p $METADATADIR
+
+# Create temp dir for package metadata.
+TMP_METADATA_DIR=$(mktemp -d $ROOT/tmp/make.buildpkg-tmp-build-XXXXXX)
+TMP_PKG_TIMINGS_FILE=$TMP_METADATA_DIR/tmp.timings.$pkg_name
+TMP_PKG_SHAREDLIBS_FILE=$TMP_METADATA_DIR/tmp.sharedlibs.$pkg_name
+TMP_PKG_CHECKSUMS_FILE=$TMP_METADATA_DIR/tmp.checksum.$pkg_name
+trap &#34;rm -rf $TMP_METADATA_DIR&#34; EXIT
+
+# Skip run part.
+SKIP=${SKIP:-0}
+if [ $SKIP  -eq 1 ] ; then
+  DECODE=${DECODE:-1} CHECK=${CHECK:-1} EXTRACT=${EXTRACT:-1} PATCH=${PATCH:-1}
+  CONFIG=${CONFIG:-1} BUILD=${BUILD:-1} INSTALL=${INSTALL:-1} POST=${POST:-1}
+  CONFIG32=${CONFIG32:-1} BUILD32=${BUILD32:-1} INSTALL32=${INSTALL32:-1} POST32=${POST32:-1}
+  STRIP=${STRIP:-1} SHARED=${SHARED:-1} CHECKSUM=${CHECKSUM:-1} PACKAGE=${PACKAGE:-1} METADATA=${METADATA:-1}
+fi
+DECODE=${DECODE:-0} CHECK=${CHECK:-0} EXTRACT=${EXTRACT:-0} PATCH=${PATCH:-0}
+CONFIG=${CONFIG:-0} BUILD=${BUILD:-0} INSTALL=${INSTALL:-0} POST=${POST:-0}
+CONFIG32=${CONFIG32:-0} BUILD32=${BUILD32:-0} INSTALL32=${INSTALL32:-0} POST32=${POST32:-0}
+STRIP=${STRIP:-0} SHARED=${SHARED:-0} CHECKSUM=${CHECKSUM:-0} PACKAGE=${PACKAGE:-0} METADATA=${METADATA:-0}
+
+EOF_OUTBUILD
+# The coding base64 part.
+# echo dirs to builder.
+echo &#34;Coding dirs to builder.&#34;
+cat &lt;&lt; &#39;EOF_OUTBUILD&#39; &gt;&gt; $OUTBUILD
+echo &#34;&#34;
+if [ $DECODE -eq 1 ] ; then echo &#34;Skipping DECODE sources.&#34; ; else
+  start_decoding_date=$(date +&#34;%s&#34;)
+  cd $SOURCESDIR || exit 1
+  # Make needed dirs to decode source.
+  echo &#34;Creating needed dirs to decode sources.&#34;
+EOF_OUTBUILD
+for dir in $(find . -type d | grep -v &#34;^.$&#34; | sort ) ; do
+  echo &#34;Found dir: $dir&#34;
+  echo &#34;mkdir -vp $dir&#34; &gt;&gt; $OUTBUILD
+done
+# echo files to builder.
+echo &#34;Coding files in b64 to builder.&#34;
+echo &#34;&#34; &gt;&gt; $OUTBUILD
+echo &#34;# Decode base64 source files.&#34; &gt;&gt; $OUTBUILD
+echo &#39;echo &#34;Decoding b64 source files.&#34;&#39; &gt;&gt; $OUTBUILD
+for file in $(find . -type f | sort ) ; do
+  if [ -z $(echo &#34;$file&#34; | grep -v &#34;buildpkg.$name-$ver&#34; ) ] ; then
+    echo &#34;  Excluding $file&#34;
+  else
+    echo &#34;  Added: $file&#34;
+    # echo check if file exist
+    echo &#34;if [ ! -e $file ] ; then&#34; &gt;&gt; $OUTBUILD
+    echo &#39;echo &#34;Extracting: &#39;$file&#39;&#34;&#39; &gt;&gt; $OUTBUILD
+    # cat file in base64
+    echo &#34;cat &lt;&lt;EOF | base64 -d &gt; $file&#34; &gt;&gt; $OUTBUILD
+    cat $file | base64 &gt;&gt; $OUTBUILD
+    echo &#34;EOF&#34; &gt;&gt; $OUTBUILD
+    echo &#34;fi&#34; &gt;&gt; $OUTBUILD
+    #echo md5sum 
+    echo &#34;# Check Sha256sum file or exit&#34; &gt;&gt; $OUTBUILD
+    echo &#34;echo \&#34;$(sha256sum $file)\&#34; | sha256sum -c || exit 1&#34; &gt;&gt; $OUTBUILD
+    echo &#34;# --- END CODE FILE ---&#34; &gt;&gt; $OUTBUILD
+  fi
+done
+# cat to buidler end decoding date and exit option.
+cat &lt;&lt; &#39;EOF_OUTBUILD&#39; &gt;&gt; $OUTBUILD
+  end_decoding_date=$(date +&#34;%s&#34;)
+  decoding_time=$(($end_decoding_date - $start_decoding_date))
+  echo &#34;Decoding sources time: $decoding_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Decoding sources time: $decoding_time seconds&#34; 
+fi
+EOF_OUTBUILD
+
+# Cat to builder the build sources part.
+cat &lt;&lt; &#39;EOF_OUTBUILD&#39; &gt;&gt; $OUTBUILD
+# Build part
+if [ $CHECK -eq 1 ] ; then echo &#34;Skipping CHECK tasks.&#34; ; else
+  # Check tasks needed to build.
+  start_checks_date=$(date +&#34;%s&#34;)
+  echo &#34;Checking needs to build.&#34;
+  # --- LFS_CMD_CHECKS ---
+  # --- END_LFS_CMD_CHECKS ---
+  end_checks_date=$(date +&#34;%s&#34;)
+  checks_time=$(($end_checks_date - $start_checks_date))
+  echo &#34;Checks time: $checks_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Checks time: $checks_time seconds&#34; 
+fi
+
+if [ $EXTRACT -eq 1 ] ; then echo &#34;Skipping EXTRACT sources.&#34; ; else
+  # Extracting sources.
+  start_extract_date=$(date +&#34;%s&#34;)
+  echo &#34;Preparing sources.&#34;
+  cd $BUILDDIR || exit 1
+  # deleting source dirs if exist.
+  if [ -d $name-$ver ] ; then rm -rf $name-$ver ; fi
+  if [ -d $PKGDIR ] ; then rm -rf $PKGDIR &amp;&amp; mkdir $PKGDIR ; fi
+EOF_OUTBUILD
+  echo &#39;  tar xf $SOURCESDIR&#39;/$file1 &gt;&gt; $OUTBUILD 
+  cat &lt;&lt; &#39;EOF_OUTBUILD&#39; &gt;&gt; $OUTBUILD
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_EXTRACT ---
+  # --- END_LFS_CMD_EXTRACT ---
+  end_extract_date=$(date +&#34;%s&#34;)
+  extract_time=$(($end_extract_date - $start_extract_date))
+  echo &#34;Extract time: $extract_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Extract time: $extract_time seconds&#34; 
+fi
+  
+if [ $PATCH -eq 1 ] ; then echo &#34;Skipping PATCH sources.&#34; ; else 
+  # Apply patches here.
+  start_patch_date=$(date +&#34;%s&#34;)
+  echo &#34;Applying patches.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_PATCH ---
+  # --- END_LFS_CMD_PATCH ---
+  end_patch_date=$(date +&#34;%s&#34;)
+  patch_time=$(($end_patch_date - $start_patch_date))
+  echo &#34;Patch time: $patch_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Patch time: $patch_time seconds&#34; 
+fi
+  
+if [ $CONFIG -eq 1 ] ; then echo &#34;Skipping CONFIG sources.&#34; ; else 
+  # ./configure here.
+  start_config_date=$(date +&#34;%s&#34;)
+  start_config_date=$(date +&#34;%s&#34;)
+  echo &#34;Configuring sources.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_CONFIG ---
+  ./configure --prefix=/usr         \
+              --disable-static      \
+              --docdir=/usr/share/doc/$name-$ver || exit 1
+  # --- END_LFS_CMD_CONFIG ---
+  end_config_date=$(date +&#34;%s&#34;)
+  config_time=$(($end_config_date - $start_config_date))
+  echo &#34;Sources config time: $config_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Sources config time: $config_time seconds&#34;
+fi
+
+if [ $BUILD -eq 1 ] ; then echo &#34;Skipping BUILD sources.&#34; ; else 
+  start_build_date=$(date +&#34;%s&#34;)
+  echo &#34;Compiling sources.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_BUILD ---
+  NUMJOBS=&#34;-j $(nproc)&#34;
+  make $NUMJOBS || exit 1
+  # --- END_LFS_CMD_BUILD ---
+  end_build_date=$(date +&#34;%s&#34;)
+  build_time=$(($end_build_date - $start_build_date))
+  echo &#34;Sources build time: $build_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Sources build time: $build_time seconds&#34;
+fi
+
+if [ $INSTALL -eq 1 ] ; then echo &#34;Skipping INSTALL sources.&#34; ; else 
+  start_install_date=$(date +&#34;%s&#34;)
+  #Installing sources.
+  echo &#34;Installing sources.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_INSTALL ---
+  make DESTDIR=$PKGDIR install || exit 1
+  # --- END_LFS_CMD_INSTALL ---
+  end_install_date=$(date +&#34;%s&#34;)
+  install_time=$(($end_install_date - $start_install_date))
+  echo &#34;Sources install time: $install_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Sources install time: $install_time seconds&#34;
+fi  
+
+if [ $POST -eq 1 ] ; then echo &#34;Skipping POST compilation tasks.&#34; ; else 
+  # Post compilation
+  start_post_date=$(date +&#34;%s&#34;)
+  echo &#34;Post compilation tasks.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_POST ---
+  make distclean
+  # --- END_LFS_CMD_POST ---
+  end_post_date=$(date +&#34;%s&#34;)
+  post_time=$(($end_post_date - $start_post_date))
+  echo &#34;Post compilation tasks time: $post_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Post compilation tasks time: $post_time seconds&#34;
+fi
+  
+if [ $CONFIG32 -eq 1 ] ; then echo &#34;Skipping CONFIG32 bits sources.&#34; ; else 
+  # ./configure here.
+  start_config32_date=$(date +&#34;%s&#34;)
+  echo &#34;Configuring 32bits sources.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_CONFIG32 ---
+  CC=&#34;gcc -m32&#34; ./configure \
+      --prefix=/usr         \
+      --disable-static      \
+      --libdir=/usr/lib32   \
+      --libexecdir=/usr/lib32   \
+      --host=i686-pc-linux-gnu || exit 1
+  # --- END_LFS_CMD_CONFIG32 ---
+  end_config32_date=$(date +&#34;%s&#34;)
+  config32_time=$(($end_config32_date - $start_config32_date))
+  echo &#34;Sources config32 time: $config32_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Sources config32 time: $config32_time seconds&#34;
+fi
+
+if [ $BUILD32 -eq 1 ] ; then echo &#34;Skipping BUILD32 bits sources.&#34; ; else 
+  start_build32_date=$(date +&#34;%s&#34;)
+  echo &#34;Compiling 32bits sources.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_BUILD32 ---
+  NUMJOBS=&#34;-j $(nproc)&#34;
+  make $NUMJOBS || exit 1
+  # --- END_LFS_CMD_BUILD32 ---
+  end_build32_date=$(date +&#34;%s&#34;)
+  build32_time=$(($end_build32_date - $start_build32_date))
+  echo &#34;Sources build32 time: $build32_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Sources build32 time: $build32_time seconds&#34;
+fi
+
+if [ $INSTALL32 -eq 1 ] ; then echo &#34;Skipping INSTALL32 bits sources.&#34; ; else 
+  #Installing sources.
+  start_install32_date=$(date +&#34;%s&#34;)
+  echo &#34;Installing 32bits sources.&#34;
+  cd $BUILDDIR || exit 1
+  cd $name-$ver || exit 1
+  # --- LFS_CMD_INSTALL32 ---
+  mkdir -vp $PKGDIR/usr/lib32
+  make DESTDIR=$PWD/DESTDIR install
+  cp -Rv DESTDIR/usr/lib32/* $PKGDIR/usr/lib32
+  rm -rf DESTDIR
+  # --- END_LFS_CMD_INSTALL32 ---
+  end_install32_date=$(date +&#34;%s&#34;)
+  install32_time=$(($end_install32_date - $start_install32_date))
+  echo &#34;Sources install32 time: $install32_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Sources install32 time: $install32_time seconds&#34;
+fi
+
+if [ $POST32 -eq 1 ] ; then echo &#34;Skipping POST32 bits compilation tasks.&#34; ; else 
+  # Post compilation 32bits
+  start_post32_date=$(date +&#34;%s&#34;)
+  echo &#34;Post compilation 32bits tasks.&#34;
+  # --- LFS_CMD_POST32 ---
+  # --- END_LFS_CMD_POST32 ---
+  end_post32_date=$(date +&#34;%s&#34;)
+  post32_time=$(($end_post32_date - $start_post32_date))
+  echo &#34;Post compilation 32bits tasks time: $post32_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Post compilation 32bits tasks time: $post32_time seconds&#34;
+fi
+
+if [ $STRIP -eq 1 ] ; then echo &#34;Skipping STRIP elf.&#34; ; else 
+  # strip ELF
+  start_strip_date=$(date +&#34;%s&#34;)
+  find $PKGDIR | xargs file | egrep &#34;ELF.*executable&#34; | cut -f 1 -d : \
+               | xargs strip --strip-unneeded 2&gt; /dev/null
+  end_strip_date=$(date +&#34;%s&#34;)
+  strip_time=$(($end_strip_date - $start_strip_date))
+  echo &#34;Sources strip time: $strip_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Sources strip time: $strip_time seconds&#34;
+fi
+  
+if [ $SHARED -eq 1 ] ; then echo &#34;Skipping find SHARED libs.&#34; ; else 
+  # extract /pkg shared-libs dir to temp file, to cat in base64 when contruct the pkg script.
+  start_shared_date=$(date +&#34;%s&#34;)
+  echo &#34;Find ELF files and extract needed shared libs&#34;
+  trap &#34;rm -f $TMP_PKG_SHAREDLIBS_FILE&#34; EXIT
+  cd $PKGDIR
+  find . -type f -executable -exec objdump -p &#34;{}&#34; 2&gt;/dev/null \; |\
+    grep NEEDED | sed &#39;s/ *NEEDED *\(l.*\)/\1/&#39; | LC_ALL=POSIX sort -u &gt; $TMP_PKG_SHAREDLIBS_FILE
+  find . -type f -executable -exec objdump -p &#34;{}&#34; 2&gt;/dev/null \; | grep -E &#34;^./|NEEDED&#34; |\
+    # change &#39;: file format elf64-x86-64&#39; to :
+    sed -e &#39;s/:.*$/:/&#39; |\
+    # remove new lines
+    tr -d &#39;\n&#39; |\
+    # remove more than one space
+    tr -s &#39; &#39; |\
+    # change first &#39;: NEEDED &#39; with :
+    sed &#39;s/: NEEDED /:/g&#39;|\
+    # change &#39; NEEDED &#39; for ,
+    sed &#39;s/ NEEDED /,/g&#39; |\
+    # add new line and ./ when find ./
+    sed &#39;s/\.\//\n.\//g&#39; |\
+    # remove first black line and add \n at end
+    awk &#39;NF&#39; |\
+    LC_ALL=POSIX sort -u &gt; $TMP_PKG_SHAREDLIBS_FILE
+  end_shared_date=$(date +&#34;%s&#34;)
+  shared_time=$(($end_shared_date - $start_shared_date))
+  echo &#34;Find shared time: $shared_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Find shared time: $shared_time seconds&#34;
+fi
+
+if [ $CHECKSUM -eq 1 ] ; then echo &#34;Skipping CHECKSUM files.&#34; ; else 
+  # Get CHECKSUM of all files in $PKGDIR.
+  # WARNING: Dont put files with timestamps that can broke the checksum.
+  start_checksum_date=$(date +&#34;%s&#34;)
+  cd $PKGDIR || exit 1
+  #ls -la .
+  if locale -a | grep POSIX &gt;/dev/null ; then
+    find . -type f -exec md5sum {} \; | LC_ALL=POSIX sort &gt; $TMP_PKG_CHECKSUMS_FILE
+    # Master md5
+    echo &#34;Master MD5:  $(md5sum $TMP_PKG_CHECKSUMS_FILE) &#34;
+  else
+    echo &#34;Locale POSIX not found&#34; &amp;&amp; exit 1
+  fi
+  end_checksum_date=$(date +&#34;%s&#34;)
+  checksum_time=$(($end_checksum_date - $start_checksum_date))
+  echo &#34;Checksum pkg files time: $checksum_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Checksum pkg files time: $checksum_time seconds&#34;
+fi
+
+EOF_OUTBUILD
+
+# Cat to Builder the package pkg.sh. $OUTPKG part.
+cat &lt;&lt; &#39;EOF_OUTBUILD&#39; &gt;&gt; $OUTBUILD
+if [ $PACKAGE -eq 1 ] ; then echo &#34;Skipping PACKAGE.&#34; ; else
+  #Packaging.
+  start_package_date=$(date +&#34;%s&#34;)
+  echo &#34;Packaging&#34;
+  # Start build pkg_name.sh
+  echo &#34;#!/bin/bash&#34; &gt; $OUTPKG
+  # Copy script header to pkg.
+  sed -n &#39;/^# --- LICENSE ---$/,/^# --- END CAT SEED ---$/p&#39; $SWD/$file_name_no_path &gt;&gt; $OUTPKG
+  
+  cat &lt;&lt; &#39;EOF_OUTPKG&#39; &gt;&gt; $OUTPKG
+  if [ $# -eq 0 ]; then USAGE=1 ; fi
+  while [ $# -gt 0 ] ; do
+    case $1 in
+      install) INSTALL=1 ; shift $# 
+        ;;
+      compare) COMPARE=1 ; shift $#
+        ;;
+      list) LIST=1 ; shift $#
+        ;;
+      remove) REMOVE=1 ; shift $#
+        ;;
+      verbose) VERBOSE=1 ; shift $#
+        ;;
+      checksum) CHECKSUM=1 ; shift $#
+        ;;
+      echo) ECHO=1 ; shift $#
+        ;;
+      shared) LISTSHARED=1 ; shift $#
+        ;;
+      *) USAGE=1 ; shift $#
+        ;;
+    esac 
+  done
+  if [[ $USAGE -eq 1 ]] ; then
+    echo &#34;USAGE: pkg.sh list&#34;
+    echo &#34;       pkg.sh verbose&#34;
+    echo &#34;       pkg.sh compare&#34;
+    echo &#34;       pkg.sh install&#34;
+    echo &#34;       pkg.sh remove&#34;
+    echo &#34;       pkg.sh shared&#34;
+    echo &#34;       pkg.sh checksum&#34;
+    echo &#34;       pkg.sh echo&#34;
+    echo &#34;       INSTALLDIR=/foo pkg.sh install&#34;
+    exit 1
+  fi
+  
+EOF_OUTPKG
+  
+  cd $PKGDIR
+  # Tar and compress files in current dir and copy it in b64 to package script.
+  echo &#34;compresed_tar_xz_pkg_b64=&#39;$(tar Jcf - * | base64)&#39;&#34; &gt;&gt; $OUTPKG
+  echo &#34;# --- END TAR FILE ---&#34; &gt;&gt; $OUTPKG
+  # Cat temp sharedlibs file in b64 to package script.
+  echo &#34;shared_libs_b64=&#39;$(cat $TMP_PKG_SHAREDLIBS_FILE | base64)&#39;&#34; &gt;&gt; $OUTPKG
+  #rm $TMP_PKG_SHAREDLIBS_FILE
+  # Cat checksums file in b64 to package script.
+  echo &#34;checksums_b64=&#39;$(cat $TMP_PKG_CHECKSUMS_FILE | base64)&#39;&#34; &gt;&gt; $OUTPKG
+  #rm $TMP_PKG_CHECKSUMS_FILE
+  
+cat &lt;&lt; &#39;EOF_OUTPKG&#39; &gt;&gt; $OUTPKG
+  INSTALLDIR=${INSTALLDIR:-/}
+  cd $INSTALLDIR || exit 1
+  LOGDIR=&#34;$INSTALLDIR/var/log&#34; 
+  LOGFILE=&#34;$LOGDIR/make.buildpkg.log&#34;
+  PKG_DB=&#34;$INSTALLDIR/pkg/installed&#34;
+  PKG_DIR=&#34;$PKG_DB/$pkg_name&#34; 
+  TMP_PKG_DIR=$(mktemp -d $ROOT/tmp/make.buildpkg-tmp-pkg-XXXXXX)
+  trap &#34;rm -rf $TMP_PKG_DIR&#34; EXIT
+  # pkg installed files
+  PKG_INDEX_FILE=&#34;$PKG_DIR/index&#34;
+  # pkg shared libs
+  PKG_SHAREDLIBS_FILE=&#34;$PKG_DIR/needed-libs&#34;
+  # pkg checksums
+  PKG_CHECKSUMS_FILE=&#34;$PKG_DIR/checksums&#34;
+  
+  if [[ $INSTALL -eq 1 ]] ; then 
+    [ -d $PKG_DIR ] || mkdir -p $PKG_DIR 
+    [ -d $LOGDIR ] || mkdir -p $LOGDIR 
+    # check write on log file 
+    if [ -w $LOGFILE ] ; then true ; else touch $LOGFILE || exit 1 ; fi
+    # check write on PKG_INDEX_FILE
+    echo &#34;Updating pkg.db files for this package.&#34;
+    # echo sharedlibs  to package db.
+    echo &#34;$shared_libs_b64&#34; | base64 -d &gt; $PKG_SHAREDLIBS_FILE
+    # update pkg index
+    echo &#34;$compresed_tar_xz_pkg_b64&#34; | base64 -d | tar -Jtf - | sort &gt; $PKG_INDEX_FILE
+    echo &#34;Installing files in $INSTALLDIR&#34;
+    echo &#34;Decoding b64 package files.&#34;
+      # --keep-directory-symlink Don&#39;t replace existing symlinks to directories when extracting.
+      # tested tar (GNU tar) 1.35 || exit
+      echo &#34;$compresed_tar_xz_pkg_b64&#34; | base64 -d | tar -Jxvf - --keep-directory-symlink
+    echo &#34;$(date) Installed $pkg_name in $INSTALLDIR&#34; &gt;&gt; $LOGFILE 
+  elif [[ $COMPARE -eq 1 ]] ; then
+    echo &#34;Comparing pkg with files in $INSTALLDIR&#34;
+    # Compare tar with filesystem (only files, dirs and links not work)
+    echo &#34;Decoding b64 package files.&#34;
+    if [[ PROCESS_FILES_FROM -eq 1 ]] ; then
+      echo &#34;$compresed_tar_xz_pkg_b64&#34; | base64 -d | tar -Jdf - --no-recursion --files-from=$FILES_FROM | sed &#39;s/^/  /&#39; 
+    else
+      echo &#34;$compresed_tar_xz_pkg_b64&#34; | base64 -d | tar -Jdf - | sed &#39;s/^/  /&#39; 
+    fi
+  elif [[ $LIST -eq 1 ]] ; then
+    echo &#34;Decoding b64 package files.&#34;
+    echo &#34;Listing pkg files.&#34;
+    echo &#34;$compresed_tar_xz_pkg_b64&#34; | base64 -d | tar -Jtf - | sed &#39;s/^/  /&#39; 
+  elif [[ $VERBOSE -eq 1 ]] ; then
+    echo &#34;Listing pkg files.&#34;
+    echo &#34;$compresed_tar_xz_pkg_b64&#34; | base64 -d | tar -Jtvf - | sed &#39;s/^/  /&#39; 
+  elif [[ $CHECKSUM -eq 1 ]] ; then
+    echo &#34;Checksum md5sum filesystem files.&#34;
+    echo &#34;$checksums_b64&#34; | base64 -d 
+  elif [[ $ECHO -eq 1 ]] ; then
+    # exclude print pkg name version arch release
+    echo &#34;$compresed_tar_xz_pkg_b64&#34; 
+  elif [[ $LISTSHARED -eq 1 ]] ; then
+    echo &#34;Listing needed shared libs for this pkg.&#34;
+    echo &#34;$shared_libs_b64&#34; | base64 -d 
+  elif [[ $REMOVE -eq 1 ]] ; then
+    # All needed files are all installed files + noremove - pkg_installed
+    # to find files that are in other packages and can&#39;t remove.
+    TMP_ALL_NEEDED_FILES=$TMP_PKG_DIR/make.buildpkg-all-needed-files.remove
+    TMP_ALL_NEEDED_FILES_SORT=$TMP_PKG_DIR/make.buildpkg-all-needed-files-sort.remove
+    TMP_FILES_TO_REMOVE=$TMP_PKG_DIR/make.buildpkg-files-to.remove
+    # find all files installed
+    find $PKG_DB -name &#34;index&#34; -not -path &#34;*/$pkg_name/*&#34; -exec cat {} \; | LC_ALL=POSIX sort &gt; $TMP_ALL_NEEDED_FILES
+    cat $TMP_ALL_NEEDED_FILES | LC_ALL=POSIX sort &gt; $TMP_ALL_NEEDED_FILES_SORT
+    # compare all files to pkg installed and get uniques no needed by third parties
+    comm -23 $PKG_INDEX_FILE $TMP_ALL_NEEDED_FILES_SORT 2&gt;/dev/null &gt; $TMP_FILES_TO_REMOVE
+    # need to do a dry run.
+    # remove no needed files
+    cat $TMP_FILES_TO_REMOVE | LC_ALL=POSIX sort -ru | while read line ; do
+      if [ -f $line ] ; then 
+        rm -v $line
+      elif [ -d $line ] ; then 
+        rmdir -v $line
+      elif [ -h $line ] ; then
+        rm -v $line
+      fi
+    done
+    # remove pkg 
+    rm -rf $PKG_DIR 2&gt;/dev/null &amp;&amp; echo &#34;$(date) Removed $pkg_name in $INSTALLDIR&#34; &gt;&gt; $LOGFILE
+  fi
+  rm -rf &#34;$TMP_PKG_DIR&#34;
+  
+  #echo &#34;&#34;
+EOF_OUTPKG
+  end_package_date=$(date +&#34;%s&#34;)
+  package_time=$(($end_package_date - $start_package_date))
+  echo &#34;Package time: $package_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE
+  echo &#34;Package time: $package_time seconds&#34;
+
+# Get builder end time and send to TIMINGS tmp file.
+end_builder_date=$(date +&#34;%s&#34;)
+builder_time=$(($end_builder_date - $start_builder_date))
+echo &#34;Builder time: $builder_time&#34; &gt;&gt; $TMP_PKG_TIMINGS_FILE 
+echo &#34;Builder time: $builder_time seconds&#34;
+#cat $TMP_PKG_TIMINGS_FILE
+
+if [ $METADATA -eq 1 ] ; then echo &#34;Skipping store METADATA files.&#34; ; else 
+  # pkg master key
+  PKG_MASTERKEY_FILE=&#34;$METADATADIR/pkg_masterkey&#34;
+  echo &#34;Package Checsum Masterkey: $(md5sum $TMP_PKG_CHECKSUMS_FILE | cut -d&#39; &#39; -f1) &#34; &gt; $PKG_MASTERKEY_FILE
+  # pkg build timings
+  PKG_TIMINGS_FILE=&#34;$METADATADIR/timings&#34;
+  cat $TMP_PKG_TIMINGS_FILE &gt; $PKG_TIMINGS_FILE
+fi
+
+# Remove tmp dir 
+rm -rf &#34;$TMP_METADATA_DIR&#34;
+  
+  echo &#34;Created: $OUTPKG&#34;
+fi
+EOF_OUTBUILD
+
+# Store md5sum of the OUTBUILD builder script to repository metadata.
+BUILDER_CHECKSUM_FILE=&#34;$METADATADIR/builder_checksum&#34;
+md5sum  $OUTBUILD &gt; $BUILDER_CHECKSUM_FILE
+echo &#34;Created: $OUTBUILD&#34;
+</code></pre><h2 id="thanks-to">Thanks to:</h2>
+<p>LFS For their job.</p>
+<p>The F.O.S.S comunity. Try hard guys.</p>
+<p>The readers, if you have arrived here.</p>
+<h2 id="contributing-and-support">Contributing and support</h2>
+<p>Please read <a href="https://www.contributor-covenant.org/">Contributor covenant</a> for details, and  <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct">code of conduct</a> before submitting pull requests or issues.</p>
+<p>If you want to support this project with a donation, here is mi Bitcoin address:</p>
+<p>bc1q6d245chm8t5sdkqjugwg3ce2c92m276ee4ksv4</p>
+<h2 id="the-author">The Author</h2>
+<ul>
+<li><strong>Viel Losero</strong> - <em>Initial work</em> - <a href="https://github.com/VielLosero">Viel Losero</a></li>
+</ul>
+<p><!-- raw HTML omitted -->back<!-- raw HTML omitted --></p>
+<p>References:</p>
+<p><a href="https://www.linuxfromscratch.org/">LFS</a></p>
+<p>Licence: <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a></p>
+
+	 </article>
+    </article>
+</main>
+
+		</div>
+	</section><footer>
+	Send your coments here --> 
+	<a href="https://github.com/VielLosero/VielLosero.github.io">[Git]</a>
+	<a href="mailto:viel.losero@gmail.com">[Email]</a>
+	&lt;-- Envia tus comentarios aquí
+	<p class=post-meta >PGP: 1418 39E8 065C 95F4 8E8D  C329 F878 16F5 B769 CD83</p>
+	<p class=post-meta >Donate Bitcoin Address: bc1q6d245chm8t5sdkqjugwg3ce2c92m276ee4ksv4</p>
+	<p>Copyright © 2019 2025 Viel Losero aka: 02112134243</p>
+	<p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+</footer>
+</body>
+</html>
